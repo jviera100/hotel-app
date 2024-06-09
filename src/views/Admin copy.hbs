@@ -1,0 +1,180 @@
+<!-- Admin.hbs -->
+<div class="container text-center py-4">
+  <h2>Administración</h2>
+  <hr class="w-50" />  
+  <div class="row">
+    <div class="col-12 col-sm-6 col-lg-4"> 
+      <div class="mb-1">
+        <button class="btn btn-outline-success" id="addUserBtn">registrar perfil</button>   
+        <button type="submit" class="btn btn-outline-warning" id="updateUserBtn">Actualizar perfil</button>       
+        <button class="btn btn-outline-danger" id="deleteUserBtn">Eliminar perfil y reserva</button> 
+      </div>     
+      <h3>Usuarios</h3>
+      <div class="table-responsive">
+        <table class="table table-sm table-dark">
+          <!-- Agrega el atributo 'table-sm' para reducir el tamaño de la tabla -->
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Foto</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Contraseña</th>
+              <th>Tipo de usuario</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each usuarios}}
+            <tr>
+              <td>{{this.id}}</td>
+              <td>
+                <img src="/img/{{this.foto}}" alt="Foto del usuario" class="img-fluid">
+              </td>
+              <td>{{this.username}}</td>
+              <td>{{this.email}}</td>
+              <td>{{this.password}}</td>
+              <td>{{this.tipo_usuario}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-4"> 
+      <div class="mb-1">
+        <button class="btn btn-outline-success" id="addReservationBtn">Agregar reserva</button>
+        <button type="submit" class="btn btn-outline-warning" id="updateReservationBtn">Actualizar reserva</button>       
+        <button class="btn btn-outline-danger" id="deleteReservationBtn">Eliminar reserva</button>
+      </div>     
+      <h3>Reservas</h3>
+      <div class="table-responsive">
+        <table class="table table-sm table-dark">
+          <!-- Agrega el atributo 'table-sm' para reducir el tamaño de la tabla -->
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Fecha Reserva</th>
+              <th>Fecha Salida</th>
+              <th>Habitación</th>
+              <th>Cliente</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each reservas}}
+            <tr>
+              <td>{{this.id}}</td>
+              <td>{{this.fecha_reserva}}</td>
+              <td>{{this.fecha_salida}}</td>
+              <td>{{this.habitacion_numero}}</td>
+              <td>{{this.nombre_usuario}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-4">      
+      <div class="mb-1">
+        <button class="btn btn-outline-success" id="addRoomBtn">Agregar habitación</button> 
+        <button type="submit" class="btn btn-outline-warning" id="updateRoomBtn">Actualizar habitación</button>       
+        <button class="btn btn-outline-danger" id="deleteRoomBtn">Eliminar habitación</button>
+      </div>
+      <h3>Habitaciones</h3>
+      <div class="table-responsive">
+        <table class="table table-sm table-dark">
+          <!-- Agrega el atributo 'table-sm' para reducir el tamaño de la tabla -->
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Número</th>
+              <th>Tipo de Habitación</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th>Disponibilidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each habitaciones}}
+            <tr>
+              <td>{{this.id}}</td>
+              <td>{{this.numero}}</td>
+              <td>{{tipoHabitacionTexto this.tipo_habitacion_id}}</td>
+              <td>{{this.descripcion}}</td>
+              <td>{{this.precio}}</td>
+              <td>{{disponibilidadTexto this.disponibilidad}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const addUserBtn = document.querySelector("#addUserBtn");
+  const updateUserBtn = document.querySelector("#updateUserBtn");
+  const deleteUserBtn = document.querySelector("#deleteUserBtn");
+  const updateReservationBtn = document.querySelector("#updateReservationBtn");
+  const deleteReservationBtn = document.querySelector("#deleteReservationBtn");
+  
+  addUserBtn.addEventListener("click", () => {
+    window.location.href = "/registro-admin"; // Redirige a la vista de registro-admin
+  });
+
+  // Event listener para los botones de actualizar y eliminar perfil
+  updateUserBtn.addEventListener("click", () => {
+    handleProfileAction('update');
+  });
+
+  deleteUserBtn.addEventListener("click", () => {
+    handleProfileAction('delete');
+  });
+
+  async function handleProfileAction(action) {
+    const currentUserEmail = '{{currentUserEmail}}';
+    if (!currentUserEmail) {
+      alert('Correo electrónico del usuario no disponible.');
+      return;
+    }
+
+    try {
+      let response;
+      if (action === 'update') {
+        window.location.href = `/perfil-admin/${currentUserEmail}`;
+      } else if (action === 'delete') {
+        response = await axios.delete(`/perfil/${currentUserEmail}`);
+        if (response.status === 200) {
+          alert("Perfil eliminado con éxito");
+          window.location = `/`; // Redirigir a la página de inicio después de eliminar el perfil
+        } else {
+          alert("Ha ocurrido un error al intentar eliminar el perfil.");
+        }
+      }
+    } catch (error) {
+      const errorMessage = error.response.data.message || 'Ha ocurrido un error al procesar la solicitud de perfil.';
+      alert(errorMessage);
+    }
+  }
+
+  // JavaScript para manejar la selección de fila y eventos de clic en los botones
+  const usuariosTable = document.querySelector("#usuariosTable");
+
+  usuariosTable.addEventListener("click", (event) => {
+    const filaSeleccionada = event.target.closest("tr");
+    if (filaSeleccionada) {
+      const emailUsuario = filaSeleccionada.querySelector(".email").textContent;
+      updateUserBtn.setAttribute("data-email", emailUsuario);
+    }
+  });
+
+  updateReservationBtn.addEventListener("click", async () => {
+    // Agregar lógica para actualizar la reserva
+  });
+
+  deleteReservationBtn.addEventListener("click", async () => {
+    // Agregar lógica para eliminar la reserva
+  });
+</script>
+

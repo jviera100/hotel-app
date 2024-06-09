@@ -1,0 +1,47 @@
+/* Estilos para la ventana modal */
+.modal-dialog {
+  max-width: 80% !important; /* Cambiar el ancho máximo de la modal */
+}
+
+.modal-content {
+  background-color: rgba(0,0,0,0.4); /* Cambiar el color de fondo de la modal al mismo que la tabla de investigación */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%;
+}
+
+.modal-body {
+  color: #fff; /* color texto blanco */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Estilo adicional para alinear label e input horizontalmente */
+.form-label {
+  margin-bottom: 0; /* Eliminar el margen inferior predeterminado del label */
+}
+
+/* Estilo para la imagen antigua en el modal */
+#fotoTablePreviewModal {
+  max-width: 100px; /* Ajustar el tamaño máximo de la imagen */
+  height: auto;
+  margin-left: 10px;
+}
+/* Estilo para la imagen nueva en el modal */
+#fotoUpLoadPreviewModal {
+  max-width: 100px; /* Ajustar el tamaño máximo de la imagen */
+  height: auto;
+  margin-left: 10px;
+}

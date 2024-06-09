@@ -1,0 +1,18 @@
+/* Estilos generales del cuerpo de la página */
+body {
+  background: #4b4e4f; /* Color de fondo */
+  color: white; /* Color del texto */
+  font-family: "Hind Siliguri", sans-serif; /* Fuente */
+  text-align: center; /* Alineación del texto */
+}
+
+/* Estilos para los enlaces */
+a {
+  color: white; /* Color del texto de los enlaces */
+  text-decoration: none; /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilos para los enlaces al pasar el ratón por encima */
+a:hover {
+  color: white; /* Cambia el color del texto de los enlaces cuando se pasa el ratón por encima */
+}

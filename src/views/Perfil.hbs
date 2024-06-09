@@ -1,0 +1,147 @@
+<!-- Perfil.hbs -->
+<div class="py-4">
+    <h2>Datos del perfil</h2>
+    <hr class="w-50" />
+    
+    <div class="mb-1">        
+        <button type="submit" class="btn btn-outline-warning" form="updateForm">Actualizar perfil</button>       
+        <button class="btn btn-outline-danger" id="deleteBtn">Eliminar perfil y reserva</button>            
+    </div>
+
+    <form id="updateForm" enctype="multipart/form-data"> <!-- Añadir enctype="multipart/form-data" para manejar archivos -->
+        <div class="form-group row w-50 m-auto text-center">
+            <div class="form-group col-12 col-sm-12">
+                <label>Foto</label>
+                <img src="/img/{{user.foto}}" alt="Foto del perfil" class="img-fluid" id="profileImage">
+            </div>
+            <hr>
+            <div class="form-group col-12 col-sm-12">
+                <label>Cargar nueva foto de perfil</label>
+                <input type="file" name="foto" class="form-control-file" accept="image/*" onchange="previewImage(event)">
+            </div>
+            <hr>
+            <div class="form-group col-12 col-sm-12">
+                <label>Email</label>
+                <input name="email" class="form-control m-auto" disabled value="{{user.email}}" />
+            </div>
+            <hr>
+            <div class="form-group col-12 col-sm-12">
+                <label>Nombre</label>
+                <input name="username" class="form-control m-auto" value="{{user.username}}" />
+            </div>
+            <div class="form-group col-12 col-sm-4">
+                <label>Password</label>
+                <input name="password" type="password" class="form-control m-auto" value="{{user.password}}" />
+            </div>
+            <div class="form-group col-12 col-sm-4">
+                <label>Repita la password</label>
+                <input name="repeatPassword" type="password" class="form-control m-auto" value="{{user.password}}" />
+            </div>
+            <div class="form-group col-12 col-sm-4">
+                <label>Tipo de usuario</label>
+                <input name="tipo_usuario" class="form-control m-auto" value="{{user.tipo_usuario}}" />
+            </div>           
+        </div>
+    </form>    
+</div>
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('profileImage').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    console.log("Script cargado correctamente");
+
+    //logica eliminar
+    const deleteBtn = document.getElementById("deleteBtn");
+    console.log("Elemento deleteBtn:", deleteBtn);
+
+    deleteBtn.addEventListener("click", async () => {
+        try {
+            const email = "{{user.email}}"; 
+            console.log('Correo electrónico del usuario:', email); 
+            const response = await axios.delete(`/perfil/${email}`); 
+            console.log("Respuesta de eliminación:", response);
+            alert("Usuario y reservas eliminados con éxito");
+            window.location = `/`; 
+        } catch (error) {
+            console.log("Error en la eliminación del usuario:", error);
+            const { response } = error;
+            const { data } = response;
+            const { message: errorMessage } = data;
+            alert(errorMessage);
+        }
+    });
+    //logica actualizar
+    const updateBtn = document.querySelector("#updateBtn");
+
+    const form = document.querySelector("#updateForm");
+    console.log("Elemento form:", form);
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = "{{user.email}}"; 
+        console.log('Correo electrónico del usuario:', email);
+        const username = document.querySelector("input[name='username']").value;
+        const password = document.querySelector("input[name='password']").value;
+        const repeatPassword = document.querySelector("input[name='repeatPassword']").value;
+        const tipo_usuario = document.querySelector("input[name='tipo_usuario']").value;
+        //const foto = document.querySelector("input[name='foto']").files[0];
+        const fotoInput = document.querySelector("input[name='foto']"); // Input de la foto
+        const foto = fotoInput.files[0]; // Obtener el archivo de la foto
+
+        console.log("Datos del formulario obtenidos:", {
+            username,
+            password,
+            repeatPassword,
+            tipo_usuario,
+            foto
+        });
+
+        if (password !== repeatPassword) {
+            alert("Las contraseñas no coinciden");
+            return;
+        }
+
+        console.log('Datos del usuario actualizados:', {
+            username,
+            password,
+            tipo_usuario,
+            foto
+        });
+        //se agregan datos
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
+        formData.append('tipo_usuario', tipo_usuario);
+        
+        // Agregar foto solo si se seleccionó una nueva
+        if (foto) {
+            formData.append('foto', foto);
+        }
+
+        try {
+            const response = await axios.put(`/perfil/${email}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data' // Añadir encabezado necesario para manejar archivos
+                }
+            }); 
+            console.log("Respuesta de actualización:", response);
+            alert("Datos actualizados con éxito");
+            window.location = `/perfil/${email}`; 
+        } catch (error) {
+            console.log("Error en la actualización del usuario:", error);
+            const { response } = error;
+            const { data } = response;
+            const { message: errorMessage } = data;
+            alert(errorMessage);
+        }
+    });
+</script>

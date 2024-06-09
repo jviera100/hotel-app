@@ -1,0 +1,51 @@
+<!-- login.hbs -->
+<div class="py-5">
+  <h2>Iniciar Sesión</h2>
+  <hr class="w-50" />
+
+  <form id="loginForm" method="POST">
+    <div class="form-group">
+      <label>Email</label>
+      <input name="email" type="email" class="form-control w-50 m-auto" required />
+    </div>
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input name="password" type="password" class="form-control w-50 m-auto" required />
+    </div>
+    <button type="submit" class="btn btn-success mb-3">Ingresar</button>
+    <p>¿Aún no tienes cuenta? <a href="/registro">Regístrate</a></p>
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector("#loginForm");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    let email = document.querySelector("input[name='email']").value;
+    let password = document.querySelector("input[name='password']").value;
+
+    try {
+      const response = await axios.post("/login", { email, password });
+      console.log('Respuesta del servidor:', response);
+      //aqui espera redireccion a vista desde orden del servidor
+      if (response.status === 200) {
+        window.location.href = response.data.redirectUrl;
+      } else {
+        alert('Ha ocurrido un error durante el inicio de sesión');
+      }
+      // // La redirección será manejada por el servidor según el tipo de usuario
+      //window.location = '/habitaciones/:email';      
+    } catch (error) {
+      const { response } = error;
+      if (response) {
+        const { data } = response;
+        const { message } = data;
+        alert(message);
+      } else {
+        console.error('Error en la solicitud:', error);
+        alert('Error en la solicitud: ' + error.message);
+      }
+  });
+</script>

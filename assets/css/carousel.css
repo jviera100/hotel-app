@@ -1,0 +1,75 @@
+/* Estilos carousel */
+:root {
+  --gray: #373a3c;
+  --whit-light: #dddddd;
+  --black: #000;
+  --white: #fff;
+  --red: #dc3545;
+}
+
+/* CARRUSEL cambiar barras por puntos */
+.carousel-indicators [data-bs-target] {
+  border-radius: 50%;
+  width: 8px; /* Ajusta el tamaño de los puntos */
+  height: 8px;
+  background-color: var(--white);
+  border: 1px solid var(--black);
+  opacity: 0.5; /* Opacidad de los puntos inactivos */
+  transition: opacity 0.6s ease;
+}
+
+/* Ajustar ancho de las tablas */
+.table-responsive {
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+}
+
+#carusel {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+  padding: 0;
+}
+
+.carousel-item .container-fluid {
+  max-width: 100%;
+  padding: 0 15px;
+}
+
+/* Redimensionar imágenes en las tablas */
+.table img {
+  max-width: 50px; /* Ajusta el tamaño máximo de las imágenes */
+  height: auto;
+}
+
+/* Posicionar controles y indicadores del carrusel en la parte superior */
+.carousel-control-prev,
+.carousel-control-next {
+  top: 0;
+  bottom: auto;
+}
+
+.carousel-indicators {
+  top: 10px; /* Ajusta la distancia desde la parte superior */
+  bottom: auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: var(--black); /* Ajusta el color del ícono */
+}
+
+.carousel-indicators [data-bs-target].active {
+  background-color: var(--red); /* Color de los puntos activos */
+  opacity: 1; /* Opacidad de los puntos activos */
+}
+
+
+

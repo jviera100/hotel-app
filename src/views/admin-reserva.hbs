@@ -1,0 +1,225 @@
+    // logica calendario
+
+    function mostrarCalendario(button) {
+    const reservaId = button.getAttribute("data-id");
+    const calendarioId = `calendario-${reservaId}`;
+    const calendarioContainer = document.getElementById(calendarioId);
+
+    // Mostrar el calendario si está oculto, ocultarlo si está visible
+    if (calendarioContainer.style.display === "none") {
+        // Mostrar el calendario
+        calendarioContainer.style.display = "block";
+        // Aquí puedes inicializar tu biblioteca de calendario (por ejemplo, FullCalendar)
+    } else {
+        // Ocultar el calendario
+        calendarioContainer.style.display = "none";
+    }
+}
+
+
+    // Event listener para los botones de reservar
+  reservarBtns.forEach(button => {
+    button.addEventListener("click", async () => {
+      const reservaId = button.getAttribute("data-id");
+      const habitacionId = button.getAttribute("data-habitacion-id");
+      await reservar(reservaId, habitacionId);
+    });
+  });
+
+  // Event listener para los botones de eliminar reserva
+  deleteReservationBtns.forEach(button => {
+    button.addEventListener("click", async () => {
+      const reservaId = button.getAttribute("data-id");
+      const habitacionId = button.getAttribute("data-habitacion-id");
+      await eliminarReserva(reservaId, habitacionId);
+    });
+  });
+
+  // Función para reservar habitación
+  const reservar = async (reservaId, habitacionId) => {
+    try {
+      const response = await axios.post(`/reservas/${reservaId}/reservar`);
+      if (response.status === 200) {
+        alert('Habitación reservada con éxito.');
+        // Actualizar estado de disponibilidad de la habitación
+        actualizarDisponibilidadHabitacion(habitacionId, false);
+      } else {
+        alert('Ha ocurrido un error al reservar la habitación.');
+      }
+    } catch (error) {
+      const errorMessage = error.response.data.message || 'Ha ocurrido un error al reservar la habitación.';
+      alert(errorMessage);
+    }
+  };
+
+  // Función para eliminar reserva
+  const eliminarReserva = async (reservaId, habitacionId) => {
+    try {
+      const response = await axios.post(`/reservas/${reservaId}/eliminar`);
+      if (response.status === 200) {
+        alert('Reserva eliminada con éxito.');
+        // Actualizar estado de disponibilidad de la habitación
+        actualizarDisponibilidadHabitacion(habitacionId, true);
+      } else {
+        alert('Ha ocurrido un error al eliminar la reserva.');
+      }
+    } catch (error) {
+      const errorMessage = error.response.data.message || 'Ha ocurrido un error al eliminar la reserva.';
+      alert(errorMessage);
+    }
+  };
+
+  // Función para actualizar estado de disponibilidad de la habitación
+  const actualizarDisponibilidadHabitacion = (habitacionId, disponibilidad) => {
+    const disponibilidadCell = document.getElementById(`disponibilidad-${habitacionId}`);
+    if (disponibilidadCell) {
+      disponibilidadCell.textContent = disponibilidad ? 'Disponible' : 'No Disponible';
+    }
+  };
+});
+//codigo adicional
+document.addEventListener("DOMContentLoaded", () => {
+    const editUserModal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+    const editUserForm = document.querySelector("#editProfileForm");
+
+    document.querySelectorAll(".updateUserBtn").forEach(button => {
+        button.addEventListener("click", function() {
+            const row = button.closest("tr");
+            const email = row.cells[3].textContent;
+            const username = row.cells[2].textContent;
+            const password = row.cells[4].textContent;
+            const tipo_usuario = row.cells[5].textContent;
+            const foto = row.cells[1].querySelector("img").src;
+
+            document.getElementById('email').value = email;
+            document.getElementById('username').value = username;
+            document.getElementById('password').value = password;
+            document.getElementById('tipo_usuario').value = tipo_usuario;
+            document.getElementById('fotoTablePreviewModal').src = foto;
+
+            editUserModal.show();
+        });
+    });
+
+    document.getElementById('foto').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('fotoTablePreviewModal').src = e.target.result;
+            document.getElementById('fotoUpLoadPreviewModal').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    document.querySelector("#saveProfileChangesBtn").addEventListener("click", async () => {
+        const formData = new FormData(editUserForm);
+        try {
+            const response = await axios.put(`/perfil/${formData.get('email')}`, formData);
+            if (response.status === 200) {
+                alert("Perfil actualizado con éxito");
+                window.location.reload();
+            } else {
+                alert("Error al actualizar el perfil.");
+            }
+        } catch (error) {
+            alert("Error al procesar la solicitud: " + error.message);
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const updateReservationBtns = document.querySelectorAll(".updateReservationBtn");
+const deleteReservationBtns = document.querySelectorAll(".deleteReservationBtn");
+
+// logica calendario
+
+function mostrarCalendario(button) {
+    const reservaId = button.getAttribute("data-id");
+    const calendarioId = `calendario-${reservaId}`;
+    const calendarioContainer = document.getElementById(calendarioId);
+
+    // Mostrar el calendario si está oculto, ocultarlo si está visible
+    if (calendarioContainer.style.display === "none") {
+        // Mostrar el calendario
+        calendarioContainer.style.display = "block";
+        // Aquí puedes inicializar tu biblioteca de calendario (por ejemplo, FullCalendar)
+    } else {
+        // Ocultar el calendario
+        calendarioContainer.style.display = "none";
+    }
+}
+
+// Event listener para los botones de reservar
+reservarBtns.forEach(button => {
+    button.addEventListener("click", async () => {
+        const reservaId = button.getAttribute("data-id");
+        const habitacionId = button.getAttribute("data-habitacion-id");
+        await reservar(reservaId, habitacionId);
+    });
+});
+
+// Event listener para los botones de eliminar reserva
+deleteReservationBtns.forEach(button => {
+    button.addEventListener("click", async () => {
+        const reservaId = button.getAttribute("data-id");
+        const habitacionId = button.getAttribute("data-habitacion-id");
+        await eliminarReserva(reservaId, habitacionId);
+    });
+});
+
+// Función para reservar habitación
+const reservar = async (reservaId, habitacionId) => {
+    try {
+        const response = await axios.post(`/reservas/${reservaId}/reservar`);
+        if (response.status === 200) {
+            alert('Habitación reservada con éxito.');
+            // Actualizar estado de disponibilidad de la habitación
+            actualizarDisponibilidadHabitacion(habitacionId, false);
+        } else {
+            alert('Ha ocurrido un error al reservar la habitación.');
+        }
+    } catch (error) {
+        const errorMessage = error.response.data.message || 'Ha ocurrido un error al reservar la habitación.';
+        alert(errorMessage);
+    }
+};
+
+// Función para eliminar reserva
+const eliminarReserva = async (reservaId, habitacionId) => {
+    try {
+        const response = await axios.post(`/reservas/${reservaId}/eliminar`);
+        if (response.status === 200) {
+            alert('Reserva eliminada con éxito.');
+            // Actualizar estado de disponibilidad de la habitación
+            actualizarDisponibilidadHabitacion(habitacionId, true);
+        } else {
+            alert('Ha ocurrido un error al eliminar la reserva.');
+        }
+    } catch (error) {
+        const errorMessage = error.response.data.message || 'Ha ocurrido un error al eliminar la reserva.';
+        alert(errorMessage);
+    }
+};
+
+// Función para actualizar estado de disponibilidad de la habitación
+const actualizarDisponibilidadHabitacion = (habitacionId, disponibilidad) => {
+    const disponibilidadCell = document.getElementById(`disponibilidad-${habitacionId}`);
+    if (disponibilidadCell) {
+        disponibilidadCell.textContent = disponibilidad ? 'Disponible' : 'No Disponible';
+    }
+};

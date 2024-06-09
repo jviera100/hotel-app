@@ -156,7 +156,7 @@
   </div>
 </section>
 
-<!-- Modal para editar perfil -->
+<!-- Modal para PERFIL -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -214,18 +214,15 @@
   </div>
 </div>
 
-<!-- logica javascript fronted -->
+<!-- script logica PERFIL javascript fronted  -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const addUserBtn = document.querySelector("#addUserBtn"); //selector id de boton agregar perfil
-    const updateUserBtns = document.querySelectorAll(".updateUserBtn"); //selector class de boton actualizar perfil
-    const deleteUserBtns = document.querySelectorAll(".deleteUserBtn"); //selector class de boton eliminar perfil
+    const addUserBtn = document.querySelector("#addUserBtn"); // Selector del botón para agregar perfil
+    const updateUserBtns = document.querySelectorAll(".updateUserBtn"); // Selector de los botones para actualizar perfil
+    const deleteUserBtns = document.querySelectorAll(".deleteUserBtn"); // Selector de los botones para eliminar perfil
     const editUserModal = new bootstrap.Modal(document.getElementById('editProfileModal')); // Instanciar el modal
-    const updateReservationBtns = document.querySelectorAll(".updateReservationBtn");
-    const reservarBtns = document.querySelectorAll(".reservarBtn");
-    const deleteReservationBtns = document.querySelectorAll(".deleteReservationBtn");
 
-
+    // Agregar evento al botón para agregar perfil
     addUserBtn.addEventListener("click", () => {
         window.location.href = "/admin/registro"; // Redirige a la vista de /admin/registro
     });
@@ -233,11 +230,12 @@
     // Event listener para los botones de actualizar usuario
     updateUserBtns.forEach(button => {
         button.addEventListener("click", () => {
-            const row = button.closest("tr"); // Obtener la fila de la tabla
-            const email = row.querySelector("td:nth-child(4)").textContent; // Obtener el correo electrónico del usuario de la cuarta celda de la fila
-            const username = row.querySelector("td:nth-child(3)").textContent; // Obtener el nombre de usuario de la tercera celda de la fila
-            const password = row.querySelector("td:nth-child(5)").textContent; // Obtener la contraseña de la quinta celda de la fila
-            const tipo_usuario = row.querySelector("td:nth-child(6)").textContent; // Obtener el tipo de usuario de la sexta celda de la fila     
+            // Obtener datos del usuario de la fila de la tabla
+            const row = button.closest("tr"); 
+            const email = row.querySelector("td:nth-child(4)").textContent;
+            const username = row.querySelector("td:nth-child(3)").textContent;
+            const password = row.querySelector("td:nth-child(5)").textContent;
+            const tipo_usuario = row.querySelector("td:nth-child(6)").textContent;
             const foto = row.querySelector("td:nth-child(2) img").getAttribute("src");       
 
             // Llenar el formulario con los datos del usuario
@@ -247,19 +245,11 @@
             document.getElementById('tipo_usuario').value = tipo_usuario;  
             document.getElementById('fotoTablePreviewModal').src = foto;          
 
-            // Cambiar la imagen del perfil en el modal
-            const foto = row.querySelector("td:nth-child(2) img").getAttribute("src");
-            console.log("Foto actual:", foto);
-            document.getElementById('fotoTablePreviewModal').src = foto;
-            console.log("Foto previa en el modal:", document.getElementById('fotoTablePreviewModal').src);
-
-
             // Mostrar el modal de edición
             editUserModal.show();
         });
     });
 
-    
     // Event listener para los botones de eliminar usuario
     deleteUserBtns.forEach(button => {
         button.addEventListener("click", () => {
@@ -268,6 +258,7 @@
         });
     });
 
+    // Función para manejar la acción de eliminar perfil
     async function handleProfileAction(action, email) {
         if (!email) {
             alert('Correo electrónico del usuario no disponible.');
@@ -291,7 +282,6 @@
         }
     }
 
-
     // Event listener para el cambio en el input de tipo file
     document.getElementById('foto').addEventListener('change', function(event) {
         const file = event.target.files[0]; // Obtener el archivo de imagen seleccionado
@@ -300,7 +290,7 @@
         // Manejar el evento de carga del archivo
         reader.onload = function(e) {
             document.getElementById('fotoTablePreviewModal').src = e.target.result; // Mostrar la vista previa de la imagen de la tabla en el modal           
-            document.getElementById('fotoUpLoadPreviewModal').src = e.target.result;// Mostrar la vista previa de la nueva imagen subida en el modal
+            document.getElementById('fotoUpLoadPreviewModal').src = e.target.result; // Mostrar la vista previa de la nueva imagen subida en el modal
         };
 
         // Leer el contenido del archivo como URL de datos
@@ -330,7 +320,6 @@
                     // Actualizar la imagen con un timestamp para forzar la recarga
                     const imgElement = row.querySelector("td:nth-child(2) img");
                     imgElement.src = `/img/${data.foto}?t=${new Date().getTime()}`;
-                    console.log("Foto actualizada en la tabla:", imgElement.src);
                 }
 
                 // Cerrar el modal
@@ -345,139 +334,82 @@
             alert(errorMessage);
         }
     });
-    const updateReservationBtns = document.querySelectorAll(".updateReservationBtn");
-    const deleteReservationBtns = document.querySelectorAll(".deleteReservationBtn");
 
-    // logica calendario
-
-    function mostrarCalendario(button) {
-    const reservaId = button.getAttribute("data-id");
-    const calendarioId = `calendario-${reservaId}`;
-    const calendarioContainer = document.getElementById(calendarioId);
-
-    // Mostrar el calendario si está oculto, ocultarlo si está visible
-    if (calendarioContainer.style.display === "none") {
-        // Mostrar el calendario
-        calendarioContainer.style.display = "block";
-        // Aquí puedes inicializar tu biblioteca de calendario (por ejemplo, FullCalendar)
-    } else {
-        // Ocultar el calendario
-        calendarioContainer.style.display = "none";
-    }
-}
-
-
-    // Event listener para los botones de reservar
-  reservarBtns.forEach(button => {
-    button.addEventListener("click", async () => {
-      const reservaId = button.getAttribute("data-id");
-      const habitacionId = button.getAttribute("data-habitacion-id");
-      await reservar(reservaId, habitacionId);
-    });
-  });
-
-  // Event listener para los botones de eliminar reserva
-  deleteReservationBtns.forEach(button => {
-    button.addEventListener("click", async () => {
-      const reservaId = button.getAttribute("data-id");
-      const habitacionId = button.getAttribute("data-habitacion-id");
-      await eliminarReserva(reservaId, habitacionId);
-    });
-  });
-
-  // Función para reservar habitación
-  const reservar = async (reservaId, habitacionId) => {
-    try {
-      const response = await axios.post(`/reservas/${reservaId}/reservar`);
-      if (response.status === 200) {
-        alert('Habitación reservada con éxito.');
-        // Actualizar estado de disponibilidad de la habitación
-        actualizarDisponibilidadHabitacion(habitacionId, false);
-      } else {
-        alert('Ha ocurrido un error al reservar la habitación.');
-      }
-    } catch (error) {
-      const errorMessage = error.response.data.message || 'Ha ocurrido un error al reservar la habitación.';
-      alert(errorMessage);
-    }
-  };
-
-  // Función para eliminar reserva
-  const eliminarReserva = async (reservaId, habitacionId) => {
-    try {
-      const response = await axios.post(`/reservas/${reservaId}/eliminar`);
-      if (response.status === 200) {
-        alert('Reserva eliminada con éxito.');
-        // Actualizar estado de disponibilidad de la habitación
-        actualizarDisponibilidadHabitacion(habitacionId, true);
-      } else {
-        alert('Ha ocurrido un error al eliminar la reserva.');
-      }
-    } catch (error) {
-      const errorMessage = error.response.data.message || 'Ha ocurrido un error al eliminar la reserva.';
-      alert(errorMessage);
-    }
-  };
-
-  // Función para actualizar estado de disponibilidad de la habitación
-  const actualizarDisponibilidadHabitacion = (habitacionId, disponibilidad) => {
-    const disponibilidadCell = document.getElementById(`disponibilidad-${habitacionId}`);
-    if (disponibilidadCell) {
-      disponibilidadCell.textContent = disponibilidad ? 'Disponible' : 'No Disponible';
-    }
-  };
 });
-//codigo adicional
-document.addEventListener("DOMContentLoaded", () => {
-    const editUserModal = new bootstrap.Modal(document.getElementById('editProfileModal'));
-    const editUserForm = document.querySelector("#editProfileForm");
-
-    document.querySelectorAll(".updateUserBtn").forEach(button => {
-        button.addEventListener("click", function() {
-            const row = button.closest("tr");
-            const email = row.cells[3].textContent;
-            const username = row.cells[2].textContent;
-            const password = row.cells[4].textContent;
-            const tipo_usuario = row.cells[5].textContent;
-            const foto = row.cells[1].querySelector("img").src;
-
-            document.getElementById('email').value = email;
-            document.getElementById('username').value = username;
-            document.getElementById('password').value = password;
-            document.getElementById('tipo_usuario').value = tipo_usuario;
-            document.getElementById('fotoTablePreviewModal').src = foto;
-
-            editUserModal.show();
-        });
-    });
-
-    document.getElementById('foto').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('fotoTablePreviewModal').src = e.target.result;
-            document.getElementById('fotoUpLoadPreviewModal').src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    });
-
-    document.querySelector("#saveProfileChangesBtn").addEventListener("click", async () => {
-        const formData = new FormData(editUserForm);
-        try {
-            const response = await axios.put(`/perfil/${formData.get('email')}`, formData);
-            if (response.status === 200) {
-                alert("Perfil actualizado con éxito");
-                window.location.reload();
-            } else {
-                alert("Error al actualizar el perfil.");
-            }
-        } catch (error) {
-            alert("Error al procesar la solicitud: " + error.message);
-        }
-    });
-});
-
-
 </script>
+
+<!-- Modal para RESERVA -->
+<div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reservaModalLabel">Reservar Habitación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario de reserva -->
+        <form id="reservaForm">
+          <div class="mb-3">
+            <label for="fechaReserva" class="form-label">Fecha de Reserva</label>
+            <input type="date" class="form-control" id="fechaReserva" name="fechaReserva">
+          </div>
+          <div class="mb-3">
+            <label for="fechaSalida" class="form-label">Fecha de Salida</label>
+            <input type="date" class="form-control" id="fechaSalida" name="fechaSalida">
+          </div>
+          <div class="mb-3">
+            <label for="habitacionId" class="form-label">Habitación</label>
+            <select class="form-select" id="habitacionId" name="habitacionId">
+              <!-- Aquí se cargarán las opciones de habitaciones dinámicamente -->
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="guardarReservaBtn">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- script logica RESERVA javascript fronted  --><script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const reservaModal = new bootstrap.Modal(document.getElementById('reservaModal')); // Instanciar el modal
+
+    // Mostrar el modal de reserva cuando se hace clic en el botón de reservar
+    function mostrarModalReserva() {
+      // Aquí podrías cargar las opciones de habitaciones dinámicamente si es necesario
+      reservaModal.show();
+    }
+
+    // Event listener para mostrar el modal de reserva
+    document.getElementById('reservarBtn').addEventListener('click', mostrarModalReserva);
+
+    // Event listener para el botón de guardar reserva en el modal
+    document.getElementById('guardarReservaBtn').addEventListener('click', async () => {
+      // Obtener los datos del formulario de reserva
+      const fechaReserva = document.getElementById('fechaReserva').value;
+      const fechaSalida = document.getElementById('fechaSalida').value;
+      const habitacionId = document.getElementById('habitacionId').value;
+
+      // Aquí podrías validar los datos de reserva si es necesario
+
+      // Enviar los datos al servidor para guardar la reserva
+      try {
+        const response = await axios.post('/reserva', { fechaReserva, fechaSalida, habitacionId });
+        // Aquí podrías manejar la respuesta del servidor, como mostrar un mensaje de éxito o actualizar la interfaz de usuario
+        console.log('Reserva guardada:', response.data);
+        // Cerrar el modal después de guardar la reserva
+        reservaModal.hide();
+      } catch (error) {
+        // Manejar errores en caso de que la solicitud falle
+        console.error('Error al guardar la reserva:', error);
+        // Aquí podrías mostrar un mensaje de error al usuario
+      }
+    });
+  });
+</script>
+
 
 

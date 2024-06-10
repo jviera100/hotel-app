@@ -80,23 +80,8 @@
                   <td>{{this.habitacion_numero}}</td>
                   <td>{{this.nombre_usuario}}</td>
                   <td>
-                    <!-- Botón para actualizar reserva -->
-                    <button type="submit" class="btn btn-outline-warning updateReservationBtn">Actualizar reserva</button>
-                    <!-- Botón para reservar o eliminar reserva dependiendo del estado de disponibilidad -->
-                    <td>
-                      {{#if this.disponibilidad}}
-                        <button class="btn btn-outline-success reservarBtn" 
-                          data-id="{{this.id}}" 
-                          data-habitacion-id="{{this.habitacion_id}}" 
-                          onclick="mostrarCalendario(this)">Reservar
-                        </button>
-                        <div id="calendario-{{this.id}}" class="calendario-container" style="display: none;">
-                          <!-- Aquí se mostraría el calendario -->
-                        </div>
-                      {{else}}
-                        <button class="btn btn-outline-danger deleteReservationBtn" data-id="{{this.id}}" data-habitacion-id="{{this.habitacion_id}}">Eliminar reserva</button>
-                      {{/if}}
-                    </td>
+                    <button type="button" class="btn btn-outline-warning updateReservationBtn" data-id="{{this.id}}" data-toggle="modal" data-target="#reservaModal">Actualizar reserva</button>
+                    <button class="btn btn-outline-danger deleteReservationBtn" data-id="{{this.id}}" data-habitacion-id="{{this.habitacion_id}}">Eliminar reserva</button>
                   </td>
                 </tr>
                 {{/each}}
@@ -363,53 +348,63 @@
               <!-- Aquí se cargarán las opciones de habitaciones dinámicamente -->
             </select>
           </div>
+          <div class="mb-3">
+            <label for="clienteId" class="form-label">Cliente</label>
+            <select class="form-select" id="clienteId" name="clienteId">
+              <!-- Aquí se cargarán las opciones de clientes dinámicamente -->
+            </select>
+          </div>
         </form>
       </div>
-      <div class="modal-footer">
+      {{!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" id="guardarReservaBtn">Guardar</button>
+      </div> --}}
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary saveReservationChangesBtn">Guardar cambios</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- script logica RESERVA javascript fronted  --><script>
+
+<!-- script logica RESERVA javascript fronted  -->
+<script>
   document.addEventListener("DOMContentLoaded", () => {
-    const reservaModal = new bootstrap.Modal(document.getElementById('reservaModal')); // Instanciar el modal
+    const updateReservationBtns = document.querySelectorAll(".updateReservationBtn");
+    const deleteReservationBtns = document.querySelectorAll(".deleteReservationBtn");
+    const reservaModal = new bootstrap.Modal(document.getElementById('reservaModal'));
 
-    // Mostrar el modal de reserva cuando se hace clic en el botón de reservar
-    function mostrarModalReserva() {
-      // Aquí podrías cargar las opciones de habitaciones dinámicamente si es necesario
-      reservaModal.show();
-    }
+    // Función para cargar datos en el modal de reserva
+    updateReservationBtns.forEach(button => {
+      button.addEventListener("click", function() {
+        const reservationId = this.getAttribute('data-id');
+        // Aquí iría el código para cargar los datos existentes de la reserva usando reservationId
+        reservaModal.show();
+      });
+    });
 
-    // Event listener para mostrar el modal de reserva
-    document.getElementById('reservarBtn').addEventListener('click', mostrarModalReserva);
-
-    // Event listener para el botón de guardar reserva en el modal
-    document.getElementById('guardarReservaBtn').addEventListener('click', async () => {
-      // Obtener los datos del formulario de reserva
-      const fechaReserva = document.getElementById('fechaReserva').value;
-      const fechaSalida = document.getElementById('fechaSalida').value;
-      const habitacionId = document.getElementById('habitacionId').value;
-
-      // Aquí podrías validar los datos de reserva si es necesario
-
-      // Enviar los datos al servidor para guardar la reserva
-      try {
-        const response = await axios.post('/reserva', { fechaReserva, fechaSalida, habitacionId });
-        // Aquí podrías manejar la respuesta del servidor, como mostrar un mensaje de éxito o actualizar la interfaz de usuario
-        console.log('Reserva guardada:', response.data);
-        // Cerrar el modal después de guardar la reserva
-        reservaModal.hide();
-      } catch (error) {
-        // Manejar errores en caso de que la solicitud falle
-        console.error('Error al guardar la reserva:', error);
-        // Aquí podrías mostrar un mensaje de error al usuario
-      }
+    // Función para eliminar reserva y actualizar estado de la habitación
+    deleteReservationBtns.forEach(button => {
+      button.addEventListener("click", async function() {
+        const reservationId = this.getAttribute('data-id');
+        const habitacionId = this.getAttribute('data-habitacion-id');
+        try {
+          const response = await axios.delete(`/reserva/${reservationId}`);
+          if (response.status === 200) {
+            alert('Reserva eliminada con éxito.');
+            // Aquí iría el código para actualizar el estado de la habitación a disponible
+          }
+        } catch (error) {
+          alert('Error al eliminar la reserva.');
+        }
+      });
     });
   });
 </script>
+
+
 
 
 

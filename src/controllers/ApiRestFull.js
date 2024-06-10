@@ -49,10 +49,6 @@ const getHomeControl = async (req, res) => {
     }
 };
 
-
-
-
-
 // Definición del controlador para agregar un nuevo usuario
 const addUsuarioRegistroControl = async (req, res) => {
     try {
@@ -313,10 +309,7 @@ const updateReservaControl = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: `Error al actualizar la reserva: ${error.message}` });
     }
-};
-  
-  
-
+};  
 
 // Controlador para obtener el perfil de un usuario
 const getPerfilControl = async (req, res) => {
@@ -372,7 +365,6 @@ const getPerfilControl = async (req, res) => {
         res.status(500).send('Error al obtener el perfil del usuario: ' + error.message);
     }
 };
-
 
 // Controlador para actualizar el perfil de un usuario
 const updatePerfilControl = async (req, res) => { 
@@ -435,9 +427,7 @@ const updatePerfilControl = async (req, res) => {
         // Envía una respuesta de error 500 junto con un mensaje detallado si ocurre un error
         res.status(500).send('Error al actualizar el perfil del usuario: ' + error.message);
     }
-}; 
-          
-      
+};         
 
 // Controlador para eliminar el perfil de un usuario
 const deletePerfilControl = async (req, res) => {

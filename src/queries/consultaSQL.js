@@ -37,6 +37,10 @@ const getUsuariosQuery = async () => {
         throw error;
     }
 };
+
+
+
+
 // Consulta para actualizar la disponibilidad de la habitación
 const updateDisponibilidadHabitacionQuery = async (habitacionId, disponibilidad) => {
     try {
@@ -82,38 +86,6 @@ const getReservasQuery = async () => {
         throw error;
     }
 };
-// Consulta para obtener las reservas de un usuario específico por su correo electrónico
-const getReservasByEmailQuery = async (email) => {
-    try {
-        console.log("getReservasByEmailQuery - Inicio con email:", email);
-        const consultaGetReservasByEmail = {
-            text: `
-            SELECT 
-                r.id,
-                r.fecha_reserva,
-                r.fecha_salida,
-                h.numero AS habitacion_numero,
-                u.username AS nombre_usuario
-            FROM             
-                reservas r
-            JOIN             
-                habitaciones h ON r.habitacion_id = h.id
-            JOIN             
-                usuarios u ON r.cliente_id = u.id
-            WHERE
-                u.email = $1;            
-            `,
-            values: [email],
-        };
-        console.log("getReservasByEmailQuery - Ejecutando consulta:", consultaGetReservasByEmail);
-        const result = await pool.query(consultaGetReservasByEmail);
-        console.log("getReservasByEmailQuery - Resultado:", result.rows);
-        return result.rows;
-    } catch (error) {
-        console.error('Error al obtener reservas del usuario:', error);
-        throw error;
-    }
-};
 // Consulta para obtener todas las habitaciones
 const getHabitacionesQuery = async () => {
     try {
@@ -130,64 +102,11 @@ const getHabitacionesQuery = async () => {
         throw error;
     }
 };
-// Consulta para obtener todas las habitaciones disponibles
-const getHabitacionesDisponiblesQuery = async () => {
-    try {
-        console.log("getHabitacionesDisponiblesQuery - Inicio");
-        const consultaGetHabitacionesDisponibles = {
-            text: `
-            SELECT 
-                h.id,
-                h.numero,
-                th.tipo AS tipo_habitacion,
-                h.descripcion,
-                h.precio,
-                h.disponibilidad
-            FROM 
-                habitaciones h
-            JOIN 
-                tiposhabitaciones th ON h.tipo_habitacion_id = th.id
-            `,
-        };
-        console.log("getHabitacionesDisponiblesQuery - Ejecutando consulta:", consultaGetHabitacionesDisponibles);
-        const result = await pool.query(consultaGetHabitacionesDisponibles);
-        console.log("getHabitacionesDisponiblesQuery - Resultado:", result.rows);
-        return result.rows;
-    } catch (error) {
-        console.error('Error al obtener habitaciones disponibles:', error);
-        throw error;
-    }
-};
-// Consulta para obtener todas las habitaciones no disponibles
-const getHabitacionesNoDisponiblesQuery = async () => {
-    try {
-        console.log("getHabitacionesNoDisponiblesQuery - Inicio");
-        const consultaGetHabitacionesNoDisponibles = {
-            text: `
-            SELECT 
-                h.id,
-                h.numero,
-                th.tipo AS tipo_habitacion,
-                h.descripcion,
-                h.precio,
-                h.disponibilidad
-            FROM 
-                habitaciones h
-            JOIN 
-                tiposhabitaciones th ON h.tipo_habitacion_id = th.id
-            WHERE 
-                h.disponibilidad = false
-            `,
-        };
-        console.log("getHabitacionesNoDisponiblesQuery - Ejecutando consulta:", consultaGetHabitacionesNoDisponibles);
-        const result = await pool.query(consultaGetHabitacionesNoDisponibles);
-        console.log("getHabitacionesNoDisponiblesQuery - Resultado:", result.rows);
-        return result.rows;
-    } catch (error) {
-        console.error('Error al obtener habitaciones no disponibles:', error);
-        throw error;
-    }
-};
+
+
+
+
+
 // Consulta para obtener un usuario por su correo electrónico
 const getUsuarioByEmailQuery = async (email) => {
     try {
@@ -259,11 +178,8 @@ export {
     addUsuarioQuery, 
     getUsuariosQuery,
     updateDisponibilidadHabitacionQuery,     
-    getReservasQuery,
-    getReservasByEmailQuery,
+    getReservasQuery,    
     getHabitacionesQuery, 
-    getHabitacionesDisponiblesQuery,
-    getHabitacionesNoDisponiblesQuery, 
     getUsuarioByEmailQuery, 
     updateUsuarioByEmailQuery, 
     deletePerfilAndReservasByEmailQuery     

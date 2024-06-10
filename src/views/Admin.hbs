@@ -8,7 +8,7 @@
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div class="carousel-item active" id="perfil-carousel">
         <div class="container text-center py-4">
           <h2>Administración de Usuarios</h2>           
           <div class="mb-1">
@@ -37,14 +37,7 @@
                   <td>{{this.username}}</td>
                   <td>{{this.email}}</td>
                   <td>{{this.password}}</td>
-                  <td>{{this.tipo_usuario}}</td>
-                  {{!-- botones antiguos si abren modal 
-                  <td>
-                    <button type="submit" class="btn btn-outline-warning" id="updateUserBtn">Actualizar perfil</button>       
-                    <button class="btn btn-outline-danger" id="deleteUserBtn">Eliminar perfil y reserva</button> 
-                  </td>
-                  --}}
-                  {{!-- botones nuevos no abren modal --}}
+                  <td>{{this.tipo_usuario}}</td>                 
                   <td>
                     <button type="button" class="btn btn-outline-warning updateUserBtn">Actualizar perfil</button>       
                     <button type="button" class="btn btn-outline-danger deleteUserBtn" data-email="{{this.email}}">Eliminar perfil y reserva</button> 
@@ -56,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item" id="reservas-carousel">
         <div class="container text-center py-4">
           <h2>Administración de Reservas</h2>                       
           <div class="table-responsive">
@@ -90,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item" id="habitaciones-carousel">
         <div class="container text-center py-4">
           <h2>Administración de Habitaciones</h2>            
           <div class="mb-1">
@@ -355,11 +348,7 @@
             </select>
           </div>
         </form>
-      </div>
-      {{!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" id="guardarReservaBtn">Guardar</button>
-      </div> --}}
+      </div>     
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary saveReservationChangesBtn">Guardar cambios</button>

@@ -4,11 +4,8 @@ import {
     addUsuarioQuery, 
     getUsuariosQuery,
     updateDisponibilidadHabitacionQuery,     
-    getReservasQuery,
-    getReservasByEmailQuery,
-    getHabitacionesQuery, 
-    getHabitacionesDisponiblesQuery,
-    getHabitacionesNoDisponiblesQuery, 
+    getReservasQuery,    
+    getHabitacionesQuery,     
     getUsuarioByEmailQuery, 
     updateUsuarioByEmailQuery, 
     deletePerfilAndReservasByEmailQuery      
@@ -230,7 +227,7 @@ const getReservaHabitacionesControl = async (req, res) => {
         console.log('Email del usuario decodificado del token:', email);
 
         // Obtiene las habitaciones disponibles y las reservas del usuario de la base de datos
-        const habitacionesDisponibles = await getHabitacionesDisponiblesQuery();
+        const habitacionesDisponibles = await getHabitacionesQuery();
         const reservasUsuario = await getReservasQuery(email);
         const usuario = await getUsuarioByEmailQuery(email);
         console.log('Habitaciones disponibles obtenidas:', habitacionesDisponibles);

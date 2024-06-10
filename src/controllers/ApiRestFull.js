@@ -16,7 +16,7 @@ const __dirname = path.resolve();
 
 console.log('ApiRestFull.js - Iniciando configuración de controllers');
 
-// Definición del controlador para la página de inicio
+// controlador para la página de inicio
 const getHomeControl = async (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
@@ -46,7 +46,10 @@ const getHomeControl = async (req, res) => {
     }
 };
 
-// Definición del controlador para agregar un nuevo usuario
+
+
+
+// controlador para agregar un nuevo usuario
 const addUsuarioRegistroControl = async (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
@@ -94,9 +97,7 @@ const addUsuarioRegistroControl = async (req, res) => {
         res.status(500).send(error.message); // Envío de una respuesta de error HTTP con el mensaje de error detallado
     }
 };
-
-
-// Definición del controlador para renderizar la página de registro
+// controlador para renderizar la página de registro
 const getUsuarioRegistroControl = (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
@@ -126,6 +127,8 @@ const getUsuarioRegistroControl = (req, res) => {
 };
 
 
+
+
 // Controlador para renderizar la vista de inicio de sesión
 const getLoginControl = async (req, res) => {
     try {
@@ -152,8 +155,6 @@ const getLoginControl = async (req, res) => {
         res.status(500).send('Ocurrió un error al cargar la vista de inicio de sesión'); // Envía una respuesta de error HTTP con un mensaje de error
     }
 };
-
-
 // Controlador para procesar el inicio de sesión
 const postLoginControl = async (req, res) => {
     try {
@@ -210,6 +211,33 @@ const postLoginControl = async (req, res) => {
         res.status(500).send('Ocurrió un error al iniciar sesión: ' + error.message); // Envía una respuesta de error HTTP con un mensaje de error
     }
 };
+// Controlador para cerrar sesión
+const logoutControl = (req, res) => {
+    try {
+        // Registro del inicio del controlador
+        console.log('logoutControl - Inicio');
+
+        // Eliminar la cookie del token
+        res.clearCookie('token');
+        // Registro de la eliminación de la cookie del token
+        console.log('Cookie del token eliminada');
+
+        // Redirigir al usuario a la página de inicio de sesión
+        res.redirect('/login');
+        // Registro de la redirección a /login
+        console.log('Redirigiendo a /login');
+
+        // Registro del fin del controlador
+        console.log('logoutControl - Fin');
+    } catch (error) {
+        // Capturar cualquier error que ocurra durante el proceso
+        console.error('Error en logoutControl:', error);
+        // Enviar un mensaje de error al frontend junto con el código de estado 500
+        res.status(500).send('Ocurrió un error al cerrar sesión');
+    }
+};
+
+
 
 
 // Controlador para la vista de habitaciones
@@ -260,7 +288,6 @@ const getReservaHabitacionesControl = async (req, res) => {
         res.status(500).send('Error al obtener los datos de las habitaciones: ' + error.message); // Envía una respuesta de error HTTP con un mensaje de error
     }
 };
-
 // Controlador para actualizar la disponibilidad de la habitación (reservar)
 const reservarHabitacionControl = async (req, res) => {
     try {
@@ -275,7 +302,6 @@ const reservarHabitacionControl = async (req, res) => {
         res.status(500).send('Error al reservar la habitación: ' + error.message);
     }
 };
-
 // Controlador para actualizar la disponibilidad de la habitación (eliminar reserva)
 const eliminarReservaHabitacionControl = async (req, res) => {
     try {
@@ -307,6 +333,10 @@ const updateReservaControl = async (req, res) => {
         res.status(500).json({ error: `Error al actualizar la reserva: ${error.message}` });
     }
 };  
+
+
+
+
 
 // Controlador para obtener el perfil de un usuario
 const getPerfilControl = async (req, res) => {
@@ -362,7 +392,6 @@ const getPerfilControl = async (req, res) => {
         res.status(500).send('Error al obtener el perfil del usuario: ' + error.message);
     }
 };
-
 // Controlador para actualizar el perfil de un usuario
 const updatePerfilControl = async (req, res) => { 
     try {
@@ -424,8 +453,7 @@ const updatePerfilControl = async (req, res) => {
         // Envía una respuesta de error 500 junto con un mensaje detallado si ocurre un error
         res.status(500).send('Error al actualizar el perfil del usuario: ' + error.message);
     }
-};         
-
+};    
 // Controlador para eliminar el perfil de un usuario
 const deletePerfilControl = async (req, res) => {
     try {
@@ -453,7 +481,12 @@ const deletePerfilControl = async (req, res) => {
     }
 }; 
 
-// Definición del controlador para la página de contacto
+
+
+
+
+
+// controlador para la página de contacto
 const getContactoControl = (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
@@ -481,9 +514,7 @@ const getContactoControl = (req, res) => {
         res.status(500).send('Ocurrió un error al renderizar la página de contacto'); // Envía una respuesta de error HTTP con el mensaje de error detallado
     }
 };
-
-
-// Definición del controlador para enviar el formulario de contacto
+// controlador para enviar el formulario de contacto
 const postEnviarContactoControl = (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
@@ -505,6 +536,13 @@ const postEnviarContactoControl = (req, res) => {
         res.status(500).send('Ocurrió un error al procesar el formulario de contacto'); // Envía una respuesta de error HTTP con el mensaje de error detallado
     }
 };
+
+
+
+
+
+
+
 
 
 // Controlador para obtener la página de inicio del administrador
@@ -582,7 +620,6 @@ const getAdminInicio = async (req, res) => {
         res.status(500).send('Error al obtener los datos getAdminInicio: ' + error.message);
     }
 }; 
-
 // Controlador para obtener y actualizar el perfil de un usuario en forma de modal para administradores
 const getPutPerfilModalAdmin = async (req, res) => {
     try {
@@ -655,7 +692,6 @@ const deletePerfilAndReservasAdminControl = async (req, res) => {
         res.status(500).send('Error al eliminar el perfil del administrador: ' + error.message);
     }
 };
-
 // Controlador para mostrar la vista de registro de administradores
 const getUsuarioRegistroAdminControl = async (req, res) => {
     try {
@@ -715,32 +751,6 @@ const getUsuarioRegistroAdminControl = async (req, res) => {
     }
 };
 
-
-// Controlador para cerrar sesión
-const logoutControl = (req, res) => {
-    try {
-        // Registro del inicio del controlador
-        console.log('logoutControl - Inicio');
-
-        // Eliminar la cookie del token
-        res.clearCookie('token');
-        // Registro de la eliminación de la cookie del token
-        console.log('Cookie del token eliminada');
-
-        // Redirigir al usuario a la página de inicio de sesión
-        res.redirect('/login');
-        // Registro de la redirección a /login
-        console.log('Redirigiendo a /login');
-
-        // Registro del fin del controlador
-        console.log('logoutControl - Fin');
-    } catch (error) {
-        // Capturar cualquier error que ocurra durante el proceso
-        console.error('Error en logoutControl:', error);
-        // Enviar un mensaje de error al frontend junto con el código de estado 500
-        res.status(500).send('Ocurrió un error al cerrar sesión');
-    }
-};
 
 
 console.log('ApiRestFull.js - Configuración de controllers completa');

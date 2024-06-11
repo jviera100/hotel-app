@@ -12,18 +12,19 @@ import {
     updateReservaControl,
     getPerfilControl,
     updatePerfilControl,
-    deletePerfilControl,
+    deletePerfilAndReservasControl,
     getContactoControl,
     postEnviarContactoControl,
     getAdminInicio,
-    getPutPerfilModalAdmin,
-    deletePerfilAndReservasAdminControl,    
-    getUsuarioRegistroAdminControl,    
+    getPutPerfilModalAdmin,              
     logoutControl
 } from '../src/controllers/ApiRestFull.js';
 import { verifyToken } from '../middlewares/token.js';
 
 const router = Router();
+
+//rutas (get) son visibles en navegador, rutas (post-put-delete) puedes ver en extensiones Postman o Thunder Client
+// cantidad de rutas = cantidad controllers
 
 console.log('routes.js - Iniciando configuración de rutas');
 
@@ -32,7 +33,7 @@ router.get('/', getHomeControl);
 
 // Rutas para el controlador de inicio y cierre de sesión de cliente y administrador
 router.get('/login', getLoginControl);
-router.post('/login', postLoginControl);
+router.post('/login', postLoginControl); // getUsuarioByEmailQuery
 router.get('/logout', logoutControl);
 
 // Ruta para la vista de contacto de cliente y administrador
@@ -40,25 +41,22 @@ router.get('/contacto', getContactoControl);
 router.post('/contacto', postEnviarContactoControl);
 
 // Rutas para el controlador de agregar usuarios y vista registro de perfil cliente
-router.post('/registro', addUsuarioRegistroControl); //ruta no visible en navegador, puedes ver en Postman o Thunder Client
+router.post('/registro', addUsuarioRegistroControl); // addUsuarioQuery
 router.get('/registro', getUsuarioRegistroControl);
 
-// Ruta para ver las habitaciones y reservar una habitación de perfil cliente 
-router.get('/habitaciones/:email', verifyToken, getReservaHabitacionesControl);
-router.post('/habitaciones/reserva/:habitacionId', verifyToken, reservarHabitacionControl);
-router.post('/habitaciones/eliminar-reserva/:habitacionId', verifyToken, eliminarReservaHabitacionControl);
-
 // Ruta para el controlador de perfil cliente
-router.get('/perfil/:email', verifyToken, getPerfilControl);
-router.put('/perfil/:email', verifyToken, updatePerfilControl);
-router.delete('/perfil/:email', verifyToken, deletePerfilControl);
+router.get('/perfil/:email', verifyToken, getPerfilControl); // getUsuarioByEmailQuery
+router.put('/perfil/:email', verifyToken, updatePerfilControl); // updateUsuarioByEmailQuery
+router.delete('/perfil/:email', verifyToken, deletePerfilAndReservasControl); // deletePerfilAndReservasByEmailQuery
+
+// Ruta para ver las habitaciones y reservar una habitación de perfil cliente 
+router.get('/habitaciones/:email', verifyToken, getReservaHabitacionesControl); // getHabitacionesQuery => getReservasQuery => getUsuarioByEmailQuery
+router.post('/habitaciones/reserva/:habitacionId', verifyToken, reservarHabitacionControl); // updateDisponibilidadHabitacionQuery
+router.post('/habitaciones/eliminar-reserva/:habitacionId', verifyToken, eliminarReservaHabitacionControl); // updateDisponibilidadHabitacionQuery
 
 // Rutas para controladores de administrador
-router.get('/admin/inicio/:email', verifyToken, getAdminInicio);
-router.delete('/admin/perfil/:email', verifyToken, deletePerfilAndReservasAdminControl);
-router.get('/admin/perfil/:email', verifyToken, getPutPerfilModalAdmin);
-router.get('/admin/registro', verifyToken, getUsuarioRegistroAdminControl);
-
+router.get('/admin/inicio/:email', verifyToken, getAdminInicio);// getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
+router.get('/admin/perfil/:email', verifyToken, getPutPerfilModalAdmin);// getUsuarioByEmailQuery
 
 console.log('routes.js - Configuración de rutas completa');
 

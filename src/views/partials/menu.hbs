@@ -42,33 +42,35 @@
         <li class="nav-item">
           <a class="nav-link contacto-btn {{#if (eq currentPage 'contacto')}}active{{/if}}" href="/contacto">Contacto</a>
         </li>
-        {{/if}}
-        <!-- Botón "Ver Perfil" -->
-        {{#if showProfileButton}}
-        <li class="nav-item">
-          <a class="nav-link perfil-btn" href="/perfil/{{currentUserEmail}}">Ver Perfil</a>
-        </li>
-        {{/if}}
-        <!-- Botón "Ver Habitaciones" -->
-        {{#if showRoomButton}}
-          <li class="nav-item">
-            <a class="nav-link habitaciones-btn" href="/habitaciones/{{currentUserEmail}}">Ver Habitaciones</a>
-          </li>
-        {{/if}}
-        <!-- Botón "Administración" -->
-        {{#if showAdminButton}}
-        <li class="nav-item">
-          <a class="nav-link admin-btn" href="/inicio-admin/{{currentUserEmail}}">Administración</a>
-        </li>
-        {{/if}}
-        <!-- Saludo y botón "Cerrar Sesión" para usuarios autenticados -->
+        {{/if}}        
+        <!-- botones para usuarios autenticados -->
         {{#if isAuthenticated}}        
         <li class="nav-item">
+          <!-- Botón "saludo usuario" -->
           {{#if showGreetingButton}}
           <li class="nav-item">
             <span class="nav-link saludo-btn">Hola, {{currentUserName}}</span>
           </li>
           {{/if}}
+            <!-- Botón "Administración" -->
+          {{#if showAdminButton}}
+          <li class="nav-item">
+            <a class="nav-link admin-btn" href="/admin/inicio/{{currentUserEmail}}">Administración</a>
+          </li>
+          {{/if}}          
+          <!-- Botón "Ver Perfil" -->
+          {{#if showProfileButton}}
+          <li class="nav-item">
+            <a class="nav-link perfil-btn" href="/perfil/{{currentUserEmail}}">Ver Perfil</a>
+          </li>
+          {{/if}}
+          <!-- Botón "Ver Habitaciones" -->
+          {{#if showRoomButton}}
+            <li class="nav-item">
+              <a class="nav-link habitaciones-btn" href="/habitaciones/{{currentUserEmail}}">Ver Habitaciones</a>
+            </li>
+          {{/if}}
+          <!-- Botón "Cerrar Sesión" -->
           {{#if showLogoutButton}}
           <li class="nav-item">
             <a class="nav-link logout-btn" href="/logout">Cerrar Sesión</a>

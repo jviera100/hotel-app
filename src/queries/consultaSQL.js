@@ -1,8 +1,9 @@
-// consultaSQL.js
+// consultaSQL.js (CRUD)
 import pool from "../models/config/db.js";
 
 console.log('consultasSQL.js - Iniciando configuración de consultas SQL');
-// Consulta para agregar un nuevo usuario a la base de datos
+//PERFIL
+// agregar un nuevo usuario a la base de datos para vista administrador y cliente
 const addUsuarioQuery = async (usuario) => {
     try {
         console.log("addUsuarioQuery - Inicio");
@@ -21,7 +22,7 @@ const addUsuarioQuery = async (usuario) => {
         throw error;
     }
 };
-// Consulta para obtener todos los usuarios de la base de datos
+// obtener todos los usuarios de la base de datos para vista administrador
 const getUsuariosQuery = async () => {
     try {
         console.log("getUsuariosQuery - Inicio");
@@ -37,11 +38,77 @@ const getUsuariosQuery = async () => {
         throw error;
     }
 };
+// obtener un usuario por su correo electrónico para vista cliente
+const getUsuarioByEmailQuery = async (email) => {
+    try {
+        console.log("getUsuarioByEmailQuery - Inicio con email:", email);
+        const getUsuarioByEmail = {
+            text: 'SELECT * FROM usuarios WHERE email = $1',
+            values: [email],
+        };
+        console.log("getUsuarioByEmailQuery - Ejecutando consulta:", getUsuarioByEmail);
+        const result = await pool.query(getUsuarioByEmail);
+        console.log("getUsuarioByEmailQuery - Resultado:", result.rows);
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error al obtener usuario por correo electrónico:', error);
+        throw error;
+    }
+};
+// actualizar un usuario por su correo electrónico para vista administrador y cliente
+const updateUsuarioByEmailQuery = async (email, updatedFields) => {
+    try {
+        console.log("updateUsuarioByEmailQuery - Inicio con email:", email);
+        const entries = Object.entries(updatedFields);
+        const sets = entries.map(([key, value], index) => `${key} = $${index + 2}`).join(', ');
+        const values = [email, ...Object.values(updatedFields)];
+
+        const updateUsuarioByEmail = {
+            text: `UPDATE usuarios SET ${sets} WHERE email = $1`,
+            values: values
+        };
+        console.log("updateUsuarioByEmailQuery - Ejecutando consulta:", updateUsuarioByEmail);
+        await pool.query(updateUsuarioByEmail);
+        console.log("updateUsuarioByEmailQuery - Consulta ejecutada con éxito");
+    } catch (error) {
+        console.error('Error al actualizar el usuario por correo electrónico:', error);
+        throw new Error('Error al actualizar el usuario por correo electrónico: ' + error.message);
+    }
+};
+// eliminar el perfil y las reservas de un usuario por su correo electrónico para vista administrador y cliente
+const deletePerfilAndReservasByEmailQuery = async (email) => {
+    try {
+        console.log("deletePerfilAndReservasByEmailQuery - Inicio con email:", email);
+
+        // Elimina las reservas del usuario
+        const deleteReservasQuery = {
+            text: 'DELETE FROM reservas WHERE cliente_id = (SELECT id FROM usuarios WHERE email = $1)',
+            values: [email]
+        };
+        console.log("deletePerfilAndReservasByEmailQuery - Ejecutando consulta para eliminar reservas:", deleteReservasQuery);
+        await pool.query(deleteReservasQuery);
+
+        // Elimina el perfil del usuario
+        const deletePerfilQuery = {
+            text: 'DELETE FROM usuarios WHERE email = $1',
+            values: [email]
+        };
+        console.log("deletePerfilAndReservasByEmailQuery - Ejecutando consulta para eliminar perfil:", deletePerfilQuery);
+        await pool.query(deletePerfilQuery);
+
+        console.log("deletePerfilAndReservasByEmailQuery - Reservas y perfil eliminados correctamente");
+    } catch (error) {
+        console.error('Error al eliminar las reservas y el perfil por correo electrónico:', error);
+        throw new Error('Error al eliminar las reservas y el perfil por correo electrónico: ' + error.message);
+    }
+};
 
 
 
 
-// Consulta para actualizar la disponibilidad de la habitación
+
+//RESERVAS
+// actualizar la disponibilidad de la habitación
 const updateDisponibilidadHabitacionQuery = async (habitacionId, disponibilidad) => {
     try {
         await pool.query({
@@ -57,7 +124,7 @@ const updateDisponibilidadHabitacionQuery = async (habitacionId, disponibilidad)
         throw error;
     }
 };
-// Consulta para obtener todas las reservas
+// obtener todas las reservas
 const getReservasQuery = async () => {
     try {
         console.log("getReservasQuery - Inicio");
@@ -86,7 +153,7 @@ const getReservasQuery = async () => {
         throw error;
     }
 };
-// Consulta para obtener todas las habitaciones
+// obtener todas las habitaciones
 const getHabitacionesQuery = async () => {
     try {
         console.log("getHabitacionesQuery - Inicio");
@@ -107,70 +174,7 @@ const getHabitacionesQuery = async () => {
 
 
 
-// Consulta para obtener un usuario por su correo electrónico
-const getUsuarioByEmailQuery = async (email) => {
-    try {
-        console.log("getUsuarioByEmailQuery - Inicio con email:", email);
-        const getUsuarioByEmail = {
-            text: 'SELECT * FROM usuarios WHERE email = $1',
-            values: [email],
-        };
-        console.log("getUsuarioByEmailQuery - Ejecutando consulta:", getUsuarioByEmail);
-        const result = await pool.query(getUsuarioByEmail);
-        console.log("getUsuarioByEmailQuery - Resultado:", result.rows);
-        return result.rows[0];
-    } catch (error) {
-        console.error('Error al obtener usuario por correo electrónico:', error);
-        throw error;
-    }
-};
-// Consulta para actualizar un usuario por su correo electrónico
-const updateUsuarioByEmailQuery = async (email, updatedFields) => {
-    try {
-        console.log("updateUsuarioByEmailQuery - Inicio con email:", email);
-        const entries = Object.entries(updatedFields);
-        const sets = entries.map(([key, value], index) => `${key} = $${index + 2}`).join(', ');
-        const values = [email, ...Object.values(updatedFields)];
 
-        const updateUsuarioByEmail = {
-            text: `UPDATE usuarios SET ${sets} WHERE email = $1`,
-            values: values
-        };
-        console.log("updateUsuarioByEmailQuery - Ejecutando consulta:", updateUsuarioByEmail);
-        await pool.query(updateUsuarioByEmail);
-        console.log("updateUsuarioByEmailQuery - Consulta ejecutada con éxito");
-    } catch (error) {
-        console.error('Error al actualizar el usuario por correo electrónico:', error);
-        throw new Error('Error al actualizar el usuario por correo electrónico: ' + error.message);
-    }
-};
-// Consulta para eliminar el perfil y las reservas de un usuario por su correo electrónico
-const deletePerfilAndReservasByEmailQuery = async (email) => {
-    try {
-        console.log("deletePerfilAndReservasByEmailQuery - Inicio con email:", email);
-
-        // Elimina las reservas del usuario
-        const deleteReservasQuery = {
-            text: 'DELETE FROM reservas WHERE cliente_id = (SELECT id FROM usuarios WHERE email = $1)',
-            values: [email]
-        };
-        console.log("deletePerfilAndReservasByEmailQuery - Ejecutando consulta para eliminar reservas:", deleteReservasQuery);
-        await pool.query(deleteReservasQuery);
-
-        // Elimina el perfil del usuario
-        const deletePerfilQuery = {
-            text: 'DELETE FROM usuarios WHERE email = $1',
-            values: [email]
-        };
-        console.log("deletePerfilAndReservasByEmailQuery - Ejecutando consulta para eliminar perfil:", deletePerfilQuery);
-        await pool.query(deletePerfilQuery);
-
-        console.log("deletePerfilAndReservasByEmailQuery - Reservas y perfil eliminados correctamente");
-    } catch (error) {
-        console.error('Error al eliminar las reservas y el perfil por correo electrónico:', error);
-        throw new Error('Error al eliminar las reservas y el perfil por correo electrónico: ' + error.message);
-    }
-};
 
 console.log('consultasSQL.js - Configuración de consultas SQL completa');
 

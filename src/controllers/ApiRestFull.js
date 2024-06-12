@@ -3,12 +3,20 @@ import path from 'path';
 import { 
     addUsuarioQuery, 
     getUsuariosQuery,
-    updateDisponibilidadHabitacionQuery,     
-    getReservasQuery,    
-    getHabitacionesQuery,     
-    getUsuarioByEmailQuery, 
-    updateUsuarioByEmailQuery, 
-    deletePerfilAndReservasByEmailQuery      
+    getUsuarioByEmailQuery,
+    updateUsuarioByEmailQuery,
+    deletePerfilAndReservasByEmailQuery,
+
+     
+    addReservaQuery,    
+    getReservasQuery,
+    getReservaByIdQuery,            
+    updateReservaQuery, 
+    deleteReservaQuery,
+
+
+    getHabitacionesQuery,
+    updateHabitacionDisponibilidadQuery    
  } from '../queries/consultaSQL.js';
 import jwt from 'jsonwebtoken';
 
@@ -116,12 +124,12 @@ const postLoginControl = async (req, res) => {
         console.log('Cookies enviadas:', res.getHeaders()['set-cookie']);
 
         // Redirige al usuario según su tipo de usuario
-        if (usuario.tipo_usuario === 'administrador' || usuario.tipo_usuario === 'admin') {
-            console.log(`Redirigiendo a /admin para el usuario ${usuario.email}`);
+        if (usuario.tipo_usuario === 'administrator' || usuario.tipo_usuario === 'admin') {
+            console.log(`Redirigiendo a /admin/inicio para el usuario ${usuario.email}`);
             res.redirect(`/admin/inicio/${email}`);
         } else {
             console.log(`Redirigiendo a /habitaciones/${email} para el usuario ${usuario.email}`);
-            res.redirect(`/habitaciones/${email}`);
+            res.redirect(`/customer/inicio/${email}`);
         }
 
         // Registro de finalización del controlador en la consola
@@ -265,8 +273,7 @@ const addUsuarioRegistroControl = async (req, res) => {
         res.status(500).send(error.message); // Envío de una respuesta de error HTTP con el mensaje de error detallado
     }
 };
-
-// vista de registro de usuarios para perfil administrador y cliente
+// vista de registro de usuarios para perfil administrador y cliente => getUsuarioByEmailQuery
 const getUsuarioRegistroControl = async (req, res) => {
     try {
         console.log('registroControl - Inicio');
@@ -474,100 +481,78 @@ const deletePerfilAndReservasControl = async (req, res) => {
 
 
 
+//RESERVA
 
-// vista de habitaciones => getHabitacionesQuery => getReservasQuery => getUsuarioByEmailQuery
-const getReservaHabitacionesControl = async (req, res) => {
+// Controlador para agregar una nueva reserva => addReservaQuery
+const addReservaControl = async (req, res) => {
     try {
-        // Registro de inicio del controlador en la consola
-        console.log('habitacionesControl - Inicio');
-        
-        // Obtiene el token de autenticación de las cookies de la solicitud
-        const token = req.cookies.token;
-        
-        // Decodifica el token para obtener el correo electrónico del usuario
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        const email = decoded.email;
-        console.log('Email del usuario decodificado del token:', email);
+        const { fecha_reserva, fecha_salida, habitacion_id, cliente_id } = req.body;
 
-        // Obtiene las habitaciones disponibles y las reservas del usuario de la base de datos
-        const habitacionesDisponibles = await getHabitacionesQuery();
-        const reservasUsuario = await getReservasQuery(email);
-        const usuario = await getUsuarioByEmailQuery(email);
-        console.log('Habitaciones disponibles obtenidas:', habitacionesDisponibles);
-        console.log('Reservas del usuario:', reservasUsuario);
-        
-        // Renderiza la vista de habitaciones con los datos obtenidos
-        res.render('Habitaciones', {             
-            habitaciones: habitacionesDisponibles, // Lista de habitaciones disponibles
-            reservasUsuario: reservasUsuario, // Reservas del usuario actual
-            user: usuario,// Información del usuario
-            currentUserEmail: usuario.email,
-            currentUserName: usuario.username, // Pasamos el nombre del usuario al contexto boton saludo
-            isAuthenticated: true, // Indica si el usuario está autenticado
-            currentPage: 'Habitaciones', // Página actual
-            showhomeButton: true, // Mostrar botón de inicio
-            showContactButton: true, // Mostrar botón de contacto
-            showRegisterButton: false, // Ocultar botón de registro
-            showLoginButton: false, // Ocultar botón de inicio de sesión
-            showProfileButton: true, // Mostrar botón de perfil
-            showRoomButton: false, // Ocultar botón de habitaciones
-            showGreetingButton: true, // Mostrar botón de saludo
-            showLogoutButton: true, // Mostrar botón de cierre de sesión
-        });
+        await addReservaQuery(fecha_reserva, fecha_salida, habitacion_id, cliente_id);
 
-        // Registro de finalización del controlador en la consola
-        console.log('habitacionesControl - Fin');
+        res.status(201).json({ message: 'Reserva agregada con éxito' });
     } catch (error) {
-        // Manejo de errores: si ocurre un error durante el proceso
-        console.error('Error en habitacionesControl:', error); // Registro del error en la consola de errores
-        res.status(500).send('Error al obtener los datos de las habitaciones: ' + error.message); // Envía una respuesta de error HTTP con un mensaje de error
+        console.error('Error en addReservaControl:', error);
+        res.status(500).send('Error al agregar la reserva: ' + error.message);
     }
 };
-// actualizar la disponibilidad de la habitación (reservar) => updateDisponibilidadHabitacionQuery
-const reservarHabitacionControl = async (req, res) => {
+// Controlador para renderizar la vista de agregar una reserva
+const getAddReservaControl = async (req, res) => {
     try {
-        const { habitacionId } = req.params;
-
-        // Actualizar la disponibilidad de la habitación a no disponible
-        await updateDisponibilidadHabitacionQuery(habitacionId, false);
-
-        res.status(200).json({ message: 'Habitación reservada con éxito' });
+        // Aquí puedes obtener datos adicionales si es necesario, como habitaciones disponibles o clientes
+        res.render('AddReservation');
     } catch (error) {
-        console.error('Error en reservarHabitacionControl:', error);
-        res.status(500).send('Error al reservar la habitación: ' + error.message);
+        console.error('Error en renderAddReservaView:', error);
+        res.status(500).send('Error al cargar la vista de agregar reserva: ' + error.message);
     }
 };
-// actualizar la disponibilidad de la habitación (eliminar reserva) => updateDisponibilidadHabitacionQuery
-const eliminarReservaHabitacionControl = async (req, res) => {
+// Controlador para obtener todas las reservas => getReservasQuery
+const getReservasControl = async (req, res) => {
     try {
-        const { habitacionId } = req.params;
-
-        // Actualizar la disponibilidad de la habitación a disponible
-        await updateDisponibilidadHabitacionQuery(habitacionId, true);
-
-        res.status(200).json({ message: 'Reserva eliminada con éxito' });
+        const reservas = await getReservasQuery();
+        res.status(200).json(reservas);
     } catch (error) {
-        console.error('Error en eliminarReservaHabitacionControl:', error);
-        res.status(500).send('Error al eliminar la reserva: ' + error.message);
+        res.status(500).send('Error al obtener las reservas: ' + error.message);
     }
 };
-// actualizar una reserva = ES QUERY
+// Controlador para obtener los detalles de una reserva específica => getReservaByIdQuery
+const getReservaByIdControl = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const reserva = await getReservaByIdQuery(id);
+        res.status(200).json(reserva);
+    } catch (error) {
+        res.status(500).send('Error al obtener los datos de la reserva: ' + error.message);
+    }
+};
+
+// Controlador para actualizar una reserva existente => updateReservaQuery
 const updateReservaControl = async (req, res) => {
     try {
         const { id } = req.params;
-        const { fecha_reserva, fecha_salida, habitacion_numero, nombre_usuario } = req.body;
+        const { fecha_reserva, fecha_salida, habitacion_id, cliente_id } = req.body;
 
-        const query = {
-            text: "UPDATE reservas SET fecha_reserva = $1, fecha_salida = $2, habitacion_numero = $3, nombre_usuario = $4 WHERE id = $5 RETURNING *",
-            values: [fecha_reserva, fecha_salida, habitacion_numero, nombre_usuario, id]
-        };
+        await updateReservaQuery(id, fecha_reserva, fecha_salida, habitacion_id, cliente_id);
 
-        const result = await pool.query(query);
-        res.status(200).json(result.rows[0]);
+        res.status(200).json({ message: 'Reserva actualizada con éxito' });
     } catch (error) {
-        res.status(500).json({ error: `Error al actualizar la reserva: ${error.message}` });
+        console.error('Error en updateReservaControl:', error);
+        res.status(500).send('Error al actualizar la reserva: ' + error.message);
     }
-};  
+};
+// Controlador para eliminar una reserva => deleteReservaQuery
+const deleteReservaControl = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        await deleteReservaQuery(id);
+
+        res.status(200).json({ message: 'Reserva eliminada con éxito' });
+    } catch (error) {
+        console.error('Error en deleteReservaControl:', error);
+        res.status(500).send('Error al eliminar la reserva: ' + error.message);
+    }
+};
 
 
 
@@ -575,14 +560,11 @@ const updateReservaControl = async (req, res) => {
 
 
 
-
-
-
-// obtener la página de inicio del administrador => getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
-const getAdminInicio = async (req, res) => {
+// obtener la página de inicio de tipo customer => getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
+const getCustomerInicio = async (req, res) => {
     try {
         // Registro del inicio del controlador
-        console.log('getAdminInicio - Inicio');
+        console.log('getCustomerInicio - Inicio');
         
         // Extrae el parámetro "email" de la ruta
         const { email } = req.params;
@@ -594,11 +576,11 @@ const getAdminInicio = async (req, res) => {
         // Registro del usuario obtenido de la base de datos
         console.log('Usuario obtenido de la base de datos:', usuario);
 
-        // Verifica si el usuario no existe o no es un administrador
-        if (!usuario || (usuario.tipo_usuario !== 'administrador' && usuario.tipo_usuario !== 'admin')) {
-            console.log('Usuario no encontrado o no es administrador');
-            // Retorna una respuesta 404 si el usuario no se encuentra o no es un administrador
-            return res.status(404).send('Usuario no encontrado o no es administrador');
+        // Verifica si el usuario no existe o no es un customer
+        if (!usuario || (usuario.tipo_usuario !== 'customer' && usuario.tipo_usuario !== 'cliente')) {
+            console.log('Usuario no encontrado o no es customer');
+            // Retorna una respuesta 404 si el usuario no se encuentra o no es un customer
+            return res.status(404).send('Usuario no encontrado o no es customer');
         }
 
         // Obtiene la lista de usuarios, reservas y habitaciones de la base de datos
@@ -623,9 +605,84 @@ const getAdminInicio = async (req, res) => {
             return res.status(404).send('Habitaciones no encontradas');
         }
         
-        // Registro de los datos obtenidos para la vista de administrador
+        // Registro de los datos obtenidos para la vista de customer
+        console.log('Datos obtenidos para la vista de customer:', { usuarios, reservas, habitaciones });
+        // Renderiza la página de customer con los datos obtenidos
+        res.render('Customer', { 
+            usuarios, 
+            reservas, 
+            habitaciones,
+            user: usuario,
+            currentUserEmail: usuario.email,
+            currentUserName: usuario.username, // Pasamos el nombre del usuario al contexto
+            isAuthenticated: true,
+            currentPage: 'Admin',
+            showhomeButton: true,
+            showContactButton: true,
+            showRegisterButton: false,
+            showLoginButton: false,            
+            showProfileButton: true, 
+            showRoomButton: false, 
+            showGreetingButton: true,
+            showLogoutButton: true,
+        });
+        // Registro del fin del controlador
+        console.log('getCustomerInicio - Fin');
+    } catch (error) {
+        // Manejo de errores en caso de que ocurra algún problema durante la ejecución del controlador
+        console.error('Error en getCustomerInicio:', error);
+        // Envía una respuesta de error 500 junto con un mensaje detallado si ocurre un error
+        res.status(500).send('Error al obtener los datos getCustomerInicio: ' + error.message);
+    }
+}; 
+// obtener la página de inicio de tipo administrator => getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
+const getAdminInicio = async (req, res) => {
+    try {
+        // Registro del inicio del controlador
+        console.log('getAdminInicio - Inicio');
+        
+        // Extrae el parámetro "email" de la ruta
+        const { email } = req.params;
+        // Registro del correo electrónico del usuario
+        console.log('Email del usuario:', email); 
+        
+        // Obtiene el usuario de la base de datos utilizando su correo electrónico
+        const usuario = await getUsuarioByEmailQuery(email);
+        // Registro del usuario obtenido de la base de datos
+        console.log('Usuario obtenido de la base de datos:', usuario);
+
+        // Verifica si el usuario no existe o no es un administrator
+        if (!usuario || (usuario.tipo_usuario !== 'administrator' && usuario.tipo_usuario !== 'admin')) {
+            console.log('Usuario no encontrado o no es administrator');
+            // Retorna una respuesta 404 si el usuario no se encuentra o no es un administrator
+            return res.status(404).send('Usuario no encontrado o no es administrator');
+        }
+
+        // Obtiene la lista de usuarios, reservas y habitaciones de la base de datos
+        const usuarios = await getUsuariosQuery();
+        const reservas = await getReservasQuery();
+        const habitaciones = await getHabitacionesQuery();
+
+        // Verifica si no se encontraron usuarios, reservas o habitaciones
+        if (!usuarios) {
+            console.log('Usuarios no encontrados');
+            throw new Error('Usuarios no encontrados');
+            return res.status(404).send('Usuarios no encontrados');
+        }
+        if (!reservas) {
+            console.log('Reservas no encontradas');
+            throw new Error('Reservas no encontradas');
+            return res.status(404).send('Reservas no encontradas');
+        }
+        if (!habitaciones) {
+            console.log('Habitaciones no encontradas');
+            throw new Error('Habitaciones no encontradas');
+            return res.status(404).send('Habitaciones no encontradas');
+        }
+        
+        // Registro de los datos obtenidos para la vista de administrator
         console.log('Datos obtenidos para la vista de admin:', { usuarios, reservas, habitaciones });
-        // Renderiza la página de administrador con los datos obtenidos
+        // Renderiza la página de administrator con los datos obtenidos
         res.render('Admin', { 
             usuarios, 
             reservas, 
@@ -654,7 +711,7 @@ const getAdminInicio = async (req, res) => {
     }
 }; 
 // obtener y actualizar el perfil de un usuario en forma de modal para administradores => getUsuarioByEmailQuery
-const getPutPerfilModalAdmin = async (req, res) => {
+const getUpdatePerfilModalAdmin = async (req, res) => {
     try {
         // Registro del inicio del controlador
         console.log('getPerfilAdmin - Inicio');
@@ -700,21 +757,30 @@ const getPutPerfilModalAdmin = async (req, res) => {
 console.log('ApiRestFull.js - Configuración de controllers completa');
 
 export { 
-    getHomeControl,    
-    addUsuarioRegistroControl,
-    getUsuarioRegistroControl,
+    getHomeControl,
+    
     getLoginControl,
     postLoginControl,
-    getReservaHabitacionesControl,
-    reservarHabitacionControl,
-    eliminarReservaHabitacionControl,
-    updateReservaControl,
+    logoutControl,
+
+    getContactoControl,
+    postEnviarContactoControl,
+
+    addUsuarioRegistroControl,
+    getUsuarioRegistroControl,
     getPerfilControl,
     updatePerfilControl,
     deletePerfilAndReservasControl,
-    getContactoControl,
-    postEnviarContactoControl,
+
+    addReservaControl, 
+    getAddReservaControl,   
+    getReservasControl,
+    getReservaByIdControl,    
+    updateReservaControl,
+    deleteReservaControl, 
+    
+    getCustomerInicio,
+    
     getAdminInicio,
-    getPutPerfilModalAdmin,             
-    logoutControl
+    getUpdatePerfilModalAdmin      
  };

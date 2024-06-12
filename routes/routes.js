@@ -1,23 +1,32 @@
-// routes.js
+// routes.js (solicitudes HTTP)
 import { Router } from 'express';
 import {
-    getHomeControl,    
-    addUsuarioRegistroControl,
-    getUsuarioRegistroControl,
+    getHomeControl,
+    
     getLoginControl,
     postLoginControl,
-    getReservaHabitacionesControl,
-    reservarHabitacionControl,
-    eliminarReservaHabitacionControl,
-    updateReservaControl,
+    logoutControl,
+
+    getContactoControl,
+    postEnviarContactoControl,
+
+    addUsuarioRegistroControl,
+    getUsuarioRegistroControl,
     getPerfilControl,
     updatePerfilControl,
     deletePerfilAndReservasControl,
-    getContactoControl,
-    postEnviarContactoControl,
+
+    addReservaControl, 
+    getAddReservaControl,   
+    getReservasControl,
+    getReservaByIdControl,    
+    updateReservaControl,
+    deleteReservaControl, 
+    
+    getCustomerInicio,
+    
     getAdminInicio,
-    getPutPerfilModalAdmin,              
-    logoutControl
+    getUpdatePerfilModalAdmin    
 } from '../src/controllers/ApiRestFull.js';
 import { verifyToken } from '../middlewares/token.js';
 
@@ -42,21 +51,29 @@ router.post('/contacto', postEnviarContactoControl);
 
 // Rutas para el controlador de agregar usuarios y vista registro de perfil cliente
 router.post('/registro', addUsuarioRegistroControl); // addUsuarioQuery
-router.get('/registro', getUsuarioRegistroControl);
+router.get('/registro', getUsuarioRegistroControl); // getUsuarioByEmailQuery
 
 // Ruta para el controlador de perfil cliente
 router.get('/perfil/:email', verifyToken, getPerfilControl); // getUsuarioByEmailQuery
 router.put('/perfil/:email', verifyToken, updatePerfilControl); // updateUsuarioByEmailQuery
 router.delete('/perfil/:email', verifyToken, deletePerfilAndReservasControl); // deletePerfilAndReservasByEmailQuery
 
-// Ruta para ver las habitaciones y reservar una habitación de perfil cliente 
-router.get('/habitaciones/:email', verifyToken, getReservaHabitacionesControl); // getHabitacionesQuery => getReservasQuery => getUsuarioByEmailQuery
-router.post('/habitaciones/reserva/:habitacionId', verifyToken, reservarHabitacionControl); // updateDisponibilidadHabitacionQuery
-router.post('/habitaciones/eliminar-reserva/:habitacionId', verifyToken, eliminarReservaHabitacionControl); // updateDisponibilidadHabitacionQuery
+// Rutas para gestionar reservas
+router.post('/reserva', verifyToken, addReservaControl); // addReservaQuery 
+router.get('/reservation-add', verifyToken, getAddReservaControl);
+router.get('/reservas', verifyToken, getReservasControl); // getReservasQuery
+router.get('/reserva/:id', verifyToken, getReservaByIdControl); // getReservaByIdQuery
+router.put('/reserva/:id', verifyToken, updateReservaControl); // updateReservaQuery 
+router.delete('/reserva/:id', verifyToken, deleteReservaControl); // deleteReservaQuery 
+
+
+// Rutas para controladores de cliente
+router.get('/customer/inicio/:email', verifyToken, getCustomerInicio);// getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
+
 
 // Rutas para controladores de administrador
 router.get('/admin/inicio/:email', verifyToken, getAdminInicio);// getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
-router.get('/admin/perfil/:email', verifyToken, getPutPerfilModalAdmin);// getUsuarioByEmailQuery
+router.get('/admin/perfil/:email', verifyToken, getUpdatePerfilModalAdmin);// getUsuarioByEmailQuery
 
 console.log('routes.js - Configuración de rutas completa');
 

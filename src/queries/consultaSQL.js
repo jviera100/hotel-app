@@ -2,6 +2,7 @@
 import pool from "../models/config/db.js";
 
 console.log('consultasSQL.js - Iniciando configuración de consultas SQL');
+
 //PERFIL
 // agregar un nuevo usuario a la base de datos para vista administrador y cliente
 const addUsuarioQuery = async (usuario) => {
@@ -108,18 +109,18 @@ const deletePerfilAndReservasByEmailQuery = async (email) => {
 
 
 //RESERVAS
-// actualizar la disponibilidad de la habitación
-const updateDisponibilidadHabitacionQuery = async (habitacionId, disponibilidad) => {
+// agregar reserva
+const addReservaQuery = async (fecha_reserva, fecha_salida, habitacion_id, cliente_id) => {
     try {
         await pool.query({
             text: `
-                UPDATE habitaciones
-                SET disponibilidad = $1
-                WHERE id = $2`,
-            values: [disponibilidad, habitacionId]
+                INSERT INTO reservas (fecha_reserva, fecha_salida, habitacion_id, cliente_id)
+                VALUES ($1, $2, $3, $4)`,
+            values: [fecha_reserva, fecha_salida, habitacion_id, cliente_id]
         });
 
-        return true;
+        // Actualizar la disponibilidad de la habitación a no disponible
+        await updateDisponibilidadHabitacionQuery(habitacion_id, false);
     } catch (error) {
         throw error;
     }
@@ -145,7 +146,7 @@ const getReservasQuery = async () => {
             `,
         };
         console.log("getReservasQuery - Ejecutando consulta:", consultaGetReservas);
-        const result = await pool.query(consultaGetReservas);
+        const result = await pool.query(consultaGetReservas); // const result puede reemplazar const nombre consulta ubicando arriba
         console.log("getReservasQuery - Resultado:", result.rows);
         return result.rows;
     } catch (error) {
@@ -153,6 +154,73 @@ const getReservasQuery = async () => {
         throw error;
     }
 };
+// Consulta para obtener detalles de una reserva específica
+const getReservaByIdQuery = async (id) => {
+    try {
+        const result = await pool.query({
+            text: `SELECT * FROM reservas WHERE id = $1`,
+            values: [id]
+        });
+        return result.rows[0];
+    } catch (error) {
+        throw error;
+    }
+};
+// actualizar reserva
+const updateReservaQuery = async (id, fecha_reserva, fecha_salida, habitacion_id, cliente_id) => {
+    try {
+        // Obtener la habitación anterior
+        const oldResult = await pool.query({
+            text: `SELECT habitacion_id FROM reservas WHERE id = $1`,
+            values: [id]
+        });
+        const old_habitacion_id = oldResult.rows[0].habitacion_id;
+
+        // Actualizar la reserva
+        await pool.query({
+            text: `
+                UPDATE reservas
+                SET fecha_reserva = $1, fecha_salida = $2, habitacion_id = $3, cliente_id = $4
+                WHERE id = $5`,
+            values: [fecha_reserva, fecha_salida, habitacion_id, cliente_id, id]
+        });
+
+        // Actualizar disponibilidad si la habitación ha cambiado
+        if (old_habitacion_id !== habitacion_id) {
+            await updateHabitacionDisponibilidadQuery(old_habitacion_id, true);
+            await updateHabitacionDisponibilidadQuery(habitacion_id, false);
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+// eliminar una reserva y actualizar la disponibilidad de la habitación
+const deleteReservaQuery = async (id) => {
+    try {
+        // Obtener el ID de la habitación asociada a la reserva que se va a eliminar
+        const result = await pool.query({
+            text: `SELECT habitacion_id FROM reservas WHERE id = $1`,
+            values: [id]
+        });
+        const habitacion_id = result.rows[0].habitacion_id;
+
+        // Eliminar la reserva
+        await pool.query({
+            text: `DELETE FROM reservas WHERE id = $1`,
+            values: [id]
+        });
+
+        // Actualizar la disponibilidad de la habitación a disponible
+        await updateDisponibilidadHabitacionQuery(habitacion_id, true);
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+
+
+
 // obtener todas las habitaciones
 const getHabitacionesQuery = async () => {
     try {
@@ -170,6 +238,22 @@ const getHabitacionesQuery = async () => {
     }
 };
 
+// actualizar la disponibilidad de la habitación
+const updateHabitacionDisponibilidadQuery = async (habitacionId, disponibilidad) => {
+    try {
+        await pool.query({
+            text: `
+                UPDATE habitaciones
+                SET disponibilidad = $1
+                WHERE id = $2`,
+            values: [disponibilidad, habitacionId]
+        });
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 
 
 
@@ -181,10 +265,18 @@ console.log('consultasSQL.js - Configuración de consultas SQL completa');
 export { 
     addUsuarioQuery, 
     getUsuariosQuery,
-    updateDisponibilidadHabitacionQuery,     
-    getReservasQuery,    
-    getHabitacionesQuery, 
-    getUsuarioByEmailQuery, 
-    updateUsuarioByEmailQuery, 
-    deletePerfilAndReservasByEmailQuery     
+    getUsuarioByEmailQuery,
+    updateUsuarioByEmailQuery,
+    deletePerfilAndReservasByEmailQuery,
+
+     
+    addReservaQuery,    
+    getReservasQuery,
+    getReservaByIdQuery,            
+    updateReservaQuery, 
+    deleteReservaQuery,
+
+    
+    getHabitacionesQuery,
+    updateHabitacionDisponibilidadQuery
 };

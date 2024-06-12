@@ -1,9 +1,9 @@
---comandos postgre
-select * from reservas
-select * from usuarios
-select * from contactos
-select * from habitaciones
-select * from tiposhabitaciones
+-- PostgreSQL commands
+select * from reservas;
+select * from usuarios;
+select * from contactos;
+select * from habitaciones;
+select * from tiposhabitaciones;
 
 DROP TABLE IF EXISTS reservas;
 DROP TABLE IF EXISTS usuarios;
@@ -11,13 +11,13 @@ DROP TABLE IF EXISTS contactos;
 DROP TABLE IF EXISTS habitaciones;
 DROP TABLE IF EXISTS tiposhabitaciones;
 
--- Crear la tabla tiposhabitaciones
+-- Create the table tiposhabitaciones
 CREATE TABLE tiposhabitaciones (
     id SERIAL PRIMARY KEY,
     tipo VARCHAR(50) NOT NULL
 );
 
--- Crear la tabla habitaciones
+-- Create the table habitaciones
 CREATE TABLE habitaciones (
     id SERIAL PRIMARY KEY,
     numero INT NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE habitaciones (
     disponibilidad BOOLEAN
 );
 
--- Crear la tabla usuarios
+-- Create the table usuarios
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE usuarios (
     foto VARCHAR(255)
 );
 
--- Crear la tabla reservas
+-- Create the table reservas
 CREATE TABLE reservas (
     id SERIAL PRIMARY KEY,
     fecha_reserva DATE,
@@ -46,7 +46,7 @@ CREATE TABLE reservas (
     cliente_id INT REFERENCES usuarios(id)
 );
 
--- Crear la tabla contactos
+-- Create the table contactos
 CREATE TABLE contactos (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100),
@@ -54,56 +54,56 @@ CREATE TABLE contactos (
     mensaje TEXT
 );
 
--- Insertar datos en la tabla tiposhabitaciones
+-- Insert data into the table tiposhabitaciones
 INSERT INTO tiposhabitaciones (tipo) VALUES
-('simple'),
-('Doble'),
-('Suite');
+('single'),
+('double'),
+('suite');
 
--- Insertar 20 datos en la tabla habitaciones, asegurando que coincidan con los tres tipos existentes
+-- Insert 20 rows into the table habitaciones, ensuring they match the three existing types
 INSERT INTO habitaciones (numero, tipo_habitacion_id, descripcion, precio, disponibilidad) VALUES
-(101, 1, 'Habitación simple con baño privado.', 50.00, true),
-(102, 1, 'Habitación simple con vista al jardín.', 55.00, true),
-(103, 1, 'Habitación simple con acceso a la piscina.', 60.00, true),
-(201, 2, 'Habitación doble con dos camas y vista al jardín.', 80.00, true),
-(202, 2, 'Habitación doble con cama matrimonial.', 85.00, true),
-(203, 2, 'Habitación doble con balcón privado.', 90.00, true),
-(204, 2, 'Habitación doble con vista al mar.', 95.00, true),
-(301, 3, 'Suite con sala de estar y balcón con vista al mar.', 120.00, true),
-(302, 3, 'Suite con jacuzzi y vista al jardín.', 130.00, true),
-(303, 3, 'Suite con cocina y sala de estar.', 140.00, true),
-(304, 3, 'Suite con terraza y piscina privada.', 150.00, true),
-(401, 1, 'Habitación simple con literas para niños.', 70.00, true),
-(402, 1, 'Habitación simple accesible para discapacitados.', 65.00, true),
-(403, 1, 'Habitación simple con escritorio y silla ergonómica.', 75.00, true),
-(501, 2, 'Habitación doble con jacuzzi.', 100.00, true),
-(502, 2, 'Habitación doble con acceso al spa.', 110.00, true),
-(503, 2, 'Habitación doble con sala de estar.', 115.00, true),
-(601, 3, 'Suite presidencial con mayordomo.', 200.00, false),
-(602, 3, 'Suite ejecutiva con acceso al lounge.', 180.00, false),
-(603, 3, 'Suite familiar con dos dormitorios.', 160.00, true);
+(101, 1, 'Single room with private bathroom.', 50.00, true),
+(102, 1, 'Single room with garden view.', 55.00, true),
+(103, 1, 'Single room with pool access.', 60.00, true),
+(201, 2, 'Double room with two beds and garden view.', 80.00, true),
+(202, 2, 'Double room with queen bed.', 85.00, true),
+(203, 2, 'Double room with private balcony.', 90.00, true),
+(204, 2, 'Double room with sea view.', 95.00, true),
+(301, 3, 'Suite with living room and balcony with sea view.', 120.00, true),
+(302, 3, 'Suite with jacuzzi and garden view.', 130.00, true),
+(303, 3, 'Suite with kitchen and living room.', 140.00, true),
+(304, 3, 'Suite with terrace and private pool.', 150.00, true),
+(401, 1, 'Single room with bunk beds for children.', 70.00, true),
+(402, 1, 'Single room accessible for disabled.', 65.00, true),
+(403, 1, 'Single room with desk and ergonomic chair.', 75.00, true),
+(501, 2, 'Double room with jacuzzi.', 100.00, true),
+(502, 2, 'Double room with spa access.', 110.00, true),
+(503, 2, 'Double room with living room.', 115.00, true),
+(601, 3, 'Presidential suite with butler.', 200.00, false),
+(602, 3, 'Executive suite with lounge access.', 180.00, false),
+(603, 3, 'Family suite with two bedrooms.', 160.00, true);
 
--- Insertar datos en la tabla usuarios
+-- Insert data into the table usuarios
 INSERT INTO usuarios (username, email, password, tipo_usuario, foto) VALUES
-('usuario1', 'usuario1@mail.com', 'contraseña1', 'cliente', 'adam_feliz.jpg'),
-('usuario2', 'usuario2@mail.com', 'contraseña2', 'cliente', 'adam.jpg'),
-('usuario3', 'usuario3@mail.com', 'contraseña3', 'cliente', 'Danny.jpg'),
-('usuario4', 'usuario4@mail.com', 'contraseña4', 'cliente', 'drama.jpg'),
-('usuario5', 'usuario5@mail.com', 'contraseña5', 'cliente', 'evelien.jpg'),
-('usuario6', 'usuario6@mail.com', 'contraseña6', 'cliente', 'jim.jpg'),
-('usuario7', 'usuario7@mail.com', 'contraseña7', 'cliente', 'NOO.jpg'),
-('usuario8', 'usuario8@mail.com', 'contraseña8', 'cliente', 'tony.jpg'),
-('usuario9', 'usuario9@mail.com', 'contraseña9', 'cliente', 'yoda.jpg'),
-('usuario10', 'usuario10@mail.com', 'contraseña10', 'cliente', 'adam.jpg');
+('user1', 'user1@mail.com', 'p1', 'administrator', 'adam_feliz.jpg'),
+('user2', 'user2@mail.com', 'p2', 'customer', 'adam.jpg'),
+('user3', 'user3@mail.com', 'p3', 'customer', 'Danny.jpg'),
+('user4', 'user4@mail.com', 'p4', 'customer', 'drama.jpg'),
+('user5', 'user5@mail.com', 'p5', 'customer', 'evelien.jpg'),
+('user6', 'user6@mail.com', 'p6', 'customer', 'jim.jpg'),
+('user7', 'user7@mail.com', 'p7', 'customer', 'NOO.jpg'),
+('user8', 'user8@mail.com', 'p8', 'customer', 'tony.jpg'),
+('user9', 'user9@mail.com', 'p9', 'customer', 'yoda.jpg'),
+('user10', 'user10@mail.com', 'p10', 'customer', 'adam.jpg');
 
--- Insertar datos en la tabla reservas
+-- Insert data into the table reservas
 INSERT INTO reservas (fecha_reserva, fecha_salida, habitacion_id, cliente_id) VALUES
 ('2024-05-10', '2024-05-15', 1, 1),
 ('2024-05-12', '2024-05-18', 2, 2),
 ('2024-05-14', '2024-05-20', 3, 3);
 
--- Insertar datos en la tabla contactos
+-- Insert data into the table contactos
 INSERT INTO contactos (nombre, email, mensaje) VALUES
-('Juan', 'juan@example.com', 'Quisiera hacer una reserva para el próximo fin de semana.'),
-('María', 'maria@example.com', '¿Tienen disponibilidad para una habitación doble?'),
-('Pedro', 'pedro@example.com', 'Me gustaría saber más sobre los servicios del hotel.');
+('Juan', 'juan@example.com', 'I would like to make a reservation for the next weekend.'),
+('María', 'maria@example.com', 'Do you have availability for a double room?'),
+('Pedro', 'pedro@example.com', 'I would like to know more about the hotel services.');

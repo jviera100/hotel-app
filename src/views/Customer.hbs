@@ -1,4 +1,4 @@
-<!-- Admin.hbs -->
+<!-- Customer.hbs -->
 <!-- carusel -->
 <section id="carusel" class="carusel container-fluid">
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -53,7 +53,7 @@
         <div class="container text-center py-4">
           <h2>Reservation management</h2> 
           <div class="mb-1">
-            <button class="btn btn-outline-success" id="addReservationBtn">Add reservation</button>
+            <button class="btn btn-outline-success" id="addUserBtn">Add reservation</button>
           </div>                                 
           <div class="table-responsive">
             <table class="table table-sm table-dark w-100">
@@ -368,23 +368,24 @@
   document.addEventListener("DOMContentLoaded", () => {
     const updateReservationBtns = document.querySelectorAll(".updateReservationBtn");
     const deleteReservationBtns = document.querySelectorAll(".deleteReservationBtn");
-    const addReservationBtn = document.getElementById("addReservationBtn");
     const reservaModalElement = document.getElementById('reservaModal');
     const reservaModal = new bootstrap.Modal(reservaModalElement);
-    const saveReservationChangesBtn = document.querySelector('.saveReservationChangesBtn');
 
     // Función para cargar datos en el modal de reserva
     updateReservationBtns.forEach(button => {
       button.addEventListener("click", async function() {
         const reservationId = this.getAttribute('data-id');
         try {
+          // Solicitar los detalles de la reserva al backend
           const response = await axios.get(`/reserva/${reservationId}`);
           if (response.status === 200) {
             const data = response.data;
+            // Rellenar los campos del modal con los datos de la reserva
             document.getElementById('fechaReserva').value = data.fecha_reserva;
             document.getElementById('fechaSalida').value = data.fecha_salida;
             document.getElementById('habitacionId').value = data.habitacion_id;
             document.getElementById('clienteId').value = data.cliente_id;
+            // Mostrar el modal
             reservaModal.show();
           }
         } catch (error) {
@@ -402,47 +403,16 @@
           const response = await axios.delete(`/reserva/${reservationId}`);
           if (response.status === 200) {
             alert('Reserva eliminada con éxito.');
+            // Actualizar el estado de la habitación a disponible
             await axios.post(`/habitaciones/eliminar-reserva/${habitacionId}`);
-            location.reload(); // Recargar la página para reflejar los cambios
           }
         } catch (error) {
           alert('Error al eliminar la reserva.');
         }
       });
     });
-
-    // Abrir vista para agregar nueva reserva
-    addReservationBtn.addEventListener("click", function() {
-      window.location.href = "/reservation-add";
-    });
-
-    // Guardar cambios de reserva
-    saveReservationChangesBtn.addEventListener("click", async function() {
-      const reservationId = document.querySelector('.updateReservationBtn[data-id]').getAttribute('data-id');
-      const fechaReserva = document.getElementById('fechaReserva').value;
-      const fechaSalida = document.getElementById('fechaSalida').value;
-      const habitacionId = document.getElementById('habitacionId').value;
-      const clienteId = document.getElementById('clienteId').value;
-      
-      try {
-        const response = await axios.put(`/reserva/${reservationId}`, {
-          fecha_reserva: fechaReserva,
-          fecha_salida: fechaSalida,
-          habitacion_id: habitacionId,
-          cliente_id: clienteId
-        });
-        if (response.status === 200) {
-          alert('Reserva actualizada con éxito.');
-          reservaModal.hide();
-          location.reload(); // Recargar la página para reflejar los cambios
-        }
-      } catch (error) {
-        alert('Error al actualizar la reserva.');
-      }
-    });
   });
 </script>
-
 
 
 

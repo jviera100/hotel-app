@@ -340,39 +340,6 @@ const getHabitacionesQuery = async () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// actualizar la disponibilidad de la habitación
-const updateHabitacionDisponibilidadQuery = async (habitacionId, disponibilidad) => {
-    try {
-        await pool.query({
-            text: `
-                UPDATE habitaciones
-                SET disponibilidad = $1
-                WHERE id = $2`,
-            values: [disponibilidad, habitacionId]
-        });
-    } catch (error) {
-        throw error;
-    }
-};
-
-
-
-
-
-
-
-
 console.log('consultasSQL.js - Configuración de consultas SQL completa');
 
 export { 
@@ -390,6 +357,5 @@ export {
     deleteReservaQuery,
 
     
-    getHabitacionesQuery,
-    updateHabitacionDisponibilidadQuery
+    getHabitacionesQuery    
 };

@@ -15,8 +15,7 @@ import {
     deleteReservaQuery,
 
 
-    getHabitacionesQuery,
-    updateHabitacionDisponibilidadQuery    
+    getHabitacionesQuery        
  } from '../queries/consultaSQL.js';
 import jwt from 'jsonwebtoken';
 

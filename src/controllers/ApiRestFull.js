@@ -10,7 +10,7 @@ import {
      
     addReservaQuery,    
     getReservasQuery,
-    getReservaByIdQuery,            
+    getReservasByEmailQuery,            
     updateReservaQuery, 
     deleteReservaQuery,
 
@@ -486,16 +486,18 @@ const deletePerfilAndReservasControl = async (req, res) => {
 // Controlador para agregar una nueva reserva => addReservaQuery
 const addReservaControl = async (req, res) => {
     try {
-        const { fecha_reserva, fecha_salida, habitacion_id, cliente_id } = req.body;
+        const { fecha_reserva, fecha_salida, numero_habitacion, nombre_usuario } = req.body;
 
-        await addReservaQuery(fecha_reserva, fecha_salida, habitacion_id, cliente_id);
+        // Llamar a la función para agregar la reserva
+        const reserva = await addReservaQuery(fecha_reserva, fecha_salida, numero_habitacion, nombre_usuario);
 
-        res.status(201).json({ message: 'Reserva agregada con éxito' });
+        res.status(201).json({ message: 'Reserva agregada con éxito', reserva });
     } catch (error) {
         console.error('Error en addReservaControl:', error);
         res.status(500).send('Error al agregar la reserva: ' + error.message);
     }
 };
+
 // Controlador para renderizar la vista de agregar una reserva
 const getAddReservaControl = async (req, res) => {
     try {
@@ -515,16 +517,17 @@ const getReservasControl = async (req, res) => {
         res.status(500).send('Error al obtener las reservas: ' + error.message);
     }
 };
-// Controlador para obtener los detalles de una reserva específica => getReservaByIdQuery
-const getReservaByIdControl = async (req, res) => {
+// Controlador para obtener los detalles de una reserva específica => getReservasByEmailQuery
+const getReservaByEmailControl = async (req, res) => {
     try {
-        const { id } = req.params;
-        const reserva = await getReservaByIdQuery(id);
-        res.status(200).json(reserva);
+        const { email } = req.params;
+        const reservas = await getReservasByEmailQuery(email);
+        res.status(200).json(reservas);
     } catch (error) {
         res.status(500).send('Error al obtener los datos de la reserva: ' + error.message);
     }
 };
+
 
 // Controlador para actualizar una reserva existente => updateReservaQuery
 const updateReservaControl = async (req, res) => {
@@ -752,6 +755,41 @@ const getUpdatePerfilModalAdmin = async (req, res) => {
         res.status(500).send('Error al obtener el perfil del usuario: ' + error.message);
     }
 };
+// Obtener y actualizar los detalles de una reserva en forma de modal para administradores => getReservasByEmailQuery
+const getUpdateReservaModalAdmin = async (req, res) => {
+    try {
+        // Registro del inicio del controlador
+        console.log('getUpdateReservaModalAdmin - Inicio');
+
+        // Obtener el correo electrónico del usuario desde los parámetros de la solicitud
+        const { email } = req.params;
+        // Registro del correo electrónico del usuario
+        console.log('Email del usuario:', email);
+
+        // Consultar la base de datos para obtener las reservas asociadas al correo electrónico del usuario
+        const reservas = await getReservasByEmailQuery(email);
+        // Registro de las reservas obtenidas de la base de datos
+        console.log('Reservas obtenidas de la base de datos:', reservas);
+
+        // Si no se encuentra ninguna reserva, devolver un error 404
+        if (!reservas || reservas.length === 0) {
+            console.log('Reservas no encontradas');
+            return res.status(404).send('Reservas no encontradas');
+        }
+
+        // Enviar los detalles de la reserva como JSON al frontend
+        res.status(200).json(reservas);
+
+        // Registro del fin del controlador
+        console.log('getUpdateReservaModalAdmin - Fin');
+    } catch (error) {
+        // Capturar cualquier error que ocurra durante el proceso
+        console.error('Error en getUpdateReservaModalAdmin:', error);
+        // Enviar un mensaje de error al frontend junto con el código de estado 500
+        res.status(500).send('Error al obtener los detalles de la reserva: ' + error.message);
+    }
+};
+
 
 
 console.log('ApiRestFull.js - Configuración de controllers completa');
@@ -775,12 +813,13 @@ export {
     addReservaControl, 
     getAddReservaControl,   
     getReservasControl,
-    getReservaByIdControl,    
+    getReservaByEmailControl,    
     updateReservaControl,
     deleteReservaControl, 
     
     getCustomerInicio,
     
     getAdminInicio,
-    getUpdatePerfilModalAdmin      
+    getUpdatePerfilModalAdmin,
+    getUpdateReservaModalAdmin      
  };

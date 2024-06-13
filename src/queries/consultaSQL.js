@@ -109,22 +109,59 @@ const deletePerfilAndReservasByEmailQuery = async (email) => {
 
 
 //RESERVAS
-// agregar reserva
-const addReservaQuery = async (fecha_reserva, fecha_salida, habitacion_id, cliente_id) => {
+// agregar reserva y cambia a no disponible la habitación
+const addReservaQuery = async (fecha_reserva, fecha_salida, numero_habitacion, nombre_usuario) => {
+    const client = await pool.connect();
     try {
-        await pool.query({
-            text: `
-                INSERT INTO reservas (fecha_reserva, fecha_salida, habitacion_id, cliente_id)
-                VALUES ($1, $2, $3, $4)`,
-            values: [fecha_reserva, fecha_salida, habitacion_id, cliente_id]
-        });
+        await client.query('BEGIN');
 
-        // Actualizar la disponibilidad de la habitación a no disponible
-        await updateDisponibilidadHabitacionQuery(habitacion_id, false);
+        // Consulta para obtener los IDs necesarios
+        const consultaIDs = {
+            text: `
+                SELECT h.id AS habitacion_id, u.id AS usuario_id
+                FROM habitaciones h
+                JOIN usuarios u ON u.username = $2
+                WHERE h.numero = $1
+            `,
+            values: [numero_habitacion, nombre_usuario],
+        };
+
+        const resultIDs = await client.query(consultaIDs);
+
+        if (resultIDs.rows.length === 0) {
+            throw new Error('Habitación o usuario no encontrados');
+        }
+
+        const { habitacion_id, usuario_id } = resultIDs.rows[0];
+
+        // Consulta para agregar la reserva
+        const consultaReserva = {
+            text: 'INSERT INTO reservas (fecha_reserva, fecha_salida, habitacion_id, cliente_id) VALUES ($1, $2, $3, $4) RETURNING *',
+            values: [fecha_reserva, fecha_salida, habitacion_id, usuario_id],
+        };
+
+        const resultReserva = await client.query(consultaReserva);
+
+        // Actualizar la disponibilidad de la habitación
+        const updateDisponibilidadQuery = {
+            text: 'UPDATE habitaciones SET disponibilidad = $1 WHERE id = $2',
+            values: [false, habitacion_id],
+        };
+
+        await client.query(updateDisponibilidadQuery);
+
+        await client.query('COMMIT');
+        return resultReserva.rows[0];
     } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error en addReservaQuery:', error);
         throw error;
+    } finally {
+        client.release();
     }
 };
+
+
 // obtener todas las reservas
 const getReservasQuery = async () => {
     try {
@@ -154,29 +191,50 @@ const getReservasQuery = async () => {
         throw error;
     }
 };
-// Consulta para obtener detalles de una reserva específica
-const getReservaByIdQuery = async (id) => {
+// obtener todas las reservas asociadas al correo electrónico del cliente, mostrando usuario y numero de habitacion
+const getReservasByEmailQuery = async (email) => {
     try {
-        const result = await pool.query({
-            text: `SELECT * FROM reservas WHERE id = $1`,
-            values: [id]
-        });
-        return result.rows[0];
+        console.log("getReservasByEmailQuery - Inicio con email:", email);
+        const consultaGetReservasByEmail = {
+            text: `
+            SELECT 
+                r.id,
+                r.fecha_reserva,
+                r.fecha_salida,
+                h.numero AS habitacion_numero,
+                u.username AS nombre_usuario
+            FROM             
+                reservas r
+            JOIN             
+                habitaciones h ON r.habitacion_id = h.id
+            JOIN             
+                usuarios u ON r.cliente_id = u.id
+            WHERE 
+                u.email = $1;            
+            `,
+            values: [email],
+        };
+        console.log("getReservasByEmailQuery - Ejecutando consulta:", consultaGetReservasByEmail);
+        const result = await pool.query(consultaGetReservasByEmail);
+        console.log("getReservasByEmailQuery - Resultado:", result.rows);
+        return result.rows;
     } catch (error) {
+        console.error('Error al obtener reservas por correo electrónico:', error);
         throw error;
     }
 };
+
 // actualizar reserva
 const updateReservaQuery = async (id, fecha_reserva, fecha_salida, habitacion_id, cliente_id) => {
     try {
-        // Obtener la habitación anterior
+        // Obtain the old habitacion_id before updating
         const oldResult = await pool.query({
             text: `SELECT habitacion_id FROM reservas WHERE id = $1`,
             values: [id]
         });
         const old_habitacion_id = oldResult.rows[0].habitacion_id;
 
-        // Actualizar la reserva
+        // Update the reservation
         await pool.query({
             text: `
                 UPDATE reservas
@@ -185,7 +243,7 @@ const updateReservaQuery = async (id, fecha_reserva, fecha_salida, habitacion_id
             values: [fecha_reserva, fecha_salida, habitacion_id, cliente_id, id]
         });
 
-        // Actualizar disponibilidad si la habitación ha cambiado
+        // Update room availability based on changes
         if (old_habitacion_id !== habitacion_id) {
             await updateHabitacionDisponibilidadQuery(old_habitacion_id, true);
             await updateHabitacionDisponibilidadQuery(habitacion_id, false);
@@ -194,26 +252,50 @@ const updateReservaQuery = async (id, fecha_reserva, fecha_salida, habitacion_id
         throw error;
     }
 };
-// eliminar una reserva y actualizar la disponibilidad de la habitación
-const deleteReservaQuery = async (id) => {
+// eliminar una reserva y cambia a disponible la habitación
+const deleteReservaQuery = async (reservaId) => {
+    const client = await pool.connect();
     try {
-        // Obtener el ID de la habitación asociada a la reserva que se va a eliminar
-        const result = await pool.query({
-            text: `SELECT habitacion_id FROM reservas WHERE id = $1`,
-            values: [id]
-        });
-        const habitacion_id = result.rows[0].habitacion_id;
+        await client.query('BEGIN');
+
+        // Obtener el ID de la habitación de la reserva
+        const consultaHabitacionId = {
+            text: 'SELECT habitacion_id FROM reservas WHERE id = $1',
+            values: [reservaId],
+        };
+
+        const resultHabitacion = await client.query(consultaHabitacionId);
+
+        if (resultHabitacion.rows.length === 0) {
+            throw new Error('Reserva no encontrada');
+        }
+
+        const habitacion_id = resultHabitacion.rows[0].habitacion_id;
 
         // Eliminar la reserva
-        await pool.query({
-            text: `DELETE FROM reservas WHERE id = $1`,
-            values: [id]
-        });
+        const consultaEliminarReserva = {
+            text: 'DELETE FROM reservas WHERE id = $1 RETURNING *',
+            values: [reservaId],
+        };
 
-        // Actualizar la disponibilidad de la habitación a disponible
-        await updateDisponibilidadHabitacionQuery(habitacion_id, true);
+        const resultEliminar = await client.query(consultaEliminarReserva);
+
+        // Actualizar la disponibilidad de la habitación
+        const updateDisponibilidadQuery = {
+            text: 'UPDATE habitaciones SET disponibilidad = $1 WHERE id = $2',
+            values: [true, habitacion_id],
+        };
+
+        await client.query(updateDisponibilidadQuery);
+
+        await client.query('COMMIT');
+        return resultEliminar.rows[0];
     } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error en deleteReservaQuery:', error);
         throw error;
+    } finally {
+        client.release();
     }
 };
 
@@ -221,12 +303,30 @@ const deleteReservaQuery = async (id) => {
 
 
 
-// obtener todas las habitaciones
+// obtener todas las habitaciones con disponibilidad según reservas activas o fechas vigentes
 const getHabitacionesQuery = async () => {
     try {
         console.log("getHabitacionesQuery - Inicio");
         const consultaGetHabitaciones = {
-            text: `SELECT * FROM habitaciones`,
+            text: `
+                SELECT 
+                    h.id, 
+                    h.numero, 
+                    h.descripcion, 
+                    h.precio, 
+                    h.disponibilidad, 
+                    h.tipo_habitacion_id,
+                    CASE 
+                        WHEN r.habitacion_id IS NOT NULL THEN false 
+                        ELSE true 
+                    END AS esta_disponible
+                FROM habitaciones h
+                LEFT JOIN (
+                    SELECT DISTINCT habitacion_id
+                    FROM reservas
+                    WHERE fecha_salida > NOW()
+                ) r ON h.id = r.habitacion_id
+            `,
         };
         console.log("getHabitacionesQuery - Ejecutando consulta:", consultaGetHabitaciones);
         const result = await pool.query(consultaGetHabitaciones);
@@ -237,6 +337,19 @@ const getHabitacionesQuery = async () => {
         throw error;
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // actualizar la disponibilidad de la habitación
 const updateHabitacionDisponibilidadQuery = async (habitacionId, disponibilidad) => {
@@ -272,7 +385,7 @@ export {
      
     addReservaQuery,    
     getReservasQuery,
-    getReservaByIdQuery,            
+    getReservasByEmailQuery,            
     updateReservaQuery, 
     deleteReservaQuery,
 

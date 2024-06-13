@@ -19,14 +19,15 @@ import {
     addReservaControl, 
     getAddReservaControl,   
     getReservasControl,
-    getReservaByIdControl,    
+    getReservaByEmailControl,    
     updateReservaControl,
     deleteReservaControl, 
     
     getCustomerInicio,
     
     getAdminInicio,
-    getUpdatePerfilModalAdmin    
+    getUpdatePerfilModalAdmin,
+    getUpdateReservaModalAdmin   
 } from '../src/controllers/ApiRestFull.js';
 import { verifyToken } from '../middlewares/token.js';
 
@@ -62,7 +63,7 @@ router.delete('/perfil/:email', verifyToken, deletePerfilAndReservasControl); //
 router.post('/reserva', verifyToken, addReservaControl); // addReservaQuery 
 router.get('/reservation-add', verifyToken, getAddReservaControl);
 router.get('/reservas', verifyToken, getReservasControl); // getReservasQuery
-router.get('/reserva/:id', verifyToken, getReservaByIdControl); // getReservaByIdQuery
+router.get('/reserva/:email', verifyToken, getReservaByEmailControl); // getReservasByEmailQuery
 router.put('/reserva/:id', verifyToken, updateReservaControl); // updateReservaQuery 
 router.delete('/reserva/:id', verifyToken, deleteReservaControl); // deleteReservaQuery 
 
@@ -74,6 +75,7 @@ router.get('/customer/inicio/:email', verifyToken, getCustomerInicio);// getUsua
 // Rutas para controladores de administrador
 router.get('/admin/inicio/:email', verifyToken, getAdminInicio);// getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
 router.get('/admin/perfil/:email', verifyToken, getUpdatePerfilModalAdmin);// getUsuarioByEmailQuery
+router.get('/admin/reserva/:email', verifyToken, getUpdateReservaModalAdmin);// getReservasByEmailQuery
 
 console.log('routes.js - Configuración de rutas completa');
 

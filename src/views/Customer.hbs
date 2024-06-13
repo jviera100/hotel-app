@@ -366,10 +366,17 @@
 <!-- script logica RESERVA javascript frontend  -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    const addReservationBtn = document.getElementById("addReservationBtn");
     const updateReservationBtns = document.querySelectorAll(".updateReservationBtn");
     const deleteReservationBtns = document.querySelectorAll(".deleteReservationBtn");
     const reservaModalElement = document.getElementById('reservaModal');
     const reservaModal = new bootstrap.Modal(reservaModalElement);
+
+    // Redirigir a la vista de agregar reserva
+      addReservationBtn.addEventListener("click", () => {
+        window.location.href = "/reservation-add";
+      });
+    } 
 
     // Función para cargar datos en el modal de reserva
     updateReservationBtns.forEach(button => {

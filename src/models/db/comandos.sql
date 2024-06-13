@@ -107,3 +107,51 @@ INSERT INTO contactos (nombre, email, mensaje) VALUES
 ('Juan', 'juan@example.com', 'I would like to make a reservation for the next weekend.'),
 ('María', 'maria@example.com', 'Do you have availability for a double room?'),
 ('Pedro', 'pedro@example.com', 'I would like to know more about the hotel services.');
+
+<!-- script logica RESERVA javascript fronted  -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {    
+    const updateReservationBtns = document.querySelectorAll(".updateReservationBtn");
+    const deleteReservationBtns = document.querySelectorAll(".deleteReservationBtn");
+    const reservaModal = new bootstrap.Modal(document.getElementById('reservaModal'));
+
+    // Función para cargar datos en el modal de reserva
+    updateReservationBtns.forEach(button => {
+      button.addEventListener("click", function() {
+        const reservationId = this.getAttribute('data-id');
+        // Aquí iría el código para cargar los datos existentes de la reserva usando reservationId
+        reservaModal.show();
+      });
+    });
+
+    // Función para eliminar reserva y actualizar estado de la habitación
+    deleteReservationBtns.forEach(button => {
+      button.addEventListener("click", async function() {
+        const reservationId = this.getAttribute('data-id');
+        const habitacionId = this.getAttribute('data-habitacion-id');
+        try {
+          const response = await axios.delete(`/reserva/${reservationId}`);
+          if (response.status === 200) {
+            alert('Reserva eliminada con éxito.');
+            // Aquí iría el código para actualizar el estado de la habitación a disponible
+          }
+        } catch (error) {
+          alert('Error al eliminar la reserva.');
+        }
+      });
+    });
+  });
+</script>
+
+Agregar Reserva:
+
+El botón para agregar reserva debe redirigir al usuario a la página donde pueda agregar una nueva reserva.
+Actualizar Reserva:
+
+El modal debe abrirse correctamente al hacer clic en el botón de actualizar. Los datos de la reserva seleccionada deben cargarse en el modal para su edición.
+Eliminar Reserva:
+
+Se debe mostrar un modal de confirmación antes de eliminar la reserva. Al confirmar, la reserva debe eliminarse y la fila correspondiente en la tabla de reservas debe ser eliminada dinámicamente.
+Guardar Cambios de Reserva:
+
+Después de actualizar los datos de la reserva en el modal, los cambios deben guardarse correctamente.

@@ -113,7 +113,7 @@
                   <td>{{tipoHabitacionTexto this.tipo_habitacion_id}}</td>
                   <td>{{this.descripcion}}</td>
                   <td>{{this.precio}}</td>
-                  <td>{{disponibilidadTexto this.disponibilidad}}</td>
+                  <td>{{#if this.esta_disponible}}Disponible{{else}}No Disponible{{/if}}</td>
                   <td>
                     <button type="submit" class="btn btn-outline-warning" id="updateRoomBtn">Update room</button>       
                     <button class="btn btn-outline-danger" id="deleteRoomBtn">Delete room</button>
@@ -143,7 +143,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editProfileModalLabel">Editar Perfil</h5>
+        <h5 class="modal-title" id="editProfileModalLabel">Update profile</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -151,24 +151,24 @@
         <form id="editProfileForm">
           <div class="row mb-3">
             <div class="col-md-6">
-              <label>ver actual foto de perfil</label>
+              <label>see current profile photo</label>
               <img id="fotoTablePreviewModal" src="" alt="Foto de perfil" class="img-fluid">
             </div>
             <div class="col-md-6 d-flex align-items-center">  {{!--flex permite ver el label al lado del input en el formulario del modal --}}
-              <label for="foto" class="form-label me-2">subir nueva foto de perfil</label>
+              <label for="foto" class="form-label me-2">upload new profile photo</label>
               <input type="file" name="foto" class="form-control" id="foto">
             </div>
           </div>
           <div class="row mb-3">
             <div class="col-md-6">
-                <label>ver nueva foto de perfil</label>
+                <label>see new profile photo</label>
                 <!-- Nueva imagen seleccionada -->
                 <img id="fotoUpLoadPreviewModal" src="" alt="Nueva Foto de perfil" class="img-fluid">
             </div>
           </div>          
           <div class="row mb-3">
             <div class="col-md-6 d-flex align-items-center">
-              <label for="username" class="form-label me-2">Nombre</label>
+              <label for="username" class="form-label me-2">Name</label>
               <input name="username" class="form-control" id="username">
             </div>
             <div class="col-md-6 d-flex align-items-center">
@@ -182,15 +182,15 @@
               <input type="password" name="password" class="form-control" id="password">
             </div>
             <div class="col-md-6 d-flex align-items-center">
-              <label for="tipo_usuario" class="form-label me-2">Tipo de usuario</label>
+              <label for="tipo_usuario" class="form-label me-2">Type of user</label>
               <input name="tipo_usuario" class="form-control" id="tipo_usuario">
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" id="saveProfileChangesBtn">Guardar Cambios</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>        
+        <button type="button" class="btn btn-success" id="saveProfileChangesBtn">Save Changes</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>        
       </div>
     </div>
   </div>
@@ -325,28 +325,28 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="reservaModalLabel">Reservar Habitación</h5>
+        <h5 class="modal-title" id="reservaModalLabel">Update Reservation</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- Formulario de reserva -->
         <form id="reservaForm">
           <div class="mb-3">
-            <label for="fechaReserva" class="form-label">Fecha de Reserva</label>
+            <label for="fechaReserva" class="form-label">Arrival Date</label>
             <input type="date" class="form-control" id="fechaReserva" name="fechaReserva">
           </div>
           <div class="mb-3">
-            <label for="fechaSalida" class="form-label">Fecha de Salida</label>
+            <label for="fechaSalida" class="form-label">Departure Date</label>
             <input type="date" class="form-control" id="fechaSalida" name="fechaSalida">
           </div>
           <div class="mb-3">
-            <label for="habitacionId" class="form-label">Habitación</label>
+            <label for="habitacionId" class="form-label">Room</label>
             <select class="form-select" id="habitacionId" name="habitacionId">
               <!-- Aquí se cargarán las opciones de habitaciones dinámicamente -->
             </select>
           </div>
           <div class="mb-3">
-            <label for="clienteId" class="form-label">Cliente</label>
+            <label for="clienteId" class="form-label">Customer</label>
             <select class="form-select" id="clienteId" name="clienteId">
               <!-- Aquí se cargarán las opciones de clientes dinámicamente -->
             </select>
@@ -354,16 +354,15 @@
         </form>
       </div>     
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary saveReservationChangesBtn">Guardar cambios</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary saveReservationChangesBtn">Save Changes</button>
       </div>
     </div>
   </div>
 </div>
 
 
-
-<!-- script logica RESERVA javascript frontend  -->
+<!-- script lógica RESERVA javascript frontend -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const updateReservationBtns = document.querySelectorAll(".updateReservationBtn");
@@ -373,48 +372,33 @@
     const reservaModal = new bootstrap.Modal(reservaModalElement);
     const saveReservationChangesBtn = document.querySelector('.saveReservationChangesBtn');
 
-    // Función para cargar datos en el modal de reserva
-    updateReservationBtns.forEach(button => {
-      button.addEventListener("click", async function() {
-        const reservationId = this.getAttribute('data-id');
-        try {
-          const response = await axios.get(`/reserva/${reservationId}`);
-          if (response.status === 200) {
-            const data = response.data;
-            document.getElementById('fechaReserva').value = data.fecha_reserva;
-            document.getElementById('fechaSalida').value = data.fecha_salida;
-            document.getElementById('habitacionId').value = data.habitacion_id;
-            document.getElementById('clienteId').value = data.cliente_id;
-            reservaModal.show();
-          }
-        } catch (error) {
-          alert('Error al cargar los datos de la reserva.');
-        }
-      });
-    });
-
-    // Función para eliminar reserva y actualizar estado de la habitación
-    deleteReservationBtns.forEach(button => {
-      button.addEventListener("click", async function() {
-        const reservationId = this.getAttribute('data-id');
-        const habitacionId = this.getAttribute('data-habitacion-id');
-        try {
-          const response = await axios.delete(`/reserva/${reservationId}`);
-          if (response.status === 200) {
-            alert('Reserva eliminada con éxito.');
-            await axios.post(`/habitaciones/eliminar-reserva/${habitacionId}`);
-            location.reload(); // Recargar la página para reflejar los cambios
-          }
-        } catch (error) {
-          alert('Error al eliminar la reserva.');
-        }
-      });
-    });
-
     // Abrir vista para agregar nueva reserva
     addReservationBtn.addEventListener("click", function() {
       window.location.href = "/reservation-add";
     });
+
+    // Event listener para los botones de actualizar reserva
+    updateReservationBtns.forEach(button => {
+      button.addEventListener("click", async () => {
+          const reservationId = button.getAttribute('data-id');
+
+          try {
+              const response = await axios.get(`/reserva/${reservationId}`);
+              const reserva = response.data;
+
+              // Populate modal fields with reservation data
+              document.getElementById('fechaReserva').value = reserva.fecha_reserva;
+              document.getElementById('fechaSalida').value = reserva.fecha_salida;
+              document.getElementById('habitacionId').value = reserva.habitacion_id;
+              document.getElementById('clienteId').value = reserva.cliente_id;
+
+              // Show the modal
+              reservaModal.show();
+          } catch (error) {
+              alert('Error al cargar los detalles de la reserva.');
+          }
+      });
+  });
 
     // Guardar cambios de reserva
     saveReservationChangesBtn.addEventListener("click", async function() {
@@ -440,8 +424,96 @@
         alert('Error al actualizar la reserva.');
       }
     });
+    
+
+    // Función para manejar la acción de eliminar reserva
+    async function handleReservationAction(action, reservationId, habitacionId) {
+      if (!reservationId) {
+        alert('ID de la reserva no disponible.');
+        return;
+      }
+
+      try {
+        if (action === 'delete') {
+          const response = await axios.delete(`/reserva/${reservationId}`);
+          if (response.status === 200) {
+            alert("Reserva eliminada con éxito");
+            document.querySelector(`tr[data-id="${reservationId}"]`).remove(); // Elimina la fila de la tabla
+          } else {
+            alert("Ha ocurrido un error al intentar eliminar la reserva.");
+          }
+        }
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || 'Ha ocurrido un error al procesar la solicitud de reserva.';
+        alert(errorMessage);
+      }
+    }
+
+    // Event listener para los botones de eliminar reserva
+    deleteReservationBtns.forEach(button => {
+      button.addEventListener("click", () => {
+        const reservationId = button.getAttribute('data-id');
+        const habitacionId = button.getAttribute('data-habitacion-id');
+        handleReservationAction('delete', reservationId, habitacionId);
+      });
+    });
+
+ 
   });
 </script>
+
+
+<!-- script lógica HABITACION javascript frontend 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Event listener for add room button
+        document.getElementById('addRoomBtn').addEventListener('click', function() {
+            // Logic for adding a room (if needed)
+            // Example: Redirect to add room page or show modal for adding a room
+            console.log('Add room button clicked');
+        });
+
+        // Event listener for update room buttons
+        const updateRoomBtns = document.querySelectorAll('#updateRoomBtn');
+        updateRoomBtns.forEach(button => {
+            button.addEventListener('click', function() {
+                const roomId = this.parentElement.parentElement.querySelector('td:first-child').textContent;
+                // Example: Redirect to update room page or show modal for updating a room
+                console.log(`Update room button clicked for room with ID: ${roomId}`);
+            });
+        });
+
+        // Event listener for delete room buttons
+        const deleteRoomBtns = document.querySelectorAll('#deleteRoomBtn');
+        deleteRoomBtns.forEach(button => {
+            button.addEventListener('click', async function() {
+                const roomId = this.parentElement.parentElement.querySelector('td:first-child').textContent;
+                try {
+                    const confirmDelete = confirm(`Are you sure you want to delete room with ID ${roomId}?`);
+                    if (confirmDelete) {
+                        // Example: Perform AJAX request to delete room
+                        const response = await fetch(`/rooms/${roomId}`, {
+                            method: 'DELETE',
+                        });
+                        if (response.ok) {
+                            alert('Room deleted successfully');
+                            // Example: Refresh or update the room list
+                            window.location.reload();
+                        } else {
+                            throw new Error('Failed to delete room');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error deleting room:', error);
+                    alert('Error deleting room');
+                }
+            });
+        });
+    });
+</script>
+
+-->
+
 
 
 

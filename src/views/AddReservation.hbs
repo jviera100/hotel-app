@@ -1,49 +1,48 @@
-<!-- addReservation.hbs -->
+<!-- views/AddReservation.hbs -->
 <div class="py-4">
     <h2>Agregar Reserva</h2>
     <hr class="w-50" />
-
     <form id="addReservationForm">
-    <div class="mb-3">
-      <label for="fechaReserva" class="form-label">Fecha de Reserva</label>
-      <input type="date" class="form-control" id="fechaReserva" name="fecha_reserva">
-    </div>
-    <div class="mb-3">
-      <label for="fechaSalida" class="form-label">Fecha de Salida</label>
-      <input type="date" class="form-control" id="fechaSalida" name="fecha_salida">
-    </div>
-    <div class="mb-3">
-      <label for="habitacionId" class="form-label">ID de Habitación</label>
-      <input type="number" class="form-control" id="habitacionId" name="habitacion_id">
-    </div>
-    <div class="mb-3">
-      <label for="clienteId" class="form-label">ID de Cliente</label>
-      <input type="number" class="form-control" id="clienteId" name="cliente_id">
-    </div>
-    <button type="submit" class="btn btn-primary">Agregar Reserva</button>
-  </form>
-  <script>
-    document.getElementById('addReservationForm').addEventListener('submit', async function(event) {
-      event.preventDefault();
-      const fechaReserva = document.getElementById('fechaReserva').value;
-      const fechaSalida = document.getElementById('fechaSalida').value;
-      const habitacionId = document.getElementById('habitacionId').value;
-      const clienteId = document.getElementById('clienteId').value;
+        <div class="mb-3">
+            <label for="fechaReserva" class="form-label">Fecha de Reserva</label>
+            <input type="date" class="form-control" id="fechaReserva" name="fecha_reserva" required>
+        </div>
+        <div class="mb-3">
+            <label for="fechaSalida" class="form-label">Fecha de Salida</label>
+            <input type="date" class="form-control" id="fechaSalida" name="fecha_salida" required>
+        </div>
+        <div class="mb-3">
+            <label for="numeroHabitacion" class="form-label">Número de Habitación</label>
+            <input type="number" class="form-control" id="numeroHabitacion" name="numero_habitacion" required>
+        </div>
+        <div class="mb-3">
+            <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control" id="nombreUsuario" name="nombre_usuario" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Reserva</button>
+    </form>
+    <script>
+        document.getElementById('addReservationForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const fechaReserva = document.getElementById('fechaReserva').value;
+            const fechaSalida = document.getElementById('fechaSalida').value;
+            const numeroHabitacion = document.getElementById('numeroHabitacion').value;
+            const nombreUsuario = document.getElementById('nombreUsuario').value;
 
-      try {
-        const response = await axios.post('/reserva', {
-          fecha_reserva: fechaReserva,
-          fecha_salida: fechaSalida,
-          habitacion_id: habitacionId,
-          cliente_id: clienteId
+            try {
+                const response = await axios.post('/reserva', {
+                    fecha_reserva: fechaReserva,
+                    fecha_salida: fechaSalida,
+                    numero_habitacion: numeroHabitacion,
+                    nombre_usuario: nombreUsuario
+                });
+                if (response.status === 201) {
+                    alert('Reserva agregada con éxito.');
+                    window.location.href = '/login'; // Redirigir al login
+                }
+            } catch (error) {
+                alert('Error al agregar la reserva.');
+            }
         });
-        if (response.status === 201) {
-          alert('Reserva agregada con éxito.');
-          window.location.href = '/reservas'; // Redirige a la página de reservas
-        }
-      } catch (error) {
-        alert('Error al agregar la reserva.');
-      }
-    });
-  </script>
+    </script>
 </div>

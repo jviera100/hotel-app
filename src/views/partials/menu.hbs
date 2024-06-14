@@ -51,25 +51,13 @@
           <li class="nav-item">
             <span class="nav-link saludo-btn">Hola, {{currentUserName}}</span>
           </li>
-          {{/if}}
-            <!-- Botón "Administración" -->
-          {{#if showAdminButton}}
-          <li class="nav-item">
-            <a class="nav-link admin-btn" href="/admin/inicio/{{currentUserEmail}}">Administración</a>
-          </li>
-          {{/if}}          
+          {{/if}}                    
           <!-- Botón "Ver Perfil" -->
           {{#if showProfileButton}}
           <li class="nav-item">
             <a class="nav-link perfil-btn" href="/perfil/{{currentUserEmail}}">Ver Perfil</a>
           </li>
-          {{/if}}
-          <!-- Botón "Ver Habitaciones" -->
-          {{#if showRoomButton}}
-            <li class="nav-item">
-              <a class="nav-link habitaciones-btn" href="/habitaciones/{{currentUserEmail}}">Ver Habitaciones</a>
-            </li>
-          {{/if}}
+          {{/if}}          
           <!-- Botón "Cerrar Sesión" -->
           {{#if showLogoutButton}}
           <li class="nav-item">

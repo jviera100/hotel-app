@@ -38,8 +38,7 @@ const getHomeControl = async (req, res) => {
             showContactButton: true, // Muestra el botón de contacto en la interfaz de usuario
             showRegisterButton: true, // Muestra el botón de registro en la interfaz de usuario
             showLoginButton: true, // Muestra el botón de inicio de sesión en la interfaz de usuario
-            showProfileButton: false, // Oculta el botón de perfil en la interfaz de usuario
-            showRoomButton: false, // Oculta el botón de habitaciones en la interfaz de usuario
+            showProfileButton: false, // Oculta el botón de perfil en la interfaz de usuario            
             showGreetingButton: false, // Oculta el mensaje de bienvenida en la interfaz de usuario
             showLogoutButton: false, // Oculta el botón de cierre de sesión en la interfaz de usuario
             currentUserName: req.user ? req.user.username : "" // Si el usuario está autenticado, pasa el nombre de usuario actual; de lo contrario, pasa una cadena vacía
@@ -70,8 +69,7 @@ const getLoginControl = async (req, res) => {
             showContactButton: true, // Mostrar botón de contacto en la barra de navegación
             showRegisterButton: true, // Mostrar botón de registro en la barra de navegación
             showLoginButton: false, // Ocultar botón de inicio de sesión en la barra de navegación
-            showProfileButton: false, // Ocultar botón de perfil en la barra de navegación
-            showRoomButton: false, // Ocultar botón de habitaciones en la barra de navegación
+            showProfileButton: false, // Ocultar botón de perfil en la barra de navegación            
             showGreetingButton: false, // Ocultar mensaje de bienvenida en la barra de navegación
             showLogoutButton: false, // Ocultar botón de cierre de sesión en la barra de navegación
         });
@@ -184,8 +182,7 @@ const getContactControl = (req, res) => {
             showContactButton: false, // Oculta el botón de contacto en la interfaz de usuario (ya estamos en la página de contacto)
             showRegisterButton: true, // Muestra el botón de registro en la interfaz de usuario
             showLoginButton: true, // Muestra el botón de inicio de sesión en la interfaz de usuario
-            showProfileButton: false, // Oculta el botón de perfil en la interfaz de usuario
-            showRoomButton: false, // Oculta el botón de habitaciones en la interfaz de usuario
+            showProfileButton: false, // Oculta el botón de perfil en la interfaz de usuario            
             showGreetingButton: false, // Oculta el mensaje de bienvenida en la interfaz de usuario
             showLogoutButton: false, // Oculta el botón de cierre de sesión en la interfaz de usuario
         });
@@ -299,8 +296,7 @@ const getUserRegistrationControl = async (req, res) => {
             // Registro del tipo de usuario obtenido
             console.log('Tipo de usuario obtenido:', usuario.tipo_usuario);
 
-            const showAdminButton = true;
-            console.log('Valor de showAdminButton:', showAdminButton);        }
+                    }
 
         // Configuración del navbar dependiendo del estado de autenticación y tipo de usuario
         const navbarConfig = {
@@ -308,10 +304,8 @@ const getUserRegistrationControl = async (req, res) => {
             showContactButton: true, // Mostrar botón
             showRegisterButton: false, // Ocultar botón
             showLoginButton: !isAuthenticated, // Ocultar botón si esta está autenticado
-            showProfileButton: false, // Ocultar botón
-            showRoomButton: false, // Ocultar botón
-            showGreetingButton: isAuthenticated, // Mostrar boton saludo si está autenticado
-            showAdminButton: isAuthenticated, // Mostrar botón si está autenticado
+            showProfileButton: false, // Ocultar botón           
+            showGreetingButton: isAuthenticated, // Mostrar boton saludo si está autenticado            
             showLogoutButton: isAuthenticated, // Mostrar botón si está autenticado
         };            
 
@@ -371,8 +365,7 @@ const getProfileControl = async (req, res) => {
             showContactButton: true,
             showRegisterButton: false,
             showLoginButton: false,            
-            showProfileButton: false, 
-            showRoomButton: true, 
+            showProfileButton: false,             
             showGreetingButton: true,
             showLogoutButton: true,
         });
@@ -582,7 +575,7 @@ async function deleteRoomControl(req, res) {
 
 
 
-// customer view => getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery
+// customer view => getUserByEmailQuery => getUsersQuery => getReservationByEmailQuery => getRoomQuery
 const getCustomerInicio = async (req, res) => {
     try {
         // Registro del inicio del controlador
@@ -606,9 +599,10 @@ const getCustomerInicio = async (req, res) => {
         }
 
         // Obtiene la lista de usuarios, reservas y habitaciones de la base de datos
-        const usuarios = await getUsersQuery();
-        const reservas = await getReservationQuery();
+        const usuarios = await getUsersQuery();        
         const habitaciones = await getRoomQuery();
+        // Obtiene las reservas asociadas al correo electrónico del usuario
+        const reservas = await getReservationByEmailQuery(email);
 
         // Verifica si no se encontraron usuarios, reservas o habitaciones
         if (!usuarios) {
@@ -643,8 +637,7 @@ const getCustomerInicio = async (req, res) => {
             showContactButton: true,
             showRegisterButton: false,
             showLoginButton: false,            
-            showProfileButton: true, 
-            showRoomButton: false, 
+            showProfileButton: true,            
             showGreetingButton: true,
             showLogoutButton: true,
         });
@@ -718,8 +711,7 @@ const getAdminInicio = async (req, res) => {
             showContactButton: true,
             showRegisterButton: false,
             showLoginButton: false,            
-            showProfileButton: true, 
-            showRoomButton: false, 
+            showProfileButton: true,             
             showGreetingButton: true,
             showLogoutButton: true,
         });
@@ -755,12 +747,7 @@ const getUpdateUserModalAdmin = async (req, res) => {
         }
 
         // Imprimir los datos del usuario que se enviarán a la vista perfil-admin
-        console.log('Datos del usuario pasados a la vista perfil-admin:', usuario);
-
-        // Definir una variable para mostrar u ocultar el botón de administración
-        const showAdminButton = true;
-        // Imprimir el valor de la variable showAdminButton
-        console.log('Valor de showAdminButton:', showAdminButton);
+        console.log('Datos del usuario pasados a la vista perfil-admin:', usuario);        
 
         // Enviar los datos del usuario como JSON al frontend
         res.status(200).json(usuario);

@@ -71,8 +71,7 @@ router.get('/room-add', verifyToken, getAddRoomControl);
 router.delete('/room/:id', verifyToken, deleteRoomControl); // deleteRoomQuery 
 
 // Routes for client controllers
-router.get('/customer/inicio/:email', verifyToken, getCustomerInicio);// getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery
-
+router.get('/customer/inicio/:email', verifyToken, getCustomerInicio);// getUserByEmailQuery => getUsersQuery => getReservationByEmailQuery => getRoomQuery
 
 // Routes for administrator controllers
 router.get('/admin/inicio/:email', verifyToken, getAdminInicio);// getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery

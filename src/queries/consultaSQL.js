@@ -3,63 +3,73 @@ import pool from "../models/config/db.js";
 
 console.log('consultasSQL.js - Iniciando configuración de consultas SQL');
 
-//PERFIL
-// agregar un nuevo usuario a la base de datos para vista administrador y cliente
-const addUsuarioQuery = async (usuario) => {
+//USERS
+
+// add user
+const addUserQuery = async (usuario) => {
     try {
-        console.log("addUsuarioQuery - Inicio");
+        console.log("addUserQuery - Inicio");
         const values = Object.values(usuario);
         const consultaUsuario = {
             text: `INSERT INTO usuarios (email, username, password, tipo_usuario, foto) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
             values: values,
         };
 
-        console.log("addUsuarioQuery - Ejecutando consulta:", consultaUsuario);
+        console.log("addUserQuery - Ejecutando consulta:", consultaUsuario);
         const result = await pool.query(consultaUsuario);
-        console.log("addUsuarioQuery - Resultado:", result.rows[0]);
+        console.log("addUserQuery - Resultado:", result.rows[0]);
         return result.rows[0];
     } catch (error) {
         console.error('Error al agregar usuario:', error);
         throw error;
     }
 };
-// obtener todos los usuarios de la base de datos para vista administrador
-const getUsuariosQuery = async () => {
+// user registration form view
+const getUsersQuery = async () => {
     try {
-        console.log("getUsuariosQuery - Inicio");
+        console.log("getUsersQuery - Inicio");
         const consultaGetUsuarios = {
-            text: `SELECT * FROM usuarios`,
+            text: `
+            SELECT * 
+            FROM usuarios
+            ORDER BY 
+                CASE 
+                    WHEN tipo_usuario = 'administrator' THEN 1
+                    ELSE 2
+                END,
+                id;  -- Ordenar primero los administradores, luego los clientes por id
+            `,
         };
-        console.log("getUsuariosQuery - Ejecutando consulta:", consultaGetUsuarios);
+        console.log("getUsersQuery - Ejecutando consulta:", consultaGetUsuarios);
         const result = await pool.query(consultaGetUsuarios);
-        console.log("getUsuariosQuery - Resultado:", result.rows);
+        console.log("getUsersQuery - Resultado:", result.rows);
         return result.rows;
     } catch (error) {
         console.error('Error al obtener usuarios:', error);
         throw error;
     }
 };
-// obtener un usuario por su correo electrónico para vista cliente
-const getUsuarioByEmailQuery = async (email) => {
+// get a user by email
+const getUserByEmailQuery = async (email) => {
     try {
-        console.log("getUsuarioByEmailQuery - Inicio con email:", email);
+        console.log("getUserByEmailQuery - Inicio con email:", email);
         const getUsuarioByEmail = {
             text: 'SELECT * FROM usuarios WHERE email = $1',
             values: [email],
         };
-        console.log("getUsuarioByEmailQuery - Ejecutando consulta:", getUsuarioByEmail);
+        console.log("getUserByEmailQuery - Ejecutando consulta:", getUsuarioByEmail);
         const result = await pool.query(getUsuarioByEmail);
-        console.log("getUsuarioByEmailQuery - Resultado:", result.rows);
+        console.log("getUserByEmailQuery - Resultado:", result.rows);
         return result.rows[0];
     } catch (error) {
         console.error('Error al obtener usuario por correo electrónico:', error);
         throw error;
     }
 };
-// actualizar un usuario por su correo electrónico para vista administrador y cliente
-const updateUsuarioByEmailQuery = async (email, updatedFields) => {
+// update user
+const updateUserByEmailQuery = async (email, updatedFields) => {
     try {
-        console.log("updateUsuarioByEmailQuery - Inicio con email:", email);
+        console.log("updateUserByEmailQuery - Inicio con email:", email);
         const entries = Object.entries(updatedFields);
         const sets = entries.map(([key, value], index) => `${key} = $${index + 2}`).join(', ');
         const values = [email, ...Object.values(updatedFields)];
@@ -68,25 +78,25 @@ const updateUsuarioByEmailQuery = async (email, updatedFields) => {
             text: `UPDATE usuarios SET ${sets} WHERE email = $1`,
             values: values
         };
-        console.log("updateUsuarioByEmailQuery - Ejecutando consulta:", updateUsuarioByEmail);
+        console.log("updateUserByEmailQuery - Ejecutando consulta:", updateUsuarioByEmail);
         await pool.query(updateUsuarioByEmail);
-        console.log("updateUsuarioByEmailQuery - Consulta ejecutada con éxito");
+        console.log("updateUserByEmailQuery - Consulta ejecutada con éxito");
     } catch (error) {
         console.error('Error al actualizar el usuario por correo electrónico:', error);
         throw new Error('Error al actualizar el usuario por correo electrónico: ' + error.message);
     }
 };
-// eliminar el perfil y las reservas de un usuario por su correo electrónico para vista administrador y cliente
-const deletePerfilAndReservasByEmailQuery = async (email) => {
+// delete a user's profile and reservations by email
+const deleteUserAndReservationByEmailQuery = async (email) => {
     try {
-        console.log("deletePerfilAndReservasByEmailQuery - Inicio con email:", email);
+        console.log("deleteUserAndReservationByEmailQuery - Inicio con email:", email);
 
         // Elimina las reservas del usuario
         const deleteReservasQuery = {
             text: 'DELETE FROM reservas WHERE cliente_id = (SELECT id FROM usuarios WHERE email = $1)',
             values: [email]
         };
-        console.log("deletePerfilAndReservasByEmailQuery - Ejecutando consulta para eliminar reservas:", deleteReservasQuery);
+        console.log("deleteUserAndReservationByEmailQuery - Ejecutando consulta para eliminar reservas:", deleteReservasQuery);
         await pool.query(deleteReservasQuery);
 
         // Elimina el perfil del usuario
@@ -94,10 +104,10 @@ const deletePerfilAndReservasByEmailQuery = async (email) => {
             text: 'DELETE FROM usuarios WHERE email = $1',
             values: [email]
         };
-        console.log("deletePerfilAndReservasByEmailQuery - Ejecutando consulta para eliminar perfil:", deletePerfilQuery);
+        console.log("deleteUserAndReservationByEmailQuery - Ejecutando consulta para eliminar perfil:", deletePerfilQuery);
         await pool.query(deletePerfilQuery);
 
-        console.log("deletePerfilAndReservasByEmailQuery - Reservas y perfil eliminados correctamente");
+        console.log("deleteUserAndReservationByEmailQuery - Reservas y perfil eliminados correctamente");
     } catch (error) {
         console.error('Error al eliminar las reservas y el perfil por correo electrónico:', error);
         throw new Error('Error al eliminar las reservas y el perfil por correo electrónico: ' + error.message);
@@ -108,9 +118,10 @@ const deletePerfilAndReservasByEmailQuery = async (email) => {
 
 
 
-//RESERVAS
-// agregar reserva y cambia a no disponible la habitación
-const addReservaQuery = async (fecha_reserva, fecha_salida, numero_habitacion, nombre_usuario) => {
+//RESERVATION
+
+// add reservation and change the room to unavailable
+const addReservationQuery = async (fecha_reserva, fecha_salida, numero_habitacion, nombre_usuario) => {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
@@ -154,18 +165,16 @@ const addReservaQuery = async (fecha_reserva, fecha_salida, numero_habitacion, n
         return resultReserva.rows[0];
     } catch (error) {
         await client.query('ROLLBACK');
-        console.error('Error en addReservaQuery:', error);
+        console.error('Error en addReservationQuery:', error);
         throw error;
     } finally {
         client.release();
     }
 };
-
-
-// obtener todas las reservas
-const getReservasQuery = async () => {
+// obtain all reservations, showing username and room number
+const getReservationQuery = async () => {
     try {
-        console.log("getReservasQuery - Inicio");
+        console.log("getReservationQuery - Inicio");
         const consultaGetReservas = {
             text: `
             SELECT 
@@ -179,22 +188,24 @@ const getReservasQuery = async () => {
             JOIN             
                 habitaciones h ON r.habitacion_id = h.id
             JOIN             
-                usuarios u ON r.cliente_id = u.id;            
+                usuarios u ON r.cliente_id = u.id
+            ORDER BY 
+                h.numero;  -- Ordenar por número de habitación
             `,
         };
-        console.log("getReservasQuery - Ejecutando consulta:", consultaGetReservas);
-        const result = await pool.query(consultaGetReservas); // const result puede reemplazar const nombre consulta ubicando arriba
-        console.log("getReservasQuery - Resultado:", result.rows);
+        console.log("getReservationQuery - Ejecutando consulta:", consultaGetReservas);
+        const result = await pool.query(consultaGetReservas);
+        console.log("getReservationQuery - Resultado:", result.rows);
         return result.rows;
     } catch (error) {
         console.error('Error al obtener reservas:', error);
         throw error;
     }
 };
-// obtener todas las reservas asociadas al correo electrónico del cliente, mostrando usuario y numero de habitacion
-const getReservasByEmailQuery = async (email) => {
+// obtain all reservations associated with the client's email, showing username and room number
+const getReservationByEmailQuery = async (email) => {
     try {
-        console.log("getReservasByEmailQuery - Inicio con email:", email);
+        console.log("getReservationByEmailQuery - Inicio con email:", email);
         const consultaGetReservasByEmail = {
             text: `
             SELECT 
@@ -214,18 +225,17 @@ const getReservasByEmailQuery = async (email) => {
             `,
             values: [email],
         };
-        console.log("getReservasByEmailQuery - Ejecutando consulta:", consultaGetReservasByEmail);
+        console.log("getReservationByEmailQuery - Ejecutando consulta:", consultaGetReservasByEmail);
         const result = await pool.query(consultaGetReservasByEmail);
-        console.log("getReservasByEmailQuery - Resultado:", result.rows);
+        console.log("getReservationByEmailQuery - Resultado:", result.rows);
         return result.rows;
     } catch (error) {
         console.error('Error al obtener reservas por correo electrónico:', error);
         throw error;
     }
 };
-
-// actualizar reserva
-const updateReservaQuery = async (id, fecha_reserva, fecha_salida, habitacion_id, cliente_id) => {
+// update reservation
+const updateReservationQuery = async (id, fecha_reserva, fecha_salida, habitacion_id, cliente_id) => {
     try {
         // Obtain the old habitacion_id before updating
         const oldResult = await pool.query({
@@ -252,8 +262,8 @@ const updateReservaQuery = async (id, fecha_reserva, fecha_salida, habitacion_id
         throw error;
     }
 };
-// eliminar una reserva y cambia a disponible la habitación
-const deleteReservaQuery = async (reservaId) => {
+// delete a reservation and make the room available
+const deleteReservationQuery = async (reservaId) => {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
@@ -292,7 +302,7 @@ const deleteReservaQuery = async (reservaId) => {
         return resultEliminar.rows[0];
     } catch (error) {
         await client.query('ROLLBACK');
-        console.error('Error en deleteReservaQuery:', error);
+        console.error('Error en deleteReservationQuery:', error);
         throw error;
     } finally {
         client.release();
@@ -301,36 +311,63 @@ const deleteReservaQuery = async (reservaId) => {
 
 
 
+// ROOM
 
+// add room
+const addRoomQuery = async (numero, tipo_habitacion_id, descripcion, precio, disponibilidad) => {
+    const query = `
+        INSERT INTO habitaciones (numero, tipo_habitacion_id, descripcion, precio, disponibilidad) 
+        VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+    const values = [numero, tipo_habitacion_id, descripcion, precio, disponibilidad];
 
-// obtener todas las habitaciones con disponibilidad según reservas activas o fechas vigentes
-const getHabitacionesQuery = async () => {
     try {
-        console.log("getHabitacionesQuery - Inicio");
+        const result = await pool.query(query, values);
+        return result.rows[0];
+    } catch (error) {
+        throw error;
+    }
+};
+// delete room
+const deleteRoomQuery = async (id) => {
+    const query = 'DELETE FROM habitaciones WHERE id = $1 RETURNING *';
+    const values = [id];
+
+    try {
+        const result = await pool.query(query, values);
+        return result.rows[0];
+    } catch (error) {
+        throw error;
+    }
+};
+// obtain all rooms with availability according to active reservations or current dates
+const getRoomQuery = async () => {
+    try {
+        console.log("getRoomQuery - Inicio");
         const consultaGetHabitaciones = {
             text: `
-                SELECT 
-                    h.id, 
-                    h.numero, 
-                    h.descripcion, 
-                    h.precio, 
-                    h.disponibilidad, 
+                SELECT
+                    h.id,
+                    h.numero,
+                    h.descripcion,
+                    h.precio,
                     h.tipo_habitacion_id,
-                    CASE 
-                        WHEN r.habitacion_id IS NOT NULL THEN false 
-                        ELSE true 
-                    END AS esta_disponible
-                FROM habitaciones h
-                LEFT JOIN (
-                    SELECT DISTINCT habitacion_id
-                    FROM reservas
-                    WHERE fecha_salida > NOW()
-                ) r ON h.id = r.habitacion_id
+                    CASE
+                        WHEN r.habitacion_id IS NOT NULL THEN 'No Disponible'
+                        ELSE 'Disponible'
+                    END AS disponibilidad,
+                    u.username AS usuario_reservado
+                FROM
+                    habitaciones h
+                LEFT JOIN reservas r ON h.id = r.habitacion_id AND r.fecha_salida > CURRENT_DATE
+                LEFT JOIN usuarios u ON r.cliente_id = u.id
+                ORDER BY
+                    h.numero;
             `,
         };
-        console.log("getHabitacionesQuery - Ejecutando consulta:", consultaGetHabitaciones);
+        console.log("getRoomQuery - Ejecutando consulta:", consultaGetHabitaciones);
         const result = await pool.query(consultaGetHabitaciones);
-        console.log("getHabitacionesQuery - Resultado:", result.rows);
+        console.log("getRoomQuery - Resultado:", result.rows);
+        console.log("Habitaciones con sus disponibilidades calculadas:", result.rows);
         return result.rows;
     } catch (error) {
         console.error('Error al obtener habitaciones:', error);
@@ -340,22 +377,30 @@ const getHabitacionesQuery = async () => {
 
 
 
+
+
+
+
+
+
+
 console.log('consultasSQL.js - Configuración de consultas SQL completa');
 
 export { 
-    addUsuarioQuery, 
-    getUsuariosQuery,
-    getUsuarioByEmailQuery,
-    updateUsuarioByEmailQuery,
-    deletePerfilAndReservasByEmailQuery,
+    addUserQuery, 
+    getUsersQuery,
+    getUserByEmailQuery,
+    updateUserByEmailQuery,
+    deleteUserAndReservationByEmailQuery,
 
      
-    addReservaQuery,    
-    getReservasQuery,
-    getReservasByEmailQuery,            
-    updateReservaQuery, 
-    deleteReservaQuery,
+    addReservationQuery,    
+    getReservationQuery,
+    getReservationByEmailQuery,            
+    updateReservationQuery, 
+    deleteReservationQuery,
 
-    
-    getHabitacionesQuery    
+    addRoomQuery,
+    deleteRoomQuery,    
+    getRoomQuery    
 };

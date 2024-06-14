@@ -76,7 +76,7 @@
                   <td>{{this.habitacion_numero}}</td>
                   <td>{{this.nombre_usuario}}</td>
                   <td>                     
-                    <button type="button" class="btn btn-outline-warning updateReservationBtn" data-id="{{this.id}}">Update reservation</button>
+                    {{!-- <button type="button" class="btn btn-outline-warning updateReservationBtn" data-id="{{this.id}}">Update reservation</button> --}}
                     <button class="btn btn-outline-danger deleteReservationBtn" data-id="{{this.id}}" data-habitacion-id="{{this.habitacion_id}}">Delete reservation</button>                    
                   </td>
                 </tr>
@@ -112,10 +112,10 @@
                   <td>{{this.numero}}</td>
                   <td>{{tipoHabitacionTexto this.tipo_habitacion_id}}</td>
                   <td>{{this.descripcion}}</td>
-                  <td>{{this.precio}}</td>
-                  <td>{{#if this.esta_disponible}}Disponible{{else}}No Disponible{{/if}}</td>
+                  <td>{{this.precio}}</td>                  
+                  <td>{{disponibilidadTexto this.disponibilidad}}</td>
                   <td>
-                    <button type="submit" class="btn btn-outline-warning" id="updateRoomBtn">Update room</button>       
+                    {{!-- <button type="submit" class="btn btn-outline-warning" id="updateRoomBtn">Update room</button>        --}}
                     <button class="btn btn-outline-danger" id="deleteRoomBtn">Delete room</button>
                   </td>
                 </tr>
@@ -138,7 +138,7 @@
 </section>
 
 
-<!-- Modal para PERFIL -->
+<!-- Modal para actualizar PERFIL funciona pero no muestra la imagen en la tabla, pero si se actualiza en DB-->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -320,7 +320,7 @@
 });
 </script>
 
-<!-- Modal para RESERVA -->
+<!-- Modal para actualizar RESERVA no abre porque comente boton actualizar reserva del carousel pero no comentar el modal o habra inconsistencia y no podra agregar o eliminar  -->
 <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -362,7 +362,7 @@
 </div>
 
 
-<!-- script lógica RESERVA javascript frontend -->
+<!-- script lógica RESERVA javascript frontend solo agrega y elimina -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const updateReservationBtns = document.querySelectorAll(".updateReservationBtn");
@@ -463,56 +463,38 @@
 </script>
 
 
-<!-- script lógica HABITACION javascript frontend 
+{{!-- script lógica HABITACION javascript frontend  --}}
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Event listener for add room button
-        document.getElementById('addRoomBtn').addEventListener('click', function() {
-            // Logic for adding a room (if needed)
-            // Example: Redirect to add room page or show modal for adding a room
-            console.log('Add room button clicked');
-        });
-
-        // Event listener for update room buttons
-        const updateRoomBtns = document.querySelectorAll('#updateRoomBtn');
-        updateRoomBtns.forEach(button => {
-            button.addEventListener('click', function() {
-                const roomId = this.parentElement.parentElement.querySelector('td:first-child').textContent;
-                // Example: Redirect to update room page or show modal for updating a room
-                console.log(`Update room button clicked for room with ID: ${roomId}`);
-            });
-        });
-
-        // Event listener for delete room buttons
-        const deleteRoomBtns = document.querySelectorAll('#deleteRoomBtn');
-        deleteRoomBtns.forEach(button => {
-            button.addEventListener('click', async function() {
-                const roomId = this.parentElement.parentElement.querySelector('td:first-child').textContent;
-                try {
-                    const confirmDelete = confirm(`Are you sure you want to delete room with ID ${roomId}?`);
-                    if (confirmDelete) {
-                        // Example: Perform AJAX request to delete room
-                        const response = await fetch(`/rooms/${roomId}`, {
-                            method: 'DELETE',
-                        });
-                        if (response.ok) {
-                            alert('Room deleted successfully');
-                            // Example: Refresh or update the room list
-                            window.location.reload();
-                        } else {
-                            throw new Error('Failed to delete room');
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error deleting room:', error);
-                    alert('Error deleting room');
+    // Script para eliminar habitación
+    document.querySelectorAll('.deleteRoomBtn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const roomId = btn.getAttribute('data-room-id');
+            try {
+                const response = await fetch(`/room/${roomId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    //body: JSON.stringify({ id: roomId }) // Si deseas enviar datos en el cuerpo de la solicitud
+                });
+                if (response.ok) {
+                    alert('Habitación eliminada correctamente.');
+                    window.location.reload(); // Recargar la página o actualizar la lista de habitaciones
+                } else {
+                    alert('Error al eliminar la habitación.');
                 }
-            });
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de red al intentar eliminar la habitación.');
+            }
         });
     });
-</script>
 
--->
+    // Script para agregar habitación (redirección)
+    document.getElementById('addRoomBtn').addEventListener('click', function() {
+        window.location.href = '/room-add';
+    });
+</script>
 
 
 

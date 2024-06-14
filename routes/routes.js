@@ -1,4 +1,4 @@
-// routes.js (solicitudes HTTP)
+// routes.js (HTTP requests)
 import { Router } from 'express';
 import {
     getHomeControl,
@@ -7,75 +7,77 @@ import {
     postLoginControl,
     logoutControl,
 
-    getContactoControl,
-    postEnviarContactoControl,
+    getContactControl,
+    postSendContactControl,
 
-    addUsuarioRegistroControl,
-    getUsuarioRegistroControl,
-    getPerfilControl,
-    updatePerfilControl,
-    deletePerfilAndReservasControl,
+    addUserRegistrationControl,
+    getUserRegistrationControl,
+    getProfileControl,
+    updateUserControl,
+    deleteUserAndReservationControl,
 
-    addReservaControl, 
-    getAddReservaControl,   
-    getReservasControl,
-    getReservaByEmailControl,    
-    updateReservaControl,
-    deleteReservaControl, 
+    addReservationControl, 
+    getaddReservationControl,         
+    updateReservationControl,
+    deleteReservationControl, 
+
+    addRoomControl,
+    getAddRoomControl,
+    deleteRoomControl,
     
     getCustomerInicio,
     
     getAdminInicio,
-    getUpdatePerfilModalAdmin,
-    getUpdateReservaModalAdmin   
+    getUpdateUserModalAdmin,
+    getUpdateReservationModalAdmin   
 } from '../src/controllers/ApiRestFull.js';
 import { verifyToken } from '../middlewares/token.js';
 
 const router = Router();
 
-//rutas (get) son visibles en navegador, rutas (post-put-delete) puedes ver en extensiones Postman o Thunder Client
-// cantidad de rutas = cantidad controllers
+// routes (get) are visible in the browser, routes (post-put-delete) you can see in Postman or Thunder Client extensions
+// number of routes = number of controllers
 
 console.log('routes.js - Iniciando configuración de rutas');
 
-// Ruta por defecto para la página de inicio de cliente y administrador
+// Routes to home page
 router.get('/', getHomeControl);
 
-// Rutas para el controlador de inicio y cierre de sesión de cliente y administrador
+// Routes for login and logout handler
 router.get('/login', getLoginControl);
-router.post('/login', postLoginControl); // getUsuarioByEmailQuery
+router.post('/login', postLoginControl); // getUserByEmailQuery
 router.get('/logout', logoutControl);
 
-// Ruta para la vista de contacto de cliente y administrador
-router.get('/contacto', getContactoControl);
-router.post('/contacto', postEnviarContactoControl);
+// Routes for contact view
+router.get('/contacto', getContactControl);
+router.post('/contacto', postSendContactControl);
 
-// Rutas para el controlador de agregar usuarios y vista registro de perfil cliente
-router.post('/registro', addUsuarioRegistroControl); // addUsuarioQuery
-router.get('/registro', getUsuarioRegistroControl); // getUsuarioByEmailQuery
+// Routes for users controllers
+router.post('/registro', addUserRegistrationControl); // addUserQuery
+router.get('/registro', getUserRegistrationControl); // getUserByEmailQuery
+router.get('/perfil/:email', verifyToken, getProfileControl); // getUserByEmailQuery
+router.put('/perfil/:email', verifyToken, updateUserControl); // updateUserByEmailQuery
+router.delete('/perfil/:email', verifyToken, deleteUserAndReservationControl); // deleteUserAndReservationByEmailQuery
 
-// Ruta para el controlador de perfil cliente
-router.get('/perfil/:email', verifyToken, getPerfilControl); // getUsuarioByEmailQuery
-router.put('/perfil/:email', verifyToken, updatePerfilControl); // updateUsuarioByEmailQuery
-router.delete('/perfil/:email', verifyToken, deletePerfilAndReservasControl); // deletePerfilAndReservasByEmailQuery
+// Routes for reservation controllers
+router.post('/reserva', verifyToken, addReservationControl); // addReservationQuery 
+router.get('/reservation-add', verifyToken, getaddReservationControl);
+router.put('/reserva/:id', verifyToken, updateReservationControl); // updateReservationQuery 
+router.delete('/reserva/:id', verifyToken, deleteReservationControl); // deleteReservationQuery 
 
-// Rutas para gestionar reservas
-router.post('/reserva', verifyToken, addReservaControl); // addReservaQuery 
-router.get('/reservation-add', verifyToken, getAddReservaControl);
-router.get('/reservas', verifyToken, getReservasControl); // getReservasQuery
-router.get('/reserva/:email', verifyToken, getReservaByEmailControl); // getReservasByEmailQuery
-router.put('/reserva/:id', verifyToken, updateReservaControl); // updateReservaQuery 
-router.delete('/reserva/:id', verifyToken, deleteReservaControl); // deleteReservaQuery 
+// Routes for rooms controllers
+router.post('/room', verifyToken, addRoomControl); // addRoomQuery 
+router.get('/room-add', verifyToken, getAddRoomControl);
+router.delete('/room/:id', verifyToken, deleteRoomControl); // deleteRoomQuery 
 
-
-// Rutas para controladores de cliente
-router.get('/customer/inicio/:email', verifyToken, getCustomerInicio);// getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
+// Routes for client controllers
+router.get('/customer/inicio/:email', verifyToken, getCustomerInicio);// getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery
 
 
-// Rutas para controladores de administrador
-router.get('/admin/inicio/:email', verifyToken, getAdminInicio);// getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
-router.get('/admin/perfil/:email', verifyToken, getUpdatePerfilModalAdmin);// getUsuarioByEmailQuery
-router.get('/admin/reserva/:email', verifyToken, getUpdateReservaModalAdmin);// getReservasByEmailQuery
+// Routes for administrator controllers
+router.get('/admin/inicio/:email', verifyToken, getAdminInicio);// getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery
+router.get('/admin/perfil/:email', verifyToken, getUpdateUserModalAdmin);// getUserByEmailQuery
+router.get('/admin/reserva/:email', verifyToken, getUpdateReservationModalAdmin);// getReservationByEmailQuery => no se usara
 
 console.log('routes.js - Configuración de rutas completa');
 

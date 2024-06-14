@@ -3,28 +3,93 @@
     <h2>Agregar Habitación</h2>
     <hr class="w-50" />
 
-    <form action="/add-room" method="POST">
+    <form action="/habitaciones" method="POST" id="addRoomForm">
         <div class="form-group row w-50 m-auto">
-            <div class="form-group col-12 col-sm-6">
-                <label>Número</label>
-                <input class="form-control m-auto" name="numero" required />
+            <div class="mb-3">
+                <label for="numeroHabitacion" class="form-label">Número de Habitación</label>
+                <select class="form-control" id="numeroHabitacion" name="numero_habitacion" required>
+                    <option value="101">101</option>
+                    <option value="102">102</option>
+                    <option value="103">103</option>
+                    <option value="201">201</option>
+                    <option value="202">202</option>
+                    <option value="203">203</option>
+                    <option value="204">204</option>
+                    <option value="301">301</option>
+                    <option value="302">302</option>
+                    <option value="303">303</option>
+                    <option value="304">304</option>
+                    <option value="401">401</option>
+                    <option value="402">402</option>
+                    <option value="403">403</option>
+                    <option value="501">501</option>
+                    <option value="502">502</option>
+                    <option value="503">503</option>
+                    <option value="601">601</option>
+                    <option value="602">602</option>
+                    <option value="603">603</option>
+                </select>
             </div>
             <div class="form-group col-12 col-sm-6">
                 <label>Tipo de Habitación</label>
                 <select class="form-control m-auto" name="tipo_habitacion_id" required>
-                    {{#each tiposHabitaciones}}
-                    <option value="{{this.id}}">{{this.tipo}}</option>
-                    {{/each}}
+                    <option value="1">Single</option>
+                    <option value="2">Double</option>
+                    <option value="3">Suite</option>
                 </select>
             </div>
-            <div class="form-group col-12 col-sm-6">
-                <label>Descripción</label>
-                <textarea class="form-control m-auto" name="descripcion" required></textarea>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <select class="form-control" id="descripcion" name="descripcion" required>
+                    <option value="Single room with private bathroom.">Single room with private bathroom.</option>
+                    <option value="Single room with garden view.">Single room with garden view.</option>
+                    <option value="Single room with pool access.">Single room with pool access.</option>
+                    <option value="Double room with two beds and garden view.">Double room with two beds and garden view.</option>
+                    <option value="Double room with queen bed.">Double room with queen bed.</option>
+                    <option value="Double room with private balcony.">Double room with private balcony.</option>
+                    <option value="Double room with sea view.">Double room with sea view.</option>
+                    <option value="Suite with living room and balcony with sea view.">Suite with living room and balcony with sea view.</option>
+                    <option value="Suite with jacuzzi and garden view.">Suite with jacuzzi and garden view.</option>
+                    <option value="Suite with kitchen and living room.">Suite with kitchen and living room.</option>
+                    <option value="Suite with terrace and private pool.">Suite with terrace and private pool.</option>
+                    <option value="Single room with bunk beds for children.">Single room with bunk beds for children.</option>
+                    <option value="Single room accessible for disabled.">Single room accessible for disabled.</option>
+                    <option value="Single room with desk and ergonomic chair.">Single room with desk and ergonomic chair.</option>
+                    <option value="Double room with jacuzzi.">Double room with jacuzzi.</option>
+                    <option value="Double room with spa access.">Double room with spa access.</option>
+                    <option value="Double room with living room.">Double room with living room.</option>
+                    <option value="Presidential suite with butler.">Presidential suite with butler.</option>
+                    <option value="Executive suite with lounge access.">Executive suite with lounge access.</option>
+                    <option value="Family suite with two bedrooms.">Family suite with two bedrooms.</option>
+                </select>
             </div>
-            <div class="form-group col-12 col-sm-6">
-                <label>Precio</label>
-                <input class="form-control m-auto" type="number" step="0.01" name="precio" required />
+
+            <div class="mb-3">
+                <label for="precio" class="form-label">Precio</label>
+                <select class="form-control" id="precio" name="precio" required>
+                    <option value="50.00">$50.00</option>
+                    <option value="55.00">$55.00</option>
+                    <option value="60.00">$60.00</option>
+                    <option value="80.00">$80.00</option>
+                    <option value="85.00">$85.00</option>
+                    <option value="90.00">$90.00</option>
+                    <option value="95.00">$95.00</option>
+                    <option value="120.00">$120.00</option>
+                    <option value="130.00">$130.00</option>
+                    <option value="140.00">$140.00</option>
+                    <option value="150.00">$150.00</option>
+                    <option value="70.00">$70.00</option>
+                    <option value="65.00">$65.00</option>
+                    <option value="75.00">$75.00</option>
+                    <option value="100.00">$100.00</option>
+                    <option value="110.00">$110.00</option>
+                    <option value="115.00">$115.00</option>
+                    <option value="200.00">$200.00</option>
+                    <option value="180.00">$180.00</option>
+                    <option value="160.00">$160.00</option>
+                </select>
             </div>
+
             <div class="form-group col-12 col-sm-6">
                 <label>Disponibilidad</label>
                 <select class="form-control m-auto" name="disponibilidad" required>
@@ -33,6 +98,30 @@
                 </select>
             </div>
         </div>
-        <button class="btn btn-info mb-3">Agregar Habitación</button>
+        <button type="submit" class="btn btn-info mb-3">Agregar Habitación</button>
     </form>
 </div>
+
+<script>
+    document.getElementById('addRoomForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        
+        try {
+            const response = await fetch('/room', {
+                method: 'POST',
+                body: formData
+            });
+            if (response.ok) {
+                alert('Habitación agregada correctamente.');
+                window.location.href = '/login'; // Redirigir a la vista de administración
+            } else {
+                alert('Error al agregar la habitación.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error de red al intentar agregar la habitación.');
+        }
+    });
+</script>

@@ -1,21 +1,22 @@
 // ApiRestFull.js (Controllers  )
 import path from 'path';
 import { 
-    addUsuarioQuery, 
-    getUsuariosQuery,
-    getUsuarioByEmailQuery,
-    updateUsuarioByEmailQuery,
-    deletePerfilAndReservasByEmailQuery,
+    addUserQuery, 
+    getUsersQuery,
+    getUserByEmailQuery,
+    updateUserByEmailQuery,
+    deleteUserAndReservationByEmailQuery,
 
      
-    addReservaQuery,    
-    getReservasQuery,
-    getReservasByEmailQuery,            
-    updateReservaQuery, 
-    deleteReservaQuery,
+    addReservationQuery,    
+    getReservationQuery,
+    getReservationByEmailQuery,            
+    updateReservationQuery, 
+    deleteReservationQuery,
 
-
-    getHabitacionesQuery        
+    addRoomQuery,
+    deleteRoomQuery,
+    getRoomQuery        
  } from '../queries/consultaSQL.js';
 import jwt from 'jsonwebtoken';
 
@@ -23,7 +24,7 @@ const __dirname = path.resolve();
 
 console.log('ApiRestFull.js - Iniciando configuración de controllers');
 
-// vista de inicio
+// home view
 const getHomeControl = async (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
@@ -57,7 +58,7 @@ const getHomeControl = async (req, res) => {
 
 
 
-// vista de inicio de sesión 
+// login view 
 const getLoginControl = async (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
@@ -83,7 +84,7 @@ const getLoginControl = async (req, res) => {
         res.status(500).send('Ocurrió un error al cargar la vista de inicio de sesión'); // Envía una respuesta de error HTTP con un mensaje de error
     }
 };
-// procesar el inicio de sesión => getUsuarioByEmailQuery
+// process login => getUserByEmailQuery
 const postLoginControl = async (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
@@ -94,7 +95,7 @@ const postLoginControl = async (req, res) => {
         console.log('Intento de inicio de sesión para:', email);
 
         // Busca al usuario en la base de datos utilizando su correo electrónico
-        const usuario = await getUsuarioByEmailQuery(email);
+        const usuario = await getUserByEmailQuery(email);
         console.log('Usuario obtenido de la base de datos:', usuario);
 
         // Verifica si el usuario existe
@@ -139,7 +140,7 @@ const postLoginControl = async (req, res) => {
         res.status(500).send('Ocurrió un error al iniciar sesión: ' + error.message); // Envía una respuesta de error HTTP con un mensaje de error
     }
 };
-// procesar el cerrar sesión
+// process logout
 const logoutControl = (req, res) => {
     try {
         // Registro del inicio del controlador
@@ -169,11 +170,11 @@ const logoutControl = (req, res) => {
 
 
 
-// vista de contacto
-const getContactoControl = (req, res) => {
+// contact view
+const getContactControl = (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
-        console.log('getContactoControl - Inicio');
+        console.log('getContactControl - Inicio');
         
         // Renderiza la plantilla 'Contacto' con los siguientes parámetros
         res.render('Contacto', {
@@ -190,15 +191,15 @@ const getContactoControl = (req, res) => {
         });
         
         // Registro de finalización del controlador en la consola
-        console.log('getContactoControl - Fin');
+        console.log('getContactControl - Fin');
     } catch (error) {
         // Manejo de errores: si ocurre un error durante el procesamiento de la solicitud
-        console.error('Error en getContactoControl:', error); // Registro del error en la consola de errores
+        console.error('Error en getContactControl:', error); // Registro del error en la consola de errores
         res.status(500).send('Ocurrió un error al renderizar la página de contacto'); // Envía una respuesta de error HTTP con el mensaje de error detallado
     }
 };
-// procesa enviar el formulario de contacto
-const postEnviarContactoControl = (req, res) => {
+// process sending the contact form
+const postSendContactControl = (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
         console.log('enviarContactoControl - Inicio');
@@ -223,9 +224,10 @@ const postEnviarContactoControl = (req, res) => {
 
 
 
+// USERS
 
-// agregar usuario de vista registro enviando a db => addUsuarioQuery
-const addUsuarioRegistroControl = async (req, res) => {
+// add user => addUserQuery
+const addUserRegistrationControl = async (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
         console.log('addUsuarioControl - Inicio');
@@ -258,7 +260,7 @@ const addUsuarioRegistroControl = async (req, res) => {
             // Crear un objeto de usuario con los datos proporcionados y la ruta de la foto de perfil
             const usuario = { email, username, password, tipo_usuario, foto: pathPhoto };
             // Agregar el usuario a la base de datos
-            await addUsuarioQuery(usuario);
+            await addUserQuery(usuario);
             // Registro de la adición exitosa del usuario en la consola
             console.log('Usuario agregado:', usuario);
             // Redirigir al usuario a la página de inicio de sesión después de agregar exitosamente el usuario
@@ -272,8 +274,8 @@ const addUsuarioRegistroControl = async (req, res) => {
         res.status(500).send(error.message); // Envío de una respuesta de error HTTP con el mensaje de error detallado
     }
 };
-// vista de registro de usuarios para perfil administrador y cliente => getUsuarioByEmailQuery
-const getUsuarioRegistroControl = async (req, res) => {
+// user registration form view => getUserByEmailQuery
+const getUserRegistrationControl = async (req, res) => {
     try {
         console.log('registroControl - Inicio');
 
@@ -287,7 +289,7 @@ const getUsuarioRegistroControl = async (req, res) => {
             console.log('Email del usuario:', email);
 
             // Obtener el usuario de la base de datos utilizando el email
-            usuario = await getUsuarioByEmailQuery(email);
+            usuario = await getUserByEmailQuery(email);
             console.log('Usuario obtenido de la base de datos:', usuario);
 
             if (!usuario) {
@@ -330,8 +332,8 @@ const getUsuarioRegistroControl = async (req, res) => {
         res.status(500).send('Ocurrió un error al renderizar la página de registro');
     }
 };
-// obtener usuario vista perfil => getUsuarioByEmailQuery
-const getPerfilControl = async (req, res) => {
+// user profile view => getUserByEmailQuery
+const getProfileControl = async (req, res) => {
     try {
         // Registro de inicio del controlador
         console.log('getPerfil - Inicio');
@@ -342,7 +344,7 @@ const getPerfilControl = async (req, res) => {
         console.log('Email del usuario:', email);
 
         // Obtiene la información del usuario desde la base de datos utilizando su correo electrónico
-        const usuario = await getUsuarioByEmailQuery(email);
+        const usuario = await getUserByEmailQuery(email);
         // Registro de la información del usuario obtenida de la base de datos
         console.log('Usuario obtenido de la base de datos:', usuario);
 
@@ -384,11 +386,11 @@ const getPerfilControl = async (req, res) => {
         res.status(500).send('Error al obtener el perfil del usuario: ' + error.message);
     }
 };
-// actualizar usuario vista perfil => updateUsuarioByEmailQuery
-const updatePerfilControl = async (req, res) => { 
+// update user => updateUserByEmailQuery
+const updateUserControl = async (req, res) => { 
     try {
         // Registro de inicio del controlador
-        console.log('updatePerfilControl - Inicio');
+        console.log('updateUserControl - Inicio');
         
         // Obtiene el correo electrónico del usuario de los parámetros de la solicitud
         const { email } = req.params;
@@ -420,34 +422,34 @@ const updatePerfilControl = async (req, res) => {
 
                 // Actualiza el perfil del usuario con la nueva imagen
                 const updatedFields = { username, password, tipo_usuario, foto: pathPhoto };
-                await updateUsuarioByEmailQuery(email, updatedFields);
+                await updateUserByEmailQuery(email, updatedFields);
                 // Registro de la actualización exitosa del perfil con nueva imagen
                 console.log('Perfil actualizado correctamente con nueva imagen para:', email);
                 // Envía una respuesta 200 indicando que el perfil se actualizó correctamente
                 res.status(200).json({ message: 'Perfil actualizado correctamente' });
                 // Registro de fin del controlador
-                console.log('updatePerfilControl - Fin');
+                console.log('updateUserControl - Fin');
             });
         } else {
             // Si no se proporcionó una nueva imagen, actualiza solo los otros campos
             const updatedFields = { username, password, tipo_usuario };
-            await updateUsuarioByEmailQuery(email, updatedFields);
+            await updateUserByEmailQuery(email, updatedFields);
             // Registro de la actualización exitosa del perfil sin nueva imagen
             console.log('Perfil actualizado correctamente sin nueva imagen para:', email);
             // Envía una respuesta 200 indicando que el perfil se actualizó correctamente
             res.status(200).json({ message: 'Perfil actualizado correctamente' });
             // Registro de fin del controlador
-            console.log('updatePerfilControl - Fin');
+            console.log('updateUserControl - Fin');
         }
     } catch (error) {
         // Manejo de errores en caso de que ocurra algún problema durante la ejecución del controlador
-        console.error('Error en updatePerfilControl:', error);
+        console.error('Error en updateUserControl:', error);
         // Envía una respuesta de error 500 junto con un mensaje detallado si ocurre un error
         res.status(500).send('Error al actualizar el perfil del usuario: ' + error.message);
     }
 };    
-// eliminar usuario vista perfil => deletePerfilAndReservasByEmailQuery
-const deletePerfilAndReservasControl = async (req, res) => {
+// delete user => deleteUserAndReservationByEmailQuery
+const deleteUserAndReservationControl = async (req, res) => {
     try {
         // Registro de inicio del controlador
         console.log('deletePerfilControl - Inicio');
@@ -458,7 +460,7 @@ const deletePerfilAndReservasControl = async (req, res) => {
         console.log('Email del usuario:', email);
 
         // Elimina el usuario de la base de datos utilizando su correo electrónico
-        await deletePerfilAndReservasByEmailQuery(email);
+        await deleteUserAndReservationByEmailQuery(email);
         // Registro de la eliminación exitosa del perfil del usuario
         console.log('Usuario eliminado correctamente para:', email);
         // Envía una respuesta 200 indicando que el perfil se eliminó correctamente
@@ -480,25 +482,24 @@ const deletePerfilAndReservasControl = async (req, res) => {
 
 
 
-//RESERVA
+//RESERVATION
 
-// Controlador para agregar una nueva reserva => addReservaQuery
-const addReservaControl = async (req, res) => {
+// add reservation => addReservationQuery
+const addReservationControl = async (req, res) => {
     try {
         const { fecha_reserva, fecha_salida, numero_habitacion, nombre_usuario } = req.body;
 
         // Llamar a la función para agregar la reserva
-        const reserva = await addReservaQuery(fecha_reserva, fecha_salida, numero_habitacion, nombre_usuario);
+        const reserva = await addReservationQuery(fecha_reserva, fecha_salida, numero_habitacion, nombre_usuario);
 
         res.status(201).json({ message: 'Reserva agregada con éxito', reserva });
     } catch (error) {
-        console.error('Error en addReservaControl:', error);
+        console.error('Error en addReservationControl:', error);
         res.status(500).send('Error al agregar la reserva: ' + error.message);
     }
 };
-
-// Controlador para renderizar la vista de agregar una reserva
-const getAddReservaControl = async (req, res) => {
+// reservation registration form view
+const getaddReservationControl = async (req, res) => {
     try {
         // Aquí puedes obtener datos adicionales si es necesario, como habitaciones disponibles o clientes
         res.render('AddReservation');
@@ -507,62 +508,82 @@ const getAddReservaControl = async (req, res) => {
         res.status(500).send('Error al cargar la vista de agregar reserva: ' + error.message);
     }
 };
-// Controlador para obtener todas las reservas => getReservasQuery
-const getReservasControl = async (req, res) => {
-    try {
-        const reservas = await getReservasQuery();
-        res.status(200).json(reservas);
-    } catch (error) {
-        res.status(500).send('Error al obtener las reservas: ' + error.message);
-    }
-};
-// Controlador para obtener los detalles de una reserva específica => getReservasByEmailQuery
-const getReservaByEmailControl = async (req, res) => {
-    try {
-        const { email } = req.params;
-        const reservas = await getReservasByEmailQuery(email);
-        res.status(200).json(reservas);
-    } catch (error) {
-        res.status(500).send('Error al obtener los datos de la reserva: ' + error.message);
-    }
-};
-
-
-// Controlador para actualizar una reserva existente => updateReservaQuery
-const updateReservaControl = async (req, res) => {
+// update reservation => updateReservationQuery
+const updateReservationControl = async (req, res) => {
     try {
         const { id } = req.params;
         const { fecha_reserva, fecha_salida, habitacion_id, cliente_id } = req.body;
 
-        await updateReservaQuery(id, fecha_reserva, fecha_salida, habitacion_id, cliente_id);
+        await updateReservationQuery(id, fecha_reserva, fecha_salida, habitacion_id, cliente_id);
 
         res.status(200).json({ message: 'Reserva actualizada con éxito' });
     } catch (error) {
-        console.error('Error en updateReservaControl:', error);
+        console.error('Error en updateReservationControl:', error);
         res.status(500).send('Error al actualizar la reserva: ' + error.message);
     }
 };
-// Controlador para eliminar una reserva => deleteReservaQuery
-const deleteReservaControl = async (req, res) => {
+// delete reservation => deleteReservationQuery
+const deleteReservationControl = async (req, res) => {
     try {
         const { id } = req.params;
 
-        await deleteReservaQuery(id);
+        await deleteReservationQuery(id);
 
         res.status(200).json({ message: 'Reserva eliminada con éxito' });
     } catch (error) {
-        console.error('Error en deleteReservaControl:', error);
+        console.error('Error en deleteReservationControl:', error);
         res.status(500).send('Error al eliminar la reserva: ' + error.message);
     }
 };
 
 
+// ROOM
+
+// add room
+const addRoomControl = async (req, res) => {
+    const { numero, tipo_habitacion_id, descripcion, precio, disponibilidad } = req.body;
+    
+    try {
+        const habitacion = await habitacionQueries.addRoomQuery(numero, tipo_habitacion_id, descripcion, precio, disponibilidad);
+        res.status(201).json({ habitacion, message: 'Habitación agregada correctamente.' });
+    } catch (error) {
+        console.error('Error al agregar la habitación:', error);
+        res.status(500).json({ message: 'Error al agregar la habitación.' });
+    }
+};
+// room registration form view
+const getAddRoomControl = async (req, res) => {
+    try {
+        // Aquí no se realiza ninguna acción en el backend, simplemente renderizamos la vista
+        res.render('AddRoom'); // Ajusta el nombre de la vista según cómo la hayas definido
+    } catch (error) {
+        console.error('Error en getAddRoomControl:', error);
+        res.status(500).send('Error al cargar la vista de agregar habitación: ' + error.message);
+    }
+};
+// delete room
+const deleteRoomControl = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const habitacionEliminada = await habitacionQueries.deleteRoomQuery(id);
+        if (habitacionEliminada) {
+            res.status(200).json({ message: 'Habitación eliminada correctamente.' });
+        } else {
+            res.status(404).json({ message: 'No se encontró la habitación para eliminar.' });
+        }
+    } catch (error) {
+        console.error('Error al eliminar la habitación:', error);
+        res.status(500).json({ message: 'Error al eliminar la habitación.' });
+    }
+};
 
 
 
 
 
-// obtener la página de inicio de tipo customer => getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
+
+// customer view => getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery
 const getCustomerInicio = async (req, res) => {
     try {
         // Registro del inicio del controlador
@@ -574,7 +595,7 @@ const getCustomerInicio = async (req, res) => {
         console.log('Email del usuario:', email); 
         
         // Obtiene el usuario de la base de datos utilizando su correo electrónico
-        const usuario = await getUsuarioByEmailQuery(email);
+        const usuario = await getUserByEmailQuery(email);
         // Registro del usuario obtenido de la base de datos
         console.log('Usuario obtenido de la base de datos:', usuario);
 
@@ -586,9 +607,9 @@ const getCustomerInicio = async (req, res) => {
         }
 
         // Obtiene la lista de usuarios, reservas y habitaciones de la base de datos
-        const usuarios = await getUsuariosQuery();
-        const reservas = await getReservasQuery();
-        const habitaciones = await getHabitacionesQuery();
+        const usuarios = await getUsersQuery();
+        const reservas = await getReservationQuery();
+        const habitaciones = await getRoomQuery();
 
         // Verifica si no se encontraron usuarios, reservas o habitaciones
         if (!usuarios) {
@@ -637,7 +658,7 @@ const getCustomerInicio = async (req, res) => {
         res.status(500).send('Error al obtener los datos getCustomerInicio: ' + error.message);
     }
 }; 
-// obtener la página de inicio de tipo administrator => getUsuarioByEmailQuery => getUsuariosQuery => getReservasQuery => getHabitacionesQuery
+// administrator view => getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery
 const getAdminInicio = async (req, res) => {
     try {
         // Registro del inicio del controlador
@@ -649,7 +670,7 @@ const getAdminInicio = async (req, res) => {
         console.log('Email del usuario:', email); 
         
         // Obtiene el usuario de la base de datos utilizando su correo electrónico
-        const usuario = await getUsuarioByEmailQuery(email);
+        const usuario = await getUserByEmailQuery(email);
         // Registro del usuario obtenido de la base de datos
         console.log('Usuario obtenido de la base de datos:', usuario);
 
@@ -661,34 +682,34 @@ const getAdminInicio = async (req, res) => {
         }
 
         // Obtiene la lista de usuarios, reservas y habitaciones de la base de datos
-        const usuarios = await getUsuariosQuery();
-        const reservas = await getReservasQuery();
-        const habitaciones = await getHabitacionesQuery();
+        const usuarios = await getUsersQuery();
+        const reservas = await getReservationQuery();
+        const habitaciones = await getRoomQuery();
 
         // Verifica si no se encontraron usuarios, reservas o habitaciones
         if (!usuarios) {
-            console.log('Usuarios no encontrados');
-            throw new Error('Usuarios no encontrados');
-            return res.status(404).send('Usuarios no encontrados');
+            console.log('Usuarios no encontrados'); // avisa consola y sigue ejecucion
+            throw new Error('Usuarios no encontrados'); // avisa consola y detiene ejecucion
+            return res.status(404).send('Usuarios no encontrados');// avisa navegador y detiene ejecucion
         }
         if (!reservas) {
             console.log('Reservas no encontradas');
-            throw new Error('Reservas no encontradas');
-            return res.status(404).send('Reservas no encontradas');
+            throw new Error('Reservas no encontradas'); // comentar para mostra tabla vacia
+            return res.status(404).send('Reservas no encontradas'); // comentar para mostra tabla vacia
         }
         if (!habitaciones) {
             console.log('Habitaciones no encontradas');
-            throw new Error('Habitaciones no encontradas');
-            return res.status(404).send('Habitaciones no encontradas');
+            throw new Error('Habitaciones no encontradas'); // comentar para mostra tabla vacia
+            return res.status(404).send('Habitaciones no encontradas'); // comentar para mostra tabla vacia
         }
         
         // Registro de los datos obtenidos para la vista de administrator
         console.log('Datos obtenidos para la vista de admin:', { usuarios, reservas, habitaciones });
         // Renderiza la página de administrator con los datos obtenidos
         res.render('Admin', { 
-            usuarios, 
-            reservas, 
-            habitaciones,
+            usuarios: usuarios || [], 
+            reservas: reservas || [], 
+            habitaciones: habitaciones || [],
             user: usuario,
             currentUserEmail: usuario.email,
             currentUserName: usuario.username, // Pasamos el nombre del usuario al contexto
@@ -712,8 +733,8 @@ const getAdminInicio = async (req, res) => {
         res.status(500).send('Error al obtener los datos getAdminInicio: ' + error.message);
     }
 }; 
-// obtener y actualizar el perfil de un usuario en forma de modal para administradores => getUsuarioByEmailQuery
-const getUpdatePerfilModalAdmin = async (req, res) => {
+// get and update a user in a modal => getUserByEmailQuery
+const getUpdateUserModalAdmin = async (req, res) => {
     try {
         // Registro del inicio del controlador
         console.log('getPerfilAdmin - Inicio');
@@ -724,7 +745,7 @@ const getUpdatePerfilModalAdmin = async (req, res) => {
         console.log('Email del usuario:', email);
 
         // Consultar la base de datos para obtener el usuario correspondiente al correo electrónico
-        const usuario = await getUsuarioByEmailQuery(email);
+        const usuario = await getUserByEmailQuery(email);
         // Registro del usuario obtenido de la base de datos
         console.log('Usuario obtenido de la base de datos:', usuario);
 
@@ -754,11 +775,11 @@ const getUpdatePerfilModalAdmin = async (req, res) => {
         res.status(500).send('Error al obtener el perfil del usuario: ' + error.message);
     }
 };
-// Obtener y actualizar los detalles de una reserva en forma de modal para administradores => getReservasByEmailQuery
-const getUpdateReservaModalAdmin = async (req, res) => {
+// Get and update reservation details in a modal => getReservationByEmailQuery
+const getUpdateReservationModalAdmin = async (req, res) => {
     try {
         // Registro del inicio del controlador
-        console.log('getUpdateReservaModalAdmin - Inicio');
+        console.log('getUpdateReservationModalAdmin - Inicio');
 
         // Obtener el correo electrónico del usuario desde los parámetros de la solicitud
         const { email } = req.params;
@@ -766,7 +787,7 @@ const getUpdateReservaModalAdmin = async (req, res) => {
         console.log('Email del usuario:', email);
 
         // Consultar la base de datos para obtener las reservas asociadas al correo electrónico del usuario
-        const reservas = await getReservasByEmailQuery(email);
+        const reservas = await getReservationByEmailQuery(email);
         // Registro de las reservas obtenidas de la base de datos
         console.log('Reservas obtenidas de la base de datos:', reservas);
 
@@ -780,10 +801,10 @@ const getUpdateReservaModalAdmin = async (req, res) => {
         res.status(200).json(reservas);
 
         // Registro del fin del controlador
-        console.log('getUpdateReservaModalAdmin - Fin');
+        console.log('getUpdateReservationModalAdmin - Fin');
     } catch (error) {
         // Capturar cualquier error que ocurra durante el proceso
-        console.error('Error en getUpdateReservaModalAdmin:', error);
+        console.error('Error en getUpdateReservationModalAdmin:', error);
         // Enviar un mensaje de error al frontend junto con el código de estado 500
         res.status(500).send('Error al obtener los detalles de la reserva: ' + error.message);
     }
@@ -800,25 +821,27 @@ export {
     postLoginControl,
     logoutControl,
 
-    getContactoControl,
-    postEnviarContactoControl,
+    getContactControl,
+    postSendContactControl,
 
-    addUsuarioRegistroControl,
-    getUsuarioRegistroControl,
-    getPerfilControl,
-    updatePerfilControl,
-    deletePerfilAndReservasControl,
+    addUserRegistrationControl,
+    getUserRegistrationControl,
+    getProfileControl,
+    updateUserControl,
+    deleteUserAndReservationControl,
 
-    addReservaControl, 
-    getAddReservaControl,   
-    getReservasControl,
-    getReservaByEmailControl,    
-    updateReservaControl,
-    deleteReservaControl, 
+    addReservationControl, 
+    getaddReservationControl,         
+    updateReservationControl,
+    deleteReservationControl, 
+
+    addRoomControl,
+    getAddRoomControl,
+    deleteRoomControl,
     
     getCustomerInicio,
     
     getAdminInicio,
-    getUpdatePerfilModalAdmin,
-    getUpdateReservaModalAdmin      
+    getUpdateUserModalAdmin,
+    getUpdateReservationModalAdmin      
  };

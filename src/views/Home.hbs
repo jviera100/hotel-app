@@ -75,7 +75,7 @@
       <div class="col-12 col-sm-6">
         <hr class="d-lg-none d-md-none d-sm-none d-sm-block my-4" />
         <!-- d-none , hace que el contenido desaparezca en mobile -->
-        <img id="capitan-gira" class="w-100" src="/img/hotel.jpg" alt="#" />
+        <img id="image-rotation" src="/img/hotel.jpg" alt="Hotel" style="width: 50%; height: auto;" />
       </div>
       <div class="col-12 col-sm-6">
         <h1 class="text-center text-sm-start pt-4 ">Actions <span class="d-block"></span></h1>
@@ -88,51 +88,72 @@
             Add to Favorites
           </button>
         </div>
-        <div>
-          <p>
-            Welcome to Hotel Super
+          <div>
+            <!-- Botones -->
+            <p class="d-inline-flex gap-1">
+              <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseAboutUs" role="button" aria-expanded="false" aria-controls="collapseAboutUs">
+                About us?
+              </a>
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContactUs" aria-expanded="false" aria-controls="collapseContactUs">
+                Contact us
+              </button>
+            </p>
+            <!-- Contenido colapsable -->
+            <div class="collapse" id="collapseAboutUs">
+              <div class="card card-body-business">
+                <h5>About Us</h5>
+                <p>
+                  Welcome to Hotel Super
 
-            Location:
-            In the heart of the city, near attractions, shopping, and cultural sites.
+                  Location:
+                  In the heart of the city, near attractions, shopping, and cultural sites.
 
-            Accommodations:
+                  Accommodations:
 
-            Comfortable rooms and suites
-            Premium linens
-            Free Wi-Fi
-            Flat-screen TVs
-            In-room dining
-            Luxury toiletries
-            Dining:
+                  Comfortable rooms and suites
+                  Premium linens
+                  Free Wi-Fi
+                  Flat-screen TVs
+                  In-room dining
+                  Luxury toiletries
+                  Dining:
 
-            Restaurant Super: Gourmet dishes
-            Café Super: Casual dining
-            Bar Super: Fine wines and cocktails
-            Amenities:
+                  Restaurant Super: Gourmet dishes
+                  Café Super: Casual dining
+                  Bar Super: Fine wines and cocktails
+                  Amenities:
 
-            Fitness center
-            Rooftop pool
-            Full-service spa
-            Business center
-            Free shuttle service
-            Events:
-            Versatile event spaces with modern technology and planning assistance.
+                  Fitness center
+                  Rooftop pool
+                  Full-service spa
+                  Business center
+                  Free shuttle service
+                  Events:
+                  Versatile event spaces with modern technology and planning assistance.
 
-            Sustainability:
-            Eco-friendly practices, including energy-efficient lighting and waste reduction.
+                  Sustainability:
+                  Eco-friendly practices, including energy-efficient lighting and waste reduction.
 
-            Guest Experience:
-            Friendly staff ensuring a comfortable stay with personalized services.
-            <hr>
-            Contact Us:
+                  Guest Experience:
+                  Friendly staff ensuring a comfortable stay with personalized services.                
+                </p>
+              </div>
+            </div>
+            <div class="collapse" id="collapseContactUs">
+              <div class="card card-body-business">
+                <h5>Contact Us</h5>
+                <p>                
+                  Contact Us:
 
-            Phone: *56912345678
-            Email: hotelsuper@mail.com
-            Website: http://localhost:3000
-            <hr>
-            Book your stay today at Hotel Super. We look forward to welcoming you!
-          </p>
-        </div>
+                  Phone: *56912345678
+                  Email: hotelsuper@mail.com
+                  Website: http://localhost:3000
+                  <hr>
+                  Book your stay today at Hotel Super. We look forward to welcoming you!
+                </p>
+              </div>
+            </div>                          
+          </div>          
       </div>
     </div>
   </section>

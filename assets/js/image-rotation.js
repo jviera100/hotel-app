@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Cuando el usuario hace clic en la imagen, se aplica una animación de giro
-    $("#capitan-gira").click(function() {
+    $("#image-rotation").click(function() {
       $(this).css({
         transition : 'transform 1s',
         transform  : 'rotate(360deg)'

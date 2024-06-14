@@ -96,11 +96,11 @@ INSERT INTO usuarios (username, email, password, tipo_usuario, foto) VALUES
 ('user9', 'user9@mail.com', 'p9', 'customer', 'yoda.jpg'),
 ('user10', 'user10@mail.com', 'p10', 'customer', 'adam.jpg');
 
--- Insert data into the table reservas
-INSERT INTO reservas (fecha_reserva, fecha_salida, habitacion_id, cliente_id) VALUES
-('2024-05-10', '2024-05-15', 1, 1),
-('2024-05-12', '2024-05-18', 2, 2),
-('2024-05-14', '2024-05-20', 3, 3);
+-- -- Insert data into the table reservas => no se insertara porque se agregaran reservas al iniciar su funcionamiento y porque disponibilidad cambia al agregar, actualizar y eliminar, pero no sincroniza con reservas previas registradas
+-- INSERT INTO reservas (fecha_reserva, fecha_salida, habitacion_id, cliente_id) VALUES
+-- ('2024-05-10', '2024-05-15', 1, 1),
+-- ('2024-05-12', '2024-05-18', 2, 2),
+-- ('2024-05-14', '2024-05-20', 3, 3);
 
 -- Insert data into the table contactos
 INSERT INTO contactos (nombre, email, mensaje) VALUES

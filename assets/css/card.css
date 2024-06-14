@@ -1,3 +1,4 @@
+/* CAROUSEL CARD */
 /* tamaño titulo tarjetas */
 #titulo-card{
     font-size: 40px; /* Tamaño del texto */     
@@ -21,4 +22,13 @@
 .card-body {
     min-height: 130px;
     max-height: 130px;
+    background-color: #343a40; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
 }
+
+/* business card */
+.card-body-business {
+    background-color: #343a40; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+  }
+

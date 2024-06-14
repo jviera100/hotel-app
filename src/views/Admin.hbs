@@ -10,7 +10,28 @@
     <div class="carousel-inner">      
       <div class="carousel-item active" id="habitaciones-carousel">
         <div class="container text-center py-4">
-          <h2>Room management</h2>            
+          <h2>Room management</h2>
+          <!-- Filters -->
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label for="filterType" class="form-label">Filter by Type:</label>
+              <select id="filterType" class="form-select">
+                <option value="">All</option>
+                <!-- Populate room type options dynamically or statically here -->
+                <option value="1">Single</option>
+                <option value="2">Double</option>
+                <option value="3">Suite</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="filterPrice" class="form-label">Filter by Price:</label>
+              <input type="number" id="filterPrice" class="form-control" placeholder="Max Price">
+            </div>
+            <div class="col-md-4">
+              <label for="searchNumber" class="form-label">Search by Number:</label>
+              <input type="text" id="searchNumber" class="form-control" placeholder="Room Number">
+            </div>
+          </div>            
           <div class="mb-1">
             <button class="btn btn-outline-success" id="addRoomBtn">Add room</button>             
           </div>          
@@ -45,6 +66,11 @@
               </tbody>
             </table>
           </div>
+        </div>
+         <div class="pagination">
+            <button onclick="previousPage()">Anterior</button>
+            <span id="pageNumber">1</span>
+            <button onclick="nextPage()">Siguiente</button>
         </div>
       </div>
       <div class="carousel-item" id="reservas-carousel">

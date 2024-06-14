@@ -316,14 +316,15 @@ const deleteReservationQuery = async (reservaId) => {
 // add room
 const addRoomQuery = async (numero, tipo_habitacion_id, descripcion, precio, disponibilidad) => {
     const query = `
-        INSERT INTO habitaciones (numero, tipo_habitacion_id, descripcion, precio, disponibilidad) 
-        VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+        INSERT INTO habitaciones (numero, tipo_habitacion_id, descripcion, precio, disponibilidad)
+        VALUES ($1, $2, $3, $4, $5)
+    `;
     const values = [numero, tipo_habitacion_id, descripcion, precio, disponibilidad];
 
     try {
-        const result = await pool.query(query, values);
-        return result.rows[0];
+        await pool.query(query, values);
     } catch (error) {
+        console.error('Error en la consulta SQL:', error);
         throw error;
     }
 };

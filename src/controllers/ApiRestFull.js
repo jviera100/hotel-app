@@ -541,14 +541,18 @@ const deleteReservationControl = async (req, res) => {
 
 // add room
 const addRoomControl = async (req, res) => {
-    const { numero, tipo_habitacion_id, descripcion, precio, disponibilidad } = req.body;
-    
     try {
-        const habitacion = await habitacionQueries.addRoomQuery(numero, tipo_habitacion_id, descripcion, precio, disponibilidad);
-        res.status(201).json({ habitacion, message: 'Habitación agregada correctamente.' });
+        const { numero_habitacion, tipo_habitacion_id, descripcion, precio, disponibilidad } = req.body;
+        
+        if (!numero_habitacion || !tipo_habitacion_id || !descripcion || !precio || !disponibilidad) {
+            return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+        }
+
+        await addRoomQuery(numero_habitacion, tipo_habitacion_id, descripcion, precio, disponibilidad);
+        res.status(201).json({ message: 'Habitación agregada correctamente' });
     } catch (error) {
         console.error('Error al agregar la habitación:', error);
-        res.status(500).json({ message: 'Error al agregar la habitación.' });
+        res.status(500).json({ message: 'Error al agregar la habitación' });
     }
 };
 // room registration form view
@@ -562,21 +566,16 @@ const getAddRoomControl = async (req, res) => {
     }
 };
 // delete room
-const deleteRoomControl = async (req, res) => {
-    const { id } = req.params;
-
+async function deleteRoomControl(req, res) {
     try {
-        const habitacionEliminada = await habitacionQueries.deleteRoomQuery(id);
-        if (habitacionEliminada) {
-            res.status(200).json({ message: 'Habitación eliminada correctamente.' });
-        } else {
-            res.status(404).json({ message: 'No se encontró la habitación para eliminar.' });
-        }
+        const { id } = req.params;
+        const habitacionEliminada = await deleteRoomQuery(id);
+        res.status(200).json(habitacionEliminada);
     } catch (error) {
         console.error('Error al eliminar la habitación:', error);
-        res.status(500).json({ message: 'Error al eliminar la habitación.' });
+        res.status(500).send('Error al eliminar la habitación');
     }
-};
+}
 
 
 

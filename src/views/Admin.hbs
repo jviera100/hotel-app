@@ -116,7 +116,7 @@
                   <td>{{disponibilidadTexto this.disponibilidad}}</td>
                   <td>
                     {{!-- <button type="submit" class="btn btn-outline-warning" id="updateRoomBtn">Update room</button>        --}}
-                    <button class="btn btn-outline-danger" id="deleteRoomBtn">Delete room</button>
+                    <button class="btn btn-outline-danger deleteRoomBtn" data-room-id="{{this.id}}">Delete room</button>
                   </td>
                 </tr>
                 {{/each}}
@@ -253,7 +253,13 @@
                 response = await axios.delete(`/perfil/${email}`);
                 if (response.status === 200) {
                     alert("Perfil eliminado con éxito");
-                    window.location = `/`; // Redirigir a la página de inicio después de eliminar el perfil
+                     // Eliminar la fila de la tabla visualmente
+                    const row = button.closest('tr');
+                    if (row) {
+                        row.remove();
+                    } 
+                    // Recargar la página para reflejar los cambios
+                    location.reload();                   
                 } else {
                     alert("Ha ocurrido un error al intentar eliminar el perfil.");
                 }
@@ -465,42 +471,60 @@
 
 {{!-- script lógica HABITACION javascript frontend  --}}
 <script>
-    // Script para eliminar habitación
-    document.querySelectorAll('.deleteRoomBtn').forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const roomId = btn.getAttribute('data-room-id');
-            try {
-                const response = await fetch(`/room/${roomId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    //body: JSON.stringify({ id: roomId }) // Si deseas enviar datos en el cuerpo de la solicitud
-                });
-                if (response.ok) {
-                    alert('Habitación eliminada correctamente.');
-                    window.location.reload(); // Recargar la página o actualizar la lista de habitaciones
-                } else {
-                    alert('Error al eliminar la habitación.');
+  document.addEventListener('DOMContentLoaded', () => {
+    // Seleccionar todos los botones de eliminar habitación
+    const deleteRoomBtns = document.querySelectorAll('.deleteRoomBtn');
+
+    // Iterar sobre cada botón de eliminar habitación
+    deleteRoomBtns.forEach(deleteRoomBtn => {
+        // Agregar un evento clic a cada botón
+        deleteRoomBtn.addEventListener('click', async () => {
+            // Obtener el ID de la habitación que se va a eliminar
+            const roomId = deleteRoomBtn.getAttribute('data-room-id');
+
+            // Confirmar la eliminación con el usuario
+            if (confirm('¿Estás seguro de que deseas eliminar esta habitación?')) {
+                try {
+                    // Enviar una solicitud DELETE al servidor
+                    const response = await fetch(`/room/${roomId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    });
+
+                    // Verificar si la eliminación fue exitosa
+                    if (response.ok) {
+                        alert('Habitación eliminada correctamente.');
+
+                        // Opcional: Eliminar la fila de la tabla si es necesario
+                        const row = deleteRoomBtn.closest('tr');
+                        if (row) {
+                            row.remove();
+                        }
+
+                        // Opcional: Recargar la página para reflejar los cambios
+                        // window.location.reload();
+                    } else {
+                        // Mostrar un mensaje de error si la eliminación falló
+                        alert('Error al eliminar la habitación.');
+                    }
+                } catch (error) {
+                    // Capturar y manejar errores de red
+                    console.error('Error:', error);
+                    alert('Error de red al intentar eliminar la habitación.');
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error de red al intentar eliminar la habitación.');
             }
         });
     });
 
-    // Script para agregar habitación (redirección)
-    document.getElementById('addRoomBtn').addEventListener('click', function() {
-        window.location.href = '/room-add';
-    });
+    // Event listener para el botón de agregar habitación
+    const addRoomBtn = document.getElementById('addRoomBtn');
+    if (addRoomBtn) {
+        addRoomBtn.addEventListener('click', () => {
+            window.location.href = '/room-add'; // Redirigir a la página de agregar habitación
+        });
+    }
+});
+
 </script>
-
-
-
-
-
-
-
-
-

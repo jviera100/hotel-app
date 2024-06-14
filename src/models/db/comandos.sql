@@ -79,8 +79,8 @@ INSERT INTO habitaciones (numero, tipo_habitacion_id, descripcion, precio, dispo
 (501, 2, 'Double room with jacuzzi.', 100.00, true),
 (502, 2, 'Double room with spa access.', 110.00, true),
 (503, 2, 'Double room with living room.', 115.00, true),
-(601, 3, 'Presidential suite with butler.', 200.00, false),
-(602, 3, 'Executive suite with lounge access.', 180.00, false),
+(601, 3, 'Presidential suite with butler.', 200.00, true),
+(602, 3, 'Executive suite with lounge access.', 180.00, true),
 (603, 3, 'Family suite with two bedrooms.', 160.00, true);
 
 -- Insert data into the table usuarios

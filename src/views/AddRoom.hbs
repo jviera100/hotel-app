@@ -3,32 +3,33 @@
     <h2>Agregar Habitación</h2>
     <hr class="w-50" />
 
-    <form action="/habitaciones" method="POST" id="addRoomForm">
+    <form action="/room" method="POST" id="addRoomForm">
         <div class="form-group row w-50 m-auto">
             <div class="mb-3">
                 <label for="numeroHabitacion" class="form-label">Número de Habitación</label>
-                <select class="form-control" id="numeroHabitacion" name="numero_habitacion" required>
-                    <option value="101">101</option>
-                    <option value="102">102</option>
-                    <option value="103">103</option>
-                    <option value="201">201</option>
-                    <option value="202">202</option>
-                    <option value="203">203</option>
-                    <option value="204">204</option>
-                    <option value="301">301</option>
-                    <option value="302">302</option>
-                    <option value="303">303</option>
-                    <option value="304">304</option>
-                    <option value="401">401</option>
-                    <option value="402">402</option>
-                    <option value="403">403</option>
-                    <option value="501">501</option>
-                    <option value="502">502</option>
-                    <option value="503">503</option>
-                    <option value="601">601</option>
-                    <option value="602">602</option>
-                    <option value="603">603</option>
-                </select>
+                <input type="text" class="form-control" id="numeroHabitacion" name="numero_habitacion" list="numerosHabitacion" required>
+                <datalist id="numerosHabitacion">                
+                    <option value="101">
+                    <option value="102">
+                    <option value="103">
+                    <option value="201">
+                    <option value="202">
+                    <option value="203">
+                    <option value="204">
+                    <option value="301">
+                    <option value="302">
+                    <option value="303">
+                    <option value="304">
+                    <option value="401">
+                    <option value="402">
+                    <option value="403">
+                    <option value="501">
+                    <option value="502">
+                    <option value="503">
+                    <option value="601">
+                    <option value="602">
+                    <option value="603">
+                </datalist>
             </div>
             <div class="form-group col-12 col-sm-6">
                 <label>Tipo de Habitación</label>
@@ -115,7 +116,7 @@
             });
             if (response.ok) {
                 alert('Habitación agregada correctamente.');
-                window.location.href = '/login'; // Redirigir a la vista de administración
+                window.location.href = '/login'; // Redirigir a la vista de login
             } else {
                 alert('Error al agregar la habitación.');
             }

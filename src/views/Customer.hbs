@@ -59,12 +59,21 @@
               </tbody>
             </table>
           </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <div class="pagination">
-            <button onclick="previousPage()">Anterior</button>
-            <span id="pageNumber">1</span>
-            <button onclick="nextPage()">Siguiente</button>
-        </div>
+        
       </div>
       <div class="carousel-item" id="reservas-carousel">
         <div class="container text-center py-4">
@@ -261,79 +270,87 @@
 
 <!-- JavaScript para la lógica de filtros, búsqueda y paginación -->
 <script>
-    let currentPage = 1;
-    let roomsPerPage = 5; // Número de habitaciones por página
-    let filteredRooms = [];
+  document.addEventListener('DOMContentLoaded', function () {
+    const rowsPerPage = 10;
+    const tableBody = document.getElementById('roomTableBody');
+    const pagination = document.getElementById('pagination');
+    const filterType = document.getElementById('filterType');
+    const filterPrice = document.getElementById('filterPrice');
+    const searchNumber = document.getElementById('searchNumber');
 
-    function filterRooms() {
-        const type = document.getElementById('filterType').value;
-        const maxPrice = document.getElementById('filterPrice').value;
-        const number = document.getElementById('searchNumber').value.trim();
+    let rows = Array.from(tableBody.getElementsByTagName('tr'));
+    let filteredRows = [...rows];
+    const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
 
-        // Filtrar habitaciones basadas en los criterios
-        filteredRooms = rooms.filter(room => {
-            const matchesType = type === '' || room.tipo_habitacion_id == type;
-            const matchesPrice = maxPrice === '' || room.precio <= parseInt(maxPrice);
-            const matchesNumber = number === '' || room.numero.includes(number);
-            return matchesType && matchesPrice && matchesNumber;
+    function displayRows(page) {
+      tableBody.innerHTML = '';
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const paginatedRows = filteredRows.slice(start, end);
+      for (let row of paginatedRows) {
+        tableBody.appendChild(row);
+      }
+    }
+
+    function setupPagination() {
+      pagination.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const pageItem = document.createElement('li');
+        pageItem.className = 'page-item';
+        const pageLink = document.createElement('a');
+        pageLink.className = 'page-link';
+        pageLink.href = '#';
+        pageLink.innerText = i;
+        pageLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          displayRows(i);
+          setCurrentPage(i);
         });
-
-        currentPage = 1;
-        displayRooms();
+        pageItem.appendChild(pageLink);
+        pagination.appendChild(pageItem);
+      }
     }
 
-    function displayRooms() {
-        const startIndex = (currentPage - 1) * roomsPerPage;
-        const endIndex = startIndex + roomsPerPage;
-        const toDisplay = filteredRooms.slice(startIndex, endIndex);
-
-        const tableBody = document.getElementById('roomTableBody');
-        tableBody.innerHTML = '';
-
-        toDisplay.forEach(room => {
-            const row = `<tr>
-                <td>${room.id}</td>
-                <td>${room.numero}</td>
-                <td>${tipoHabitacionTexto(room.tipo_habitacion_id)}</td>
-                <td>${room.descripcion}</td>
-                <td>${room.precio}</td>
-                <td>${room.disponibilidad ? 'Disponible' : 'No disponible'}</td>
-            </tr>`;
-            tableBody.innerHTML += row;
-        });
-
-        updatePagination();
+    function setCurrentPage(page) {
+      const pageItems = pagination.getElementsByClassName('page-item');
+      for (let item of pageItems) {
+        item.classList.remove('active');
+      }
+      pageItems[page - 1].classList.add('active');
     }
 
-    function nextPage() {
-        if ((currentPage * roomsPerPage) < filteredRooms.length) {
-            currentPage++;
-            displayRooms();
-        }
+    function applyFilters() {
+      filteredRows = rows.filter(row => {
+        const type = filterType.value;
+        const price = filterPrice.value;
+        const number = searchNumber.value.toLowerCase();
+
+        const rowType = row.cells[2].textContent;
+        const rowPrice = parseFloat(row.cells[4].textContent);
+        const rowNumber = row.cells[1].textContent.toLowerCase();
+
+        return (
+          (type === "" || rowType.includes(type)) &&
+          (price === "" || rowPrice <= parseFloat(price)) &&
+          (number === "" || rowNumber.includes(number))
+        );
+      });
+      displayRows(1);
+      setupPagination();
+      setCurrentPage(1);
     }
 
-    function previousPage() {
-        if (currentPage > 1) {
-            currentPage--;
-            displayRooms();
-        }
-    }
+    filterType.addEventListener('change', applyFilters);
+    filterPrice.addEventListener('input', applyFilters);
+    searchNumber.addEventListener('input', applyFilters);
 
-    function updatePagination() {
-        const totalPages = Math.ceil(filteredRooms.length / roomsPerPage);
-        document.getElementById('pageNumber').textContent = currentPage;
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Suponiendo que 'rooms' es la variable que contiene todas las habitaciones
-        filteredRooms = rooms; // Inicializar con todas las habitaciones
-        displayRooms();
-    });
-
-    document.getElementById('filterType').addEventListener('change', filterRooms);
-    document.getElementById('filterPrice').addEventListener('input', filterRooms);
-    document.getElementById('searchNumber').addEventListener('input', filterRooms);
+    // Inicializar
+    displayRows(1);
+    setupPagination();
+    setCurrentPage(1);
+  });
 </script>
+
 
 
 

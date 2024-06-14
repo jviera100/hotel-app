@@ -3,7 +3,7 @@ $(document).ready(function () {
     
         // boton pdf
         document.getElementById('abrir-pdf-1').addEventListener('click', function () {
-            window.open('../documents/prueba .pdf', '_blank');
+            window.open('../documents/Prueba-JavaScript-01.pdf', '_blank');
           });           
         //   // boton pdf
         // document.getElementById('abrir-pdf-2').addEventListener('click', function () {

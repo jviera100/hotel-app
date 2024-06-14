@@ -28,19 +28,19 @@
         <!-- Botón "Registrarse" -->
         {{#if showRegisterButton}}  
           <li class="nav-item">
-            <a class="nav-link register-btn {{#if (eq currentPage 'registro')}}active{{/if}}" href="/registro">Registrarse</a>  
+            <a class="nav-link register-btn {{#if (eq currentPage 'registro')}}active{{/if}}" href="/registro">Check in</a>  
           </li>
         {{/if}}
         <!-- Botón "Iniciar Sesión" -->
         {{#if showLoginButton}}
           <li class="nav-item">
-            <a class="nav-link login-btn {{#if (eq currentPage 'login')}}active{{/if}}" href="/login">Iniciar Sesión</a>
+            <a class="nav-link login-btn {{#if (eq currentPage 'login')}}active{{/if}}" href="/login">Log in</a>
           </li>
         {{/if}}        
         <!-- Botón "Contacto" -->
         {{#if showContactButton}}
         <li class="nav-item">
-          <a class="nav-link contacto-btn {{#if (eq currentPage 'contacto')}}active{{/if}}" href="/contacto">Contacto</a>
+          <a class="nav-link contacto-btn {{#if (eq currentPage 'contacto')}}active{{/if}}" href="/contacto">Contact</a>
         </li>
         {{/if}}        
         <!-- botones para usuarios autenticados -->
@@ -49,19 +49,19 @@
           <!-- Botón "saludo usuario" -->
           {{#if showGreetingButton}}
           <li class="nav-item">
-            <span class="nav-link saludo-btn">Hola, {{currentUserName}}</span>
+            <span class="nav-link saludo-btn">Hello, {{currentUserName}}</span>
           </li>
           {{/if}}                    
           <!-- Botón "Ver Perfil" -->
           {{#if showProfileButton}}
           <li class="nav-item">
-            <a class="nav-link perfil-btn" href="/perfil/{{currentUserEmail}}">Ver Perfil</a>
+            <a class="nav-link perfil-btn" href="/perfil/{{currentUserEmail}}">View profile</a>
           </li>
           {{/if}}          
           <!-- Botón "Cerrar Sesión" -->
           {{#if showLogoutButton}}
           <li class="nav-item">
-            <a class="nav-link logout-btn" href="/logout">Cerrar Sesión</a>
+            <a class="nav-link logout-btn" href="/logout">Log out</a>
           </li>
           {{/if}}
         {{/if}}

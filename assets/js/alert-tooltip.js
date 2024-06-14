@@ -11,12 +11,12 @@ $(document).ready(function () {
         $('[data-bs-toggle="tooltip"]').tooltip();
       
         // Evento click toolpit en grill e imagen girando
-         $("#enviarCorreo").click(function () {
-            alert("El correo fue enviado correctamente...");
+         $("#sendEmail").click(function () {
+            alert("The email was sent correctly......");
         });
         // Evento click ultimo formulario contact
-        $("#boton-form-contact").click(function () {
-            alert("El correo fue enviado correctamente...");
+        $("#addFavorites").click(function () {
+            alert("It was added to favorites successfully......");
         });          
   
     });

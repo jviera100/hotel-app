@@ -107,3 +107,22 @@ INSERT INTO contactos (nombre, email, mensaje) VALUES
 ('Juan', 'juan@example.com', 'I would like to make a reservation for the next weekend.'),
 ('María', 'maria@example.com', 'Do you have availability for a double room?'),
 ('Pedro', 'pedro@example.com', 'I would like to know more about the hotel services.');
+
+
+
+
+hablame en español quiero algo sencillo en habitaciones debe mostrar con paginacion y contar con un filtro donde el usuario podra filttrar por tipo y precio:
+
+
+registrar formularion contacto en tabla contactos
+
+readme
+
+
+nodemailer
+
+tabla remota neon
+
+render
+
+registros de inicio de sesion en bases de datos y de movimientos o transacciones

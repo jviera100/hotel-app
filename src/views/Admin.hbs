@@ -7,40 +7,38 @@
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active" id="perfil-carousel">
+    <div class="carousel-inner">      
+      <div class="carousel-item active" id="habitaciones-carousel">
         <div class="container text-center py-4">
-          <h2>Users management</h2>           
+          <h2>Room management</h2>            
           <div class="mb-1">
-            <button class="btn btn-outline-success" id="addUserBtn">Add profile</button>             
-          </div>            
+            <button class="btn btn-outline-success" id="addRoomBtn">Add room</button>             
+          </div>          
           <div class="table-responsive">
             <table class="table table-sm table-dark w-100">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Photo</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Password</th>
-                  <th>Type of user</th>
+                  <th>Number</th>
+                  <th>Type of room</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Availability</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {{#each usuarios}}
+                {{#each habitaciones}}
                 <tr>
                   <td>{{this.id}}</td>
+                  <td>{{this.numero}}</td>
+                  <td>{{tipoHabitacionTexto this.tipo_habitacion_id}}</td>
+                  <td>{{this.descripcion}}</td>
+                  <td>{{this.precio}}</td>                  
+                  <td>{{disponibilidadTexto this.disponibilidad}}</td>
                   <td>
-                    <img src="/img/{{this.foto}}" alt="Foto del usuario" class="img-fluid img-thumbnail">
-                  </td>
-                  <td>{{this.username}}</td>
-                  <td>{{this.email}}</td>
-                  <td>{{this.password}}</td>
-                  <td>{{this.tipo_usuario}}</td>                 
-                  <td>
-                    <button type="button" class="btn btn-outline-warning updateUserBtn">Update profile</button>       
-                    <button type="button" class="btn btn-outline-danger deleteUserBtn" data-email="{{this.email}}">Delete profile and reservation</button> 
+                    {{!-- <button type="submit" class="btn btn-outline-warning" id="updateRoomBtn">Update room</button>        --}}
+                    <button class="btn btn-outline-danger deleteRoomBtn" data-room-id="{{this.id}}">Delete room</button>
                   </td>
                 </tr>
                 {{/each}}
@@ -86,37 +84,39 @@
           </div>
         </div>
       </div>
-      <div class="carousel-item" id="habitaciones-carousel">
+      <div class="carousel-item" id="perfil-carousel">
         <div class="container text-center py-4">
-          <h2>Room management</h2>            
+          <h2>Users management</h2>           
           <div class="mb-1">
-            <button class="btn btn-outline-success" id="addRoomBtn">Add room</button>             
-          </div>          
+            <button class="btn btn-outline-success" id="addUserBtn">Add profile</button>             
+          </div>            
           <div class="table-responsive">
             <table class="table table-sm table-dark w-100">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Number</th>
-                  <th>Type of room</th>
-                  <th>Description</th>
-                  <th>Price</th>
-                  <th>Availability</th>
+                  <th>Photo</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Password</th>
+                  <th>Type of user</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {{#each habitaciones}}
+                {{#each usuarios}}
                 <tr>
                   <td>{{this.id}}</td>
-                  <td>{{this.numero}}</td>
-                  <td>{{tipoHabitacionTexto this.tipo_habitacion_id}}</td>
-                  <td>{{this.descripcion}}</td>
-                  <td>{{this.precio}}</td>                  
-                  <td>{{disponibilidadTexto this.disponibilidad}}</td>
                   <td>
-                    {{!-- <button type="submit" class="btn btn-outline-warning" id="updateRoomBtn">Update room</button>        --}}
-                    <button class="btn btn-outline-danger deleteRoomBtn" data-room-id="{{this.id}}">Delete room</button>
+                    <img src="/img/{{this.foto}}" alt="Foto del usuario" class="img-fluid img-thumbnail">
+                  </td>
+                  <td>{{this.username}}</td>
+                  <td>{{this.email}}</td>
+                  <td>{{this.password}}</td>
+                  <td>{{this.tipo_usuario}}</td>                 
+                  <td>
+                    <button type="button" class="btn btn-outline-warning updateUserBtn">Update profile</button>       
+                    <button type="button" class="btn btn-outline-danger deleteUserBtn" data-email="{{this.email}}">Delete profile and reservation</button> 
                   </td>
                 </tr>
                 {{/each}}

@@ -7,7 +7,68 @@
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>      
     </div>
     <div class="carousel-inner">      
-      <div class="carousel-item active" id="reservas-carousel">
+      
+      <div class="carousel-item active" id="habitaciones-carousel">
+        <div class="container text-center py-4">
+          <h2>Room Management</h2>
+          <!-- Filters -->
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label for="filterType" class="form-label">Filter by Type:</label>
+              <select id="filterType" class="form-select">
+                <option value="">All</option>
+                <!-- Populate room type options dynamically or statically here -->
+                <option value="1">Single</option>
+                <option value="2">Double</option>
+                <option value="3">Suite</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="filterPrice" class="form-label">Filter by Price:</label>
+              <input type="number" id="filterPrice" class="form-control" placeholder="Max Price">
+            </div>
+            <div class="col-md-4">
+              <label for="searchNumber" class="form-label">Search by Number:</label>
+              <input type="text" id="searchNumber" class="form-control" placeholder="Room Number">
+            </div>
+          </div>
+          <!-- Room Table -->
+          <div class="table-responsive">
+            <table class="table table-sm table-dark w-100">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Number</th>
+                  <th>Type of Room</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Availability</th>
+                </tr>
+              </thead>
+              <tbody id="roomTableBody">
+                {{#each habitaciones}}
+                <tr>
+                  <td>{{this.id}}</td>
+                  <td>{{this.numero}}</td>
+                  <td>{{tipoHabitacionTexto this.tipo_habitacion_id}}</td>
+                  <td>{{this.descripcion}}</td>
+                  <td>{{this.precio}}</td>
+                  <td>{{disponibilidadTexto this.disponibilidad}}</td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="pagination">
+            <button onclick="previousPage()">Anterior</button>
+            <span id="pageNumber">1</span>
+            <button onclick="nextPage()">Siguiente</button>
+        </div>
+      </div>
+
+
+      <div class="carousel-item" id="reservas-carousel">
         <div class="container text-center py-4">
           <h2>Reservation management</h2> 
           <div class="mb-1">
@@ -36,45 +97,6 @@
                   <td>                     
                     {{!-- <button type="button" class="btn btn-outline-warning updateReservationBtn" data-id="{{this.id}}">Update reservation</button> --}}
                     <button class="btn btn-outline-danger deleteReservationBtn" data-id="{{this.id}}" data-habitacion-id="{{this.habitacion_id}}">Delete reservation</button>                    
-                  </td>
-                </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item" id="habitaciones-carousel">
-        <div class="container text-center py-4">
-          <h2>Room management</h2>            
-          <div class="mb-1">
-            <button class="btn btn-outline-success" id="addRoomBtn">Add room</button>             
-          </div>          
-          <div class="table-responsive">
-            <table class="table table-sm table-dark w-100">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Number</th>
-                  <th>Type of room</th>
-                  <th>Description</th>
-                  <th>Price</th>
-                  <th>Availability</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each habitaciones}}
-                <tr>
-                  <td>{{this.id}}</td>
-                  <td>{{this.numero}}</td>
-                  <td>{{tipoHabitacionTexto this.tipo_habitacion_id}}</td>
-                  <td>{{this.descripcion}}</td>
-                  <td>{{this.precio}}</td>                  
-                  <td>{{disponibilidadTexto this.disponibilidad}}</td>
-                  <td>
-                    {{!-- <button type="submit" class="btn btn-outline-warning" id="updateRoomBtn">Update room</button>        --}}
-                    <button class="btn btn-outline-danger deleteRoomBtn" data-room-id="{{this.id}}">Delete room</button>
                   </td>
                 </tr>
                 {{/each}}
@@ -239,63 +261,81 @@
   });
 </script>
 
-
-{{!-- script lógica HABITACION javascript frontend  --}}
+<!-- JavaScript para la lógica de filtros, búsqueda y paginación -->
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Seleccionar todos los botones de eliminar habitación
-    const deleteRoomBtns = document.querySelectorAll('.deleteRoomBtn');
+    let currentPage = 1;
+    let roomsPerPage = 5; // Número de habitaciones por página
+    let filteredRooms = [];
 
-    // Iterar sobre cada botón de eliminar habitación
-    deleteRoomBtns.forEach(deleteRoomBtn => {
-        // Agregar un evento clic a cada botón
-        deleteRoomBtn.addEventListener('click', async () => {
-            // Obtener el ID de la habitación que se va a eliminar
-            const roomId = deleteRoomBtn.getAttribute('data-room-id');
+    function filterRooms() {
+        const type = document.getElementById('filterType').value;
+        const maxPrice = document.getElementById('filterPrice').value;
+        const number = document.getElementById('searchNumber').value.trim();
 
-            // Confirmar la eliminación con el usuario
-            if (confirm('¿Estás seguro de que deseas eliminar esta habitación?')) {
-                try {
-                    // Enviar una solicitud DELETE al servidor
-                    const response = await fetch(`/room/${roomId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    });
-
-                    // Verificar si la eliminación fue exitosa
-                    if (response.ok) {
-                        alert('Habitación eliminada correctamente.');
-
-                        // Opcional: Eliminar la fila de la tabla si es necesario
-                        const row = deleteRoomBtn.closest('tr');
-                        if (row) {
-                            row.remove();
-                        }
-
-                        // Opcional: Recargar la página para reflejar los cambios
-                        // window.location.reload();
-                    } else {
-                        // Mostrar un mensaje de error si la eliminación falló
-                        alert('Error al eliminar la habitación.');
-                    }
-                } catch (error) {
-                    // Capturar y manejar errores de red
-                    console.error('Error:', error);
-                    alert('Error de red al intentar eliminar la habitación.');
-                }
-            }
+        // Filtrar habitaciones basadas en los criterios
+        filteredRooms = rooms.filter(room => {
+            const matchesType = type === '' || room.tipo_habitacion_id == type;
+            const matchesPrice = maxPrice === '' || room.precio <= parseInt(maxPrice);
+            const matchesNumber = number === '' || room.numero.includes(number);
+            return matchesType && matchesPrice && matchesNumber;
         });
+
+        currentPage = 1;
+        displayRooms();
+    }
+
+    function displayRooms() {
+        const startIndex = (currentPage - 1) * roomsPerPage;
+        const endIndex = startIndex + roomsPerPage;
+        const toDisplay = filteredRooms.slice(startIndex, endIndex);
+
+        const tableBody = document.getElementById('roomTableBody');
+        tableBody.innerHTML = '';
+
+        toDisplay.forEach(room => {
+            const row = `<tr>
+                <td>${room.id}</td>
+                <td>${room.numero}</td>
+                <td>${tipoHabitacionTexto(room.tipo_habitacion_id)}</td>
+                <td>${room.descripcion}</td>
+                <td>${room.precio}</td>
+                <td>${room.disponibilidad ? 'Disponible' : 'No disponible'}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+
+        updatePagination();
+    }
+
+    function nextPage() {
+        if ((currentPage * roomsPerPage) < filteredRooms.length) {
+            currentPage++;
+            displayRooms();
+        }
+    }
+
+    function previousPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayRooms();
+        }
+    }
+
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredRooms.length / roomsPerPage);
+        document.getElementById('pageNumber').textContent = currentPage;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Suponiendo que 'rooms' es la variable que contiene todas las habitaciones
+        filteredRooms = rooms; // Inicializar con todas las habitaciones
+        displayRooms();
     });
 
-    // Event listener para el botón de agregar habitación
-    const addRoomBtn = document.getElementById('addRoomBtn');
-    if (addRoomBtn) {
-        addRoomBtn.addEventListener('click', () => {
-            window.location.href = '/room-add'; // Redirigir a la página de agregar habitación
-        });
-    }
-});
-
+    document.getElementById('filterType').addEventListener('change', filterRooms);
+    document.getElementById('filterPrice').addEventListener('input', filterRooms);
+    document.getElementById('searchNumber').addEventListener('input', filterRooms);
 </script>
+
+
+

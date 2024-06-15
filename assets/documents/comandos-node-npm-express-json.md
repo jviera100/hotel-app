@@ -911,18 +911,7 @@ ejemplo:
     "description": "Snippet para .gitignore"
   }
 }
-# MVC
-/*  MVC (Model-View-Controller: modelo-vista-controlador)
-    ● (frontend = cliente)     
-      el index.js (levanta servidor) y este importa archivo middlewares (configura solicitudes json, handlebars, 
-      errores, fileupload, JWT y carpetas estaticas que muestran el html o hbs en el navegador, y este enlaza 
-      archivos script.js y style.css).
-    ● (backend = servidor)
-      index.js (levanta el servidor) y este importa archivo routes.js (las rutas) y este importa los 
-      controllers.js (api rest full) y este importa las consultas.js (consultas sql), y este importa la 
-      config el db.js (conexion database) y este importa archivo .env (variables de entorno). 
-      Opcionalmente los controllers pueden importar la data de una API o desde archivo json.
-*/
+
 
 
 
@@ -938,10 +927,7 @@ const { emisor, receptor, monto } = datos
       await pool.query(`SELECT * FROM usuarios WHERE nombre = '${receptor}'`)
     ).rows[0];
 -----------------------------------------------------
-body = post = backend
-query = get = lleva signo ? = porque filtra
-params = url
-------------------------------------------------
+
 entonces rowMode muestra un objeto como array?
 petstore.swagger.io para documentar api🤔
 HATEOAS🧐🤔🤯🧑‍🏫 permite paginar la data, mostrar tantos datos por pagina
@@ -958,29 +944,118 @@ secret key = color celeste
 
 logica funcion envia por ruta token y secret key y obtiene data(en que parte de la funcio?)
 
-# Api Rest Full. Uso de req.params, req.body y req.query en las operaciones CRUD con solicitudes HTTP.
+----------------------------------------------------------------------------------------------
 
-● req.params: Se utiliza en las operaciones Read (GET), Update (PUT) y Delete (DELETE) para capturar los parámetros de la ruta en la URL, 
-              generalmente un ID para buscar en la base de datos, API o en un archivo JSON.
-      --ejemplo:
-         //--Read (GET): Para obtener una tarea específica por su ID.//
+body = post = backend
+query = get = lleva signo ? = porque filtra
+params = url
+
+
+--------------------------------------------------------------------------------------------------------------------
+# SPANISH
+
+# Api Rest Full:
+(Uso de req.params, req.body y req.query en las operaciones CRUD con solicitudes HTTP.)
+
+
+# ● req.params: 
+              Se utiliza en las operaciones Read (GET), Update (PUT) y Delete (DELETE), para capturar los parámetros 
+              de la ruta en la URL, generalmente un ID para buscar en la base de datos, API o en un archivo JSON.
+
+      --ejemplo: //--Read (GET): Para obtener una tarea específica por su ID.//
+
                 app.get('/tasks/:taskId', function(req, res) {
                     let taskId = req.params.taskId;
-                    // Buscar la tarea en la base de datos y devolverla
+                    // Buscar la tarea en la base de datos y devolverla//
                 });
-● req.body: Se utiliza en las operaciones Create (POST) y Update (PUT) para acceder a los datos enviados en el cuerpo de la solicitud HTTP, 
-            generalmente para agregar o actualizar datos en la base de datos, API o en un archivo JSON.
-      --ejemplo:
-          //--Create (POST): Para crear una nueva tarea.//
+# ● req.body: 
+            Se utiliza en las operaciones Create (POST) y Update (PUT), para capturar para acceder a los datos enviados
+             en el cuerpo de la solicitud HTTP, generalmente para agregar o actualizar datos en la base de datos, 
+            API o en un archivo JSON.
+
+      --ejemplo: //--Create (POST): Para crear una nueva tarea.//
+
                 app.post('/tasks', function(req, res) {
                     let newTask = req.body;
-                    // Agregar la nueva tarea a la base de datos
+                    // Agregar la nueva tarea a la base de datos//
                     });
-● req.query: Se utiliza en la operación Read (GET) para leer los parámetros de consulta en la URL, 
-             generalmente para filtrar resultados en una base de datos, API o en un archivo JSON.
-      --ejemplo:
-          //--Read (GET): Para obtener tareas que coincidan con un estado específico (por ejemplo, completadas).
+# ● req.query: 
+            Se utiliza en la operación Read (GET) para leer los parámetros de consulta en la URL, generalmente para 
+            filtrar resultados en una base de datos, API o en un archivo JSON.
+
+      --ejemplo: //--Read (GET): Para obtener tareas que coincidan con un estado específico (ejemplo, completadas).//
+
                 app.get('/tasks', function(req, res) {
                     let status = req.query.status;
-                    // Buscar las tareas que coincidan con el estado en la base de datos y devolverlas
+                    // Buscar las tareas que coincidan con el estado en la base de datos 
+                    y devolverlas//
                 });
+          
+--------------------------------------------------------------------------------------------------------------------                
+# ENGLISH
+
+# Api Rest Full:
+(Using req.params, req.body, and req.query in CRUD operations with HTTP requests.)
+
+
+# ● req.params: 
+              It is used in Read (GET), Update (PUT) and Delete (DELETE) operations. to capture the route parameters 
+              in the URL, usually an ID to search the database, API or a JSON file.              
+
+      --example: //--Read (GET): To get a specific task by its ID.//
+
+                app.get('/tasks/:taskId', function(req, res) {
+                    let taskId = req.params.taskId;
+                    // Find the task in the database and return it //
+                });
+# ● req.body:
+            It is used in the Create (POST) and Update (PUT) operations, to capture to access the data sent in the 
+            body of the HTTP request, usually to add or update data in the database, API or in a JSON file.            
+
+      --example: //--Create (POST): To create a new task.//
+
+                app.post('/tasks', function(req, res) {
+                    let newTask = req.body;
+                    // Add the new task to the database //
+                    });
+# ● req.query: 
+            Used in the Read (GET) operation to read the query parameters in the URL, usually to filter results in
+             a database, API or in a JSON file.            
+
+      --example: //--Read (GET): To get tasks that match a specific state (e.g. completed).//
+
+                app.get('/tasks', function(req, res) {
+                    let status = req.query.status;
+                    // Find tasks that match the status in the database and return them //
+                });
+
+--------------------------------------------------------------------------------------------------------------------
+# MVC SPANISH
+/*                            MVC ( modelo-vista-controlador )
+    ● (frontend = cliente):     
+      el index.js (levanta servidor) y este importa archivo middlewares (configura solicitudes json, handlebars, 
+      manejo de errores, fileupload, JWT y carpetas estaticas que muestran las vistas de html o hbs en el navegador), 
+      y la vista main.hbs enlaza las vistas y los partials (navbar y footer) y el main.hbs enlaza las animaciones con  
+      archivos (script.js) y los estilos con archivos (style.css). Ademas hay un script con la logica en cada vista.
+
+    ● (backend = servidor):
+      index.js (levanta el servidor) y este importa archivo routes.js (las rutas) y este importa los 
+      controllers.js (api rest full) y este importa las consultas.js (consultas sql), y este importa la 
+      config el db.js (conexion database) y este importa archivo .env (variables de entorno). 
+      Opcionalmente los controllers pueden importar la data de una API o desde archivo json.
+*/
+# MVC ENGLISH
+/*                             MVC ( Model-View-Controller )
+    ● (frontend = client):
+      the index.js (starts server) and this imports middlewares file (configures json requests, handlebars,
+      error handling, fileupload, JWT and static folders showing html or hbs views in the browser),
+      and the main.hbs view links the views and the partials (navbar and footer) and the main.hbs links the animations 
+      with files (script.js) and styles with files (style.css). There is also a script with the logic in each view.
+
+    ● (backend = server):
+      index.js (raises the server) and this imports the routes.js file (the routes) and this imports the
+      controllers.js (api rest full) and this imports the queries.js (sql queries), and this imports the
+      config the db.js (database connection) and this imports the .env file (environment variables).
+      Controllers can optionally import data from an API or from a json file.
+*/
+----------------------------------------------------------------------------------------------------------------

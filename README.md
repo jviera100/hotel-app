@@ -158,7 +158,9 @@ Este repositorio contiene los archivos y directorios siguientes:
 13. disponibilizar el archivo principal
 
 ...
-
+<Hr>
+    <img src="./assets/img/folder_structure.jpg" alt="">      
+<hr>
 - m8d35Hotel/
   - ├── assets/
   - │   ├── css/

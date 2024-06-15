@@ -225,19 +225,21 @@ Este repositorio contiene los archivos y directorios siguientes:
   - ├── package.json
   - └── README.md
 
+<hr>
 
 ## Descripción de Directorios Principales
 
-- **assets/**: Contiene recursos como archivos de sonido, hojas de estilo CSS, scripts JS, imágenes y documentos.
-- **config/**: Configuraciones del proyecto, incluyendo archivos de conexión a la base de datos y de configuración de envío de correos electrónicos.
-- **controller/**: Controladores que manejan las solicitudes de la aplicación.
-- **db/**: Archivos de base de datos, incluyendo scripts SQL para transferencias y usuarios.
-- **middlewares/**: Middlewares para la aplicación.
-- **model/**: Modelos de datos para la aplicación.
+- **assets/**: Contiene recursos como archivos de hojas de estilo CSS, scripts JS, imágenes y documentos.
+- **middlewares/**: Middlewares para la aplicación y de token.
 - **node_modules/**: Módulos de Node.js utilizados en el proyecto.
-- **queries/**: Archivos de consultas para la base de datos.
-- **routes/**: Rutas de la aplicación.
-- **views/**: Vistas de la aplicación, incluyendo páginas, diseños y parciales.
+- **routes/**: Rutas de la aplicación y de configuración de envío de correos electrónicos.
+- **src/**: contiene carpetas controller, model, queries y views.
+- - **controller/**: Controladores que manejan las solicitudes de la aplicación.
+- - **model/**: Modelos de datos para la aplicación. Contiene las carpetas db y config.
+- - - **config/**: contiene archivo db.js para la conexión a la base de datos.
+- - - **db/**: Contiene los comandos para crear la base de datos local en postgre.
+- - **queries/**: Archivos de consultas sql para la base de datos.
+- - **views/**: Vistas de la aplicación, incluyendo páginas, diseños y parciales.
 
 ## Otros Archivos y Directorios
 

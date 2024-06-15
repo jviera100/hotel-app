@@ -162,59 +162,59 @@ Este repositorio contiene los archivos y directorios siguientes:
 - m8d35Hotel/
   - ├── assets/
   - │   ├── css/
-  - │   │   ├── alerta-bootstrap.css
-  - │   │   ├── body.css
-  - │   │   ├── card.css
-  - │   │   ├── carousel.css
-  - │   │   ├── modal.css
-  - │   │   └── navbar.css
+  - │   │    ├── alerta-bootstrap.css
+  - │   │    ├── body.css
+  - │   │    ├── card.css
+  - │   │    ├── carousel.css
+  - │   │    ├── modal.css
+  - │   │    └── navbar.css
   - │   ├── js/
-  - │   │   ├── alert-tooltip.js
-  - │   │   ├── api.js
-  - │   │   ├── button-pdf.js
-  - │   │   ├── card.js
-  - │   │   ├── color-change-title.js
-  - │   │   ├── image-rotation.js
-  - │   │   ├── navbar-toggler-rotation.js
-  - │   │   └── parpadea-blinking-fadetoggle.js
+  - │   │    ├── alert-tooltip.js
+  - │   │    ├── api.js
+  - │   │    ├── button-pdf.js
+  - │   │    ├── card.js
+  - │   │    ├── color-change-title.js
+  - │   │    ├── image-rotation.js
+  - │   │    ├── navbar-toggler-rotation.js
+  - │   │    └── parpadea-blinking-fadetoggle.js
   - │   ├── img/
-  - │   │   ├── 1.jpg
-  - │   │   └── 2.jpg
+  - │   │    ├── 1.jpg
+  - │   │    └── 2.jpg
   - │   └── documents/
-  - │       ├── comandos-node-npm-express-json.md
-  - │       └── Prueba-JavaScript-01.pdf
+  - │             ├── comandos-node-npm-express-json.md
+  - │             └── Prueba-JavaScript-01.pdf
   - ├── middlewares/
-  - │   ├── middlewares.js
-  - │   └── token.js
+  - │             ├── middlewares.js
+  - │             └── token.js
   - ├── node_modules/
   - ├── routes/
-  - │   └── routes.js   
+  - │        └── routes.js   
   - ├── src/
   - │   ├── controllers/
-  - │   │   └── ApiRestFull.js
+  - │   │             └── ApiRestFull.js
   - │   ├── models/
-  - │   │       ├── config/
-  - │   │          └── db.js
-  - │   │       └── db/
-  - │   │          └── comandos.sql
+  - │   │        ├── config/
+  - │   │        │        └── db.js
+  - │   │        └── db/
+  - │   │             └── comandos.sql
   - │   ├── queries/
-  - │   │   └── consultas.js
+  - │   │         └── consultas.js
   - │   └── views/
-  - │       ├── layouts/
-  - │       │   └── main.hbs
-  - │       ├── partials/
-  - │       │   ├── footer.hbs
-  - │       │   └── menu.hbs
-  - │       ├── AddReservation.hbs
-  - │       ├── AddRoom.hbs
-  - │       ├── Admin.hbs
-  - │       ├── contacto.hbs
-  - │       ├── Customer.hbs
-  - │       ├── Home.hbs
-  - │       ├── Login.hbs
-  - │       ├── Perfil.hbs
-  - │       ├── Registro.hbs  
-  - │       └── undefined.hbs
+  - │           ├── layouts/
+  - │           │         └── main.hbs
+  - │           ├── partials/
+  - │           │         ├── footer.hbs
+  - │           │         └── menu.hbs
+  - │           ├── AddReservation.hbs
+  - │           ├── AddRoom.hbs
+  - │           ├── Admin.hbs
+  - │           ├── contacto.hbs
+  - │           ├── Customer.hbs
+  - │           ├── Home.hbs
+  - │           ├── Login.hbs
+  - │           ├── Perfil.hbs
+  - │           ├── Registro.hbs  
+  - │           └── undefined.hbs
   - ├── .env
   - ├── .gitignore
   - ├── index.js

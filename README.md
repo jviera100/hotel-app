@@ -1,44 +1,72 @@
 <h1 class="text-center"> ---- MODULE 8-Certification test. <br> Sistema de Gestión de Reservas para Hotel. ---- </h1>
  👨🏽‍💻Development Languages and Tools:
 
- <div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        Accordion Item #1
-      </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        Accordion Item #2
-      </button>
-    </h2>
-    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-        Accordion Item #3
-      </button>
-    </h2>
-    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
-    </div>
-  </div>
-</div>
+ <div>
+            <!-- Botones -->
+            <p class="d-inline-flex gap-1">
+              <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseAboutUs" role="button" aria-expanded="false" aria-controls="collapseAboutUs">
+                About us?
+              </a>
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContactUs" aria-expanded="false" aria-controls="collapseContactUs">
+                Contact us
+              </button>
+            </p>
+            <!-- Contenido colapsable -->
+            <div class="collapse" id="collapseAboutUs">
+              <div class="card card-body-business">
+                <h5>About Us</h5>
+                <p>
+                  Welcome to Hotel Super
+
+                  Location:
+                  In the heart of the city, near attractions, shopping, and cultural sites.
+
+                  Accommodations:
+
+                  Comfortable rooms and suites
+                  Premium linens
+                  Free Wi-Fi
+                  Flat-screen TVs
+                  In-room dining
+                  Luxury toiletries
+                  Dining:
+
+                  Restaurant Super: Gourmet dishes
+                  Café Super: Casual dining
+                  Bar Super: Fine wines and cocktails
+                  Amenities:
+
+                  Fitness center
+                  Rooftop pool
+                  Full-service spa
+                  Business center
+                  Free shuttle service
+                  Events:
+                  Versatile event spaces with modern technology and planning assistance.
+
+                  Sustainability:
+                  Eco-friendly practices, including energy-efficient lighting and waste reduction.
+
+                  Guest Experience:
+                  Friendly staff ensuring a comfortable stay with personalized services.                
+                </p>
+              </div>
+            </div>
+            <div class="collapse" id="collapseContactUs">
+              <div class="card card-body-business">
+                <h5>Contact Us</h5>
+                <p>                
+                  Contact Us:
+
+                  Phone: *56912345678
+                  Email: hotelsuper@mail.com
+                  Website: http://localhost:3000
+                  <hr>
+                  Book your stay today at Hotel Super. We look forward to welcoming you!
+                </p>
+              </div>
+            </div>                          
+          </div> 
    
 <img width="70px" 
     height="70px" 

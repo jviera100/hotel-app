@@ -161,6 +161,7 @@ Este repositorio contiene los archivos y directorios siguientes:
 <Hr>
     <img src="./assets/img/folder_structure.jpg" alt="">      
 <hr>
+
 - m8d35Hotel/
   - ├── assets/
   - │   ├── css/

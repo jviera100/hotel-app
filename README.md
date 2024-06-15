@@ -1,4 +1,4 @@
-<h1> ---- MODULE 8-Certification test. <br> Sistema de Gestión de Reservas para Hotel. ---- </h1>
+<h1 class="text-center"> ---- MODULE 8-Certification test. <br> Sistema de Gestión de Reservas para Hotel. ---- </h1>
  👨🏽‍💻Development Languages and Tools::
    
 <img width="70px" 

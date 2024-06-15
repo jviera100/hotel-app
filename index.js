@@ -31,4 +31,9 @@ setupMiddlewares(app);
 //Routes
 app.use("/", router);
 
+// Ruta para respuestas no definidas
+app.get('*', (req, res) => {
+    res.status(404).render('undefined');
+});
+
 app.listen(PORT, () => console.log(chalk.underline.bgCyanBright.magenta.bold.italic(`🔥🔥🔥🔥🔥Servidor conectado en el puerto🔥🔥🔥🔥🔥http://localhost: ${PORT}`)));

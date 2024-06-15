@@ -43,10 +43,6 @@ console.log('routes.js - Iniciando configuración de rutas');
 
 // Routes to home page
 router.get('/', getHomeControl);
-// // Requerimiento 6: Crear una ruta genérica que devuelva un mensaje para rutas no definidas
-// app.get('*', (req, res) => { //ultima ruta la generica 
-//     res.send("<center><h1>🤣🤣🤣🤣🤣Esta página no existe...🤣🤣🤣🤣🤣 </h1></center>");
-//   });//windows + . = inserta iconos
 
 // Routes for login and logout handler
 router.get('/login', getLoginControl);

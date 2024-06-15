@@ -1,72 +1,82 @@
 <h1 class="text-center"> ---- MODULE 8-Certification test. <br> Sistema de Gestión de Reservas para Hotel. ---- </h1>
  👨🏽‍💻Development Languages and Tools:
 
- <div>
-            <!-- Botones -->
-            <p class="d-inline-flex gap-1">
-              <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseAboutUs" role="button" aria-expanded="false" aria-controls="collapseAboutUs">
-                About us?
-              </a>
-              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContactUs" aria-expanded="false" aria-controls="collapseContactUs">
-                Contact us
-              </button>
-            </p>
-            <!-- Contenido colapsable -->
-            <div class="collapse" id="collapseAboutUs">
-              <div class="card card-body-business">
-                <h5>About Us</h5>
-                <p>
-                  Welcome to Hotel Super
+ # Índice
 
-                  Location:
-                  In the heart of the city, near attractions, shopping, and cultural sites.
+1. [Introducción](#introducción)
+2. [Instalación](#instalación)
+3. [Uso](#uso)
+4. [Contribución](#contribución)
+5. [Licencia](#licencia)
 
-                  Accommodations:
+# Proyecto XYZ
 
-                  Comfortable rooms and suites
-                  Premium linens
-                  Free Wi-Fi
-                  Flat-screen TVs
-                  In-room dining
-                  Luxury toiletries
-                  Dining:
+## Contenido
 
-                  Restaurant Super: Gourmet dishes
-                  Café Super: Casual dining
-                  Bar Super: Fine wines and cocktails
-                  Amenities:
+1. [Introducción](introducción.md)
+2. [Instalación](instalación.md)
+3. [Uso](uso.md)
+4. [Contribución](contribución.md)
+5. [Licencia](licencia.md)
 
-                  Fitness center
-                  Rooftop pool
-                  Full-service spa
-                  Business center
-                  Free shuttle service
-                  Events:
-                  Versatile event spaces with modern technology and planning assistance.
+# Título del Documento
 
-                  Sustainability:
-                  Eco-friendly practices, including energy-efficient lighting and waste reduction.
+<details>
+  <summary>Sección 1: Introducción</summary>
+  
+  Aquí va el contenido de la introducción.
 
-                  Guest Experience:
-                  Friendly staff ensuring a comfortable stay with personalized services.                
-                </p>
-              </div>
-            </div>
-            <div class="collapse" id="collapseContactUs">
-              <div class="card card-body-business">
-                <h5>Contact Us</h5>
-                <p>                
-                  Contact Us:
+</details>
 
-                  Phone: *56912345678
-                  Email: hotelsuper@mail.com
-                  Website: http://localhost:3000
-                  <hr>
-                  Book your stay today at Hotel Super. We look forward to welcoming you!
-                </p>
-              </div>
-            </div>                          
-          </div> 
+<details>
+  <summary>Sección 2: Instalación</summary>
+  
+  Aquí va el contenido de la instalación.
+
+</details>
+
+<details>
+  <summary>Sección 3: Uso</summary>
+  
+  Aquí va el contenido del uso.
+
+</details>
+
+<details>
+  <summary>Sección 4: Contribución</summary>
+  
+  Aquí va el contenido de la contribución.
+
+</details>
+
+<details>
+  <summary>Sección 5: Licencia</summary>
+  
+  Aquí va el contenido de la licencia.
+
+</details>
+
+
+## Introducción
+
+Aquí va el contenido de la introducción.
+
+## Instalación
+
+Aquí va el contenido de la instalación.
+
+## Uso
+
+Aquí va el contenido del uso.
+
+## Contribución
+
+Aquí va el contenido de la contribución.
+
+## Licencia
+
+Aquí va el contenido de la licencia.
+
    
 <img width="70px" 
     height="70px" 

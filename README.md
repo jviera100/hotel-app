@@ -1,4 +1,4 @@
-# //--------MODULE 8-Certification test--------
+<h1> ---- MODULE 8-Certification test. Sistema de Gestión de Reservas para Hotel. ---- </h1>
  👨🏽‍💻Development Languages and Tools::
    
 <img width="70px" 
@@ -73,7 +73,7 @@ www.desafiolatam.com
 
     homeControl: Renderiza la página de inicio (Home) con botones de navegación dependiendo del estado de autenticación del usuario.
     getContactoControl: Renderiza la página de contacto.
-    enviarContactoControl: Procesa el formulario de contacto y envía un mensaje de confirmación al cliente.
+    enviarContactoControl: Procesa el formulario de contacto y envía un mensaje de confirmación al cliente por correo electronico.
     addUsuarioControl: Procesa el formulario de registro de usuario, guarda la imagen de perfil en el servidor y agrega el usuario a la base de datos.
     registroControl: Renderiza la página de registro de usuario.
     getLoginControl: Renderiza la página de inicio de sesión.

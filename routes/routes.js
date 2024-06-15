@@ -1,5 +1,6 @@
 // routes.js (HTTP requests)
 import { Router } from 'express';
+import nodemailer from 'nodemailer';
 import {
     getHomeControl,
     
@@ -42,6 +43,10 @@ console.log('routes.js - Iniciando configuración de rutas');
 
 // Routes to home page
 router.get('/', getHomeControl);
+// // Requerimiento 6: Crear una ruta genérica que devuelva un mensaje para rutas no definidas
+// app.get('*', (req, res) => { //ultima ruta la generica 
+//     res.send("<center><h1>🤣🤣🤣🤣🤣Esta página no existe...🤣🤣🤣🤣🤣 </h1></center>");
+//   });//windows + . = inserta iconos
 
 // Routes for login and logout handler
 router.get('/login', getLoginControl);
@@ -49,8 +54,49 @@ router.post('/login', postLoginControl); // getUserByEmailQuery
 router.get('/logout', logoutControl);
 
 // Routes for contact view
+
+// Configurar el transporte SMTP
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+  
+  // Definir las opciones del correo electrónico
+  const mailOptions = (to, name, message) => ({
+    from: process.env.EMAIL_USER,
+    to: process.env.EMAIL_USER,
+    subject: 'Confirmación de Contacto',
+    text: `Hola ${name}, hemos recibido tu mensaje: "${message}". Nos pondremos en contacto contigo pronto.`,
+});
+
 router.get('/contacto', getContactControl);
-router.post('/contacto', postSendContactControl);
+router.post('/contacto', async (req, res) => {
+    try {
+        // Procesar el envío del formulario de contacto
+        const { nombre, email, mensaje } = req.body;
+        await postSendContactControl(req, res);        
+
+        // Configurar opciones del correo
+        const createMailOptions = mailOptions(email, nombre, mensaje);
+
+        // Enviar el correo electrónico
+        transporter.sendMail(createMailOptions, (error, info) => {
+            if (error) {
+                console.error("Error al enviar el correo electrónico:", error);
+                res.status(500).send("Error al enviar el correo electrónico");
+            } else {
+                console.log("Correo electrónico enviado:", info.response);
+                res.send("Correo electrónico enviado correctamente");
+            }
+        });
+    } catch (error) {
+        console.error("Error al procesar la solicitud:", error);
+        res.status(500).send("Ocurrió un error al procesar la solicitud");
+    }
+});
 
 // Routes for users controllers
 router.post('/registro', addUserRegistrationControl); // addUserQuery

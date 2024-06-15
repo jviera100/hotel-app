@@ -7,6 +7,7 @@ import {
     updateUserByEmailQuery,
     deleteUserAndReservationByEmailQuery,
 
+    addContactQuery,
      
     addReservationQuery,    
     getReservationQuery,
@@ -16,8 +17,8 @@ import {
 
     addRoomQuery,
     deleteRoomQuery,
-    getRoomQuery        
- } from '../queries/consultaSQL.js';
+    getRoomQuery,          
+ } from '../queries/consultaSQL.js'; 
 import jwt from 'jsonwebtoken';
 
 const __dirname = path.resolve();
@@ -196,25 +197,22 @@ const getContactControl = (req, res) => {
     }
 };
 // process sending the contact form
-const postSendContactControl = (req, res) => {
+const postSendContactControl = async (req, res) => {
     try {
-        // Registro de inicio del controlador en la consola
-        console.log('enviarContactoControl - Inicio');
+        console.log('postSendContactControl - Inicio');
+        const { nombre, email, mensaje } = req.body;
+        const contacto = { nombre, email, mensaje };
 
-        // Extrae los datos del formulario de contacto desde el cuerpo de la solicitud
-        const { nombre, email, telefono, mensaje } = req.body;
-        // Registro de los datos del formulario de contacto en la consola
-        console.log('Datos de contacto recibidos:', { nombre, email, telefono, mensaje });
+        // Insertar datos en la tabla contactos
+        const newContact = await addContactQuery(contacto);
+        console.log('Contacto registrado:', newContact); 
 
-        // Envía una respuesta exitosa con un mensaje al cliente
-        res.status(200).send({ message: "Mensaje recibido. Nos pondremos en contacto contigo pronto." });
-
-        // Registro de finalización del controlador en la consola
-        console.log('enviarContactoControl - Fin');
+        // No enviar la respuesta aquí
+        //res.status(200).send({ message: "Mensaje recibido. Nos pondremos en contacto contigo pronto." });
+        console.log('postSendContactControl - Fin');
     } catch (error) {
-        // Manejo de errores: si ocurre un error durante el procesamiento de la solicitud
-        console.error('Error en enviarContactoControl:', error); // Registro del error en la consola de errores
-        res.status(500).send('Ocurrió un error al procesar el formulario de contacto'); // Envía una respuesta de error HTTP con el mensaje de error detallado
+        console.error('Error en postSendContactControl:', error);
+        res.status(500).send('Ocurrió un error al procesar el formulario de contacto');
     }
 };
 

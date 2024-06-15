@@ -115,6 +115,24 @@ const deleteUserAndReservationByEmailQuery = async (email) => {
 };
 
 
+// CONTACT
+
+const addContactQuery = async (contacto) => {
+    try {
+        const { nombre, email, mensaje } = contacto;
+        const consultaContacto = {
+            text: 'INSERT INTO contactos (nombre, email, mensaje) VALUES ($1, $2, $3) RETURNING *',
+            values: [nombre, email, mensaje],
+        };
+        const result = await pool.query(consultaContacto);
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error al agregar contacto:', error);
+        throw error;
+    }
+};
+
+
 
 
 
@@ -377,14 +395,6 @@ const getRoomQuery = async () => {
 };
 
 
-
-
-
-
-
-
-
-
 console.log('consultasSQL.js - Configuración de consultas SQL completa');
 
 export { 
@@ -394,6 +404,7 @@ export {
     updateUserByEmailQuery,
     deleteUserAndReservationByEmailQuery,
 
+    addContactQuery,
      
     addReservationQuery,    
     getReservationQuery,
@@ -403,5 +414,5 @@ export {
 
     addRoomQuery,
     deleteRoomQuery,    
-    getRoomQuery    
+    getRoomQuery,    
 };

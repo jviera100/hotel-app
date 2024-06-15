@@ -1,18 +1,18 @@
 <!-- views/AddReservation.hbs -->
 <div class="py-4">
-    <h2>Agregar Reserva</h2>
+    <h2>Add Reservation</h2>
     <hr class="w-50" />
     <form id="addReservationForm">
         <div class="mb-3">
-            <label for="fechaReserva" class="form-label">Fecha de Reserva</label>
+            <label for="fechaReserva" class="form-label">Reservation date</label>
             <input type="date" class="form-control" id="fechaReserva" name="fecha_reserva" required>
         </div>
         <div class="mb-3">
-            <label for="fechaSalida" class="form-label">Fecha de Salida</label>
+            <label for="fechaSalida" class="form-label">Departure date</label>
             <input type="date" class="form-control" id="fechaSalida" name="fecha_salida" required>
         </div>
         <div class="mb-3">
-            <label for="numeroHabitacion" class="form-label">Número de Habitación</label>
+            <label for="numeroHabitacion" class="form-label">Room number</label>
             <select class="form-control" id="numeroHabitacion" name="numero_habitacion" required>
                 <option value="101">101</option>
                 <option value="102">102</option>
@@ -39,10 +39,10 @@
 
 
         <div class="mb-3">
-            <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
+            <label for="nombreUsuario" class="form-label">Username</label>
             <input type="text" class="form-control" id="nombreUsuario" name="nombre_usuario" required>
         </div>
-        <button type="submit" class="btn btn-primary">Agregar Reserva</button>
+        <button type="submit" class="btn btn-primary">Add Reservation</button>
     </form>
     <script>
         document.getElementById('addReservationForm').addEventListener('submit', async function(event) {

@@ -383,7 +383,7 @@ console.log(chalk.underline.bgCyanBright.magenta.bold.italic(JSON.stringify({ me
 // Moment: Para formatear las fechas.
 // Lodash: Para dividir el arreglo de usuarios por sexo.
 // Chalk: Para imprimir en la consola con colores.version 5.3 con import
-// npm i express express-handlebars bootstrap jquery path chalk uuid moment lodash axios cli-table3 jimp nodemailer dotenv yargs pg pg-cursor sequelize pg-hstore cors body-parser
+// npm i express express-handlebars bootstrap jquery path chalk uuid moment lodash axios cli-table3 jimp nodemailer dotenv yargs pg pg-cursor sequelize pg-hstore cors body-parser ⭐⭐⭐⭐⭐
 //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻
 // npm i --- instala todas las dependencias registradas en json ---👨🏽‍💻
 // npm i cli-table3 ------
@@ -552,10 +552,7 @@ app.use("/colores/:color", (req, res, next) => {
 app.get("/colores/:color", (req, res, next) => {
   res.send("Si, es azúl")
 });
-// Requerimiento 6: Crear una ruta genérica que devuelva un mensaje para rutas no definidas
-app.get('*', (req, res) => { //ultima ruta la generica 
-  res.send("<center><h1>🤣🤣🤣🤣🤣Esta página no existe...🤣🤣🤣🤣🤣 </h1></center>");
-});//windows + . = inserta iconos
+
 
 // Requerimiento 7: Crear una ruta para obtener los datos de la API: https://jsonplaceholder.typicode.com/users
 /*

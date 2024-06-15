@@ -1,12 +1,12 @@
 <!-- AddRoom.hbs -->
 <div class="py-4">
-    <h2>Agregar Habitación</h2>
+    <h2>Add Room</h2>
     <hr class="w-50" />
 
     <form action="/room" method="POST" id="addRoomForm">
         <div class="form-group row w-50 m-auto">
             <div class="mb-3">
-                <label for="numeroHabitacion" class="form-label">Número de Habitación</label>
+                <label for="numeroHabitacion" class="form-label">Room number</label>
                 <input type="text" class="form-control" id="numeroHabitacion" name="numero_habitacion" list="numerosHabitacion" required>
                 <datalist id="numerosHabitacion">                
                     <option value="101">
@@ -32,7 +32,7 @@
                 </datalist>
             </div>
             <div class="form-group col-12 col-sm-6">
-                <label>Tipo de Habitación</label>
+                <label>Type of room</label>
                 <select class="form-control m-auto" name="tipo_habitacion_id" required>
                     <option value="1">Single</option>
                     <option value="2">Double</option>
@@ -40,7 +40,7 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
+                <label for="descripcion" class="form-label">Description</label>
                 <select class="form-control" id="descripcion" name="descripcion" required>
                     <option value="Single room with private bathroom.">Single room with private bathroom.</option>
                     <option value="Single room with garden view.">Single room with garden view.</option>
@@ -66,7 +66,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="precio" class="form-label">Precio</label>
+                <label for="precio" class="form-label">Price</label>
                 <select class="form-control" id="precio" name="precio" required>
                     <option value="50.00">$50.00</option>
                     <option value="55.00">$55.00</option>
@@ -92,14 +92,14 @@
             </div>
 
             <div class="form-group col-12 col-sm-6">
-                <label>Disponibilidad</label>
+                <label>Availability</label>
                 <select class="form-control m-auto" name="disponibilidad" required>
                     <option value="true">Disponible</option>
                     <option value="false">No Disponible</option>
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-info mb-3">Agregar Habitación</button>
+        <button type="submit" class="btn btn-info mb-3"> Add Room </button>
     </form>
 </div>
 

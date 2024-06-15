@@ -96,30 +96,24 @@ INSERT INTO usuarios (username, email, password, tipo_usuario, foto) VALUES
 ('user9', 'user9@mail.com', 'p9', 'customer', 'yoda.jpg'),
 ('user10', 'user10@mail.com', 'p10', 'customer', 'adam.jpg');
 
--- -- Insert data into the table reservas => no se insertara porque se agregaran reservas al iniciar su funcionamiento y porque disponibilidad cambia al agregar, actualizar y eliminar, pero no sincroniza con reservas previas registradas
+-- -- Insert data into the table reservas => se inicia vacia la tabla y porque disponibilidad cambia al agregar, actualizar y eliminar, pero no sincroniza con reservas previas registradas
 -- INSERT INTO reservas (fecha_reserva, fecha_salida, habitacion_id, cliente_id) VALUES
 -- ('2024-05-10', '2024-05-15', 1, 1),
 -- ('2024-05-12', '2024-05-18', 2, 2),
 -- ('2024-05-14', '2024-05-20', 3, 3);
 
--- Insert data into the table contactos
-INSERT INTO contactos (nombre, email, mensaje) VALUES
-('Juan', 'juan@example.com', 'I would like to make a reservation for the next weekend.'),
-('María', 'maria@example.com', 'Do you have availability for a double room?'),
-('Pedro', 'pedro@example.com', 'I would like to know more about the hotel services.');
+-- Insert data into the table contactos => funciona nodemailer y registro de tabala de contacto, se inicia vacia la tabla
+-- INSERT INTO contactos (nombre, email, mensaje) VALUES
+-- ('Juan', 'juan@example.com', 'I would like to make a reservation for the next weekend.'),
+-- ('María', 'maria@example.com', 'Do you have availability for a double room?'),
+-- ('Pedro', 'pedro@example.com', 'I would like to know more about the hotel services.');
 
 
 
 
 hablame en español quiero algo sencillo en habitaciones debe mostrar con paginacion y contar con un filtro donde el usuario podra filttrar por tipo y precio:
 
-
-registrar formularion contacto en tabla contactos
-
 readme
-
-
-nodemailer
 
 tabla remota neon
 

@@ -159,59 +159,62 @@ Este repositorio contiene los archivos y directorios siguientes:
 
 ...
 
-- my_project/
+- m8d35Hotel/
   - ├── assets/
-  - │   ├── sounds/
   - │   ├── css/
-  - │   │   ├── principal/
-  - │   │   ├── animal/
-  - │   │   └── pokemon/
+  - │   │   ├── alerta-bootstrap.css
+  - │   │   ├── body.css
+  - │   │   ├── card.css
+  - │   │   ├── carousel.css
+  - │   │   ├── modal.css
+  - │   │   └── navbar.css
   - │   ├── js/
-  - │   │   ├── principal/
-  - │   │   ├── pokemon/
-  - │   │   ├── animal/
-  - │   │   └── videos/
+  - │   │   ├── alert-tooltip.js
+  - │   │   ├── api.js
+  - │   │   ├── button-pdf.js
+  - │   │   ├── card.js
+  - │   │   ├── color-change-title.js
+  - │   │   ├── image-rotation.js
+  - │   │   ├── navbar-toggler-rotation.js
+  - │   │   └── parpadea-blinking-fadetoggle.js
   - │   ├── img/
-  - │   │   ├── logo.png
-  - │   │   └── background.jpg
+  - │   │   ├── 1.jpg
+  - │   │   └── 2.jpg
   - │   └── documents/
-  - ├── config/
-  - │   ├── db.js
-  - │   ├── dbMail.js
-  - │   └── dbSend.js
-  - ├── controller/
-  - │   ├── sendMail.js
-  - │   └── userController.js
-  - ├── db/
-  - │   ├── transferencias.sql
-  - │   └── usuarios.sql
+  - │       ├── comandos-node-npm-express-json.md
+  - │       └── Prueba-JavaScript-01.pdf
   - ├── middlewares/
-  - │   └── middlewares.js
-  - ├── model/
-  - │   ├── transferencias.js
-  - │   └── usuarios.js
+  - │   ├── middlewares.js
+  - │   └── token.js
   - ├── node_modules/
-  - ├── queries/
-  - │   └── consultas.js
   - ├── routes/
-  - │   └── routes.js
-  - ├── views/
-  - │   |
-  - │   ├── layouts/
-  - │   │   └── main.hbs
-  - │   │   ├── animales.hbs
-  - │   │   ├── pokemon.hbs
-  - │   │   └── videos.hbs
-  - │   └── partials/
-  - │       ├── api-hero.hbs
-  - │       ├── banco.hbs
-  - │       ├── botones-pdf.hbs
-  - │       ├── carousel.hbs
-  - │       ├── colum-grill.hbs
-  - │       ├── footer.hbs
-  - │       ├── form-contact.hbs
-  - │       ├── grid-card.hbs
-  - │       └── menu.hbs
+  - │   └── routes.js   
+  - ├── src/
+  - │   ├── controllers/
+  - │   │   └── ApiRestFull.js
+  - │   ├── models/
+  - │   │       ├── config/
+  - │   │          └── db.js
+  - │   │       └── db/
+  - │   │          └── comandos.sql
+  - │   ├── queries/
+  - │   │   └── consultas.js
+  - │   └── views/
+  - │       ├── layouts/
+  - │       │   └── main.hbs
+  - │       ├── partials/
+  - │       │   ├── footer.hbs
+  - │       │   └── menu.hbs
+  - │       ├── AddReservation.hbs
+  - │       ├── AddRoom.hbs
+  - │       ├── Admin.hbs
+  - │       ├── contacto.hbs
+  - │       ├── Customer.hbs
+  - │       ├── Home.hbs
+  - │       ├── Login.hbs
+  - │       ├── Perfil.hbs
+  - │       ├── Registro.hbs  
+  - │       └── undefined.hbs
   - ├── .env
   - ├── .gitignore
   - ├── index.js

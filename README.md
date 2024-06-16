@@ -12,6 +12,7 @@
 8. [Gratitude](#Gratitude)
 9. [License](#License)
 10. [Authors](#Authors)
+11. [folders](#folders)
 
 ## Sección 1: requirements in english and spanish <a name="requirements-in-english-and-spanish"></a>
 
@@ -338,7 +339,7 @@ Start Command...
 
 <details>
   <summary>Sección 8: Expressions of Gratitude 🎁 </summary>  
-  
+
   I am grateful for the teaching of [Academia Latam](https://desafiolatam.com/). If you found any value in this project or want to contribute, here's what you can do:
     - Share this project with others
     - Invite me a tea ☕
@@ -363,138 +364,18 @@ Start Command...
 ⌨️ with ❤️ by [Jonathan Viera L](https://github.com/jviera100) 😊 
 </details>
 
+## Sección 11: folders ✒️ <a name="folders"></a>
+# folder structure => 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-<br>
-🚀[token](https://m8d35Hotel.onrender.com)
-<br>
-# folder structure => model view controller (MVC)
-👨🏽‍💻
-<Hr>
+<details>
+  <summary>Sección 11_1: model view controller and requests HTTP (MVC) </summary> 
     <img src="./assets/img/photo_MVC_backend_and_fronted.png" alt="">
-    <img src="./assets/img/photo_ApiRestFull_requestsHTTP_CRUD.png" alt="">  
-<hr>
-www.desafiolatam.com
-<br> 
+    <img src="./assets/img/photo_ApiRestFull_requestsHTTP_CRUD.png" alt="">     
+</details>
 
-
-
-
-
-<p>
-    Definición de rutas y controladores para una API RESTful utilizando Node.js y Express. Aquí hay un resumen de lo que hace cada controlador:
-
-    homeControl: Renderiza la página de inicio (Home) con botones de navegación dependiendo del estado de autenticación del usuario.
-    getContactoControl: Renderiza la página de contacto.
-    enviarContactoControl: Procesa el formulario de contacto y envía un mensaje de confirmación al cliente por correo electronico.
-    addUsuarioControl: Procesa el formulario de registro de usuario, guarda la imagen de perfil en el servidor y agrega el usuario a la base de datos.
-    registroControl: Renderiza la página de registro de usuario.
-    getLoginControl: Renderiza la página de inicio de sesión.
-    postLoginControl: Procesa el formulario de inicio de sesión, verifica las credenciales del usuario y crea un token JWT para la autenticación.
-    habitacionesControl: Renderiza la página de habitaciones disponibles para un usuario autenticado, mostrando también las reservas realizadas por el usuario.
-    reservarHabitacionControl: Controla la reserva de una habitación específica por parte de un usuario.
-    getPerfil: Renderiza la página de perfil de usuario, mostrando los datos del usuario y permitiendo su edición.
-    updatePerfilControl: Procesa la actualización del perfil de usuario, incluida la opción de cambiar la imagen de perfil.
-    deletePerfilControl: Elimina el perfil de usuario y sus datos asociados (reservas).
-    getAdminInicio: Renderiza la página de inicio de administrador, mostrando información sobre usuarios, reservas y habitaciones.
-    getPerfilModalAdmin: Obtiene los datos del perfil de usuario para mostrarlos en un modal administrativo.
-    putStatusAdmin: Actualiza el estado de un usuario (por ejemplo, activo o inactivo) en el panel de administración.
-    registroAdminControl: Renderiza la página de registro para administradores.
-    logoutControl: Controla el cierre de sesión del usuario, eliminando la cookie del token y redirigiendo al usuario a la página de inicio de sesión.
-    Cada controlador realiza operaciones específicas en función de las rutas y los métodos HTTP solicitados. ¿Hay algún controlador en particular sobre el que te gustaría saber más?
-</p>
-<p>
-    Este archivo JavaScript, consultasSQL.js, parece ser un módulo que maneja consultas SQL para interactuar con una base de datos. Veamos su estructura y funcionalidad:
-
-    Importaciones: El módulo importa un objeto pool desde "../models/config/db.js". Esto probablemente representa un grupo de conexiones a la base de datos, comúnmente utilizado en aplicaciones Node.js para gestionar conexiones de base de datos de manera eficiente.
-
-    Funciones:
-
-    addUsuarioQuery: Inserta un nuevo registro de usuario en la tabla usuarios y devuelve los datos del usuario insertado.
-    getUsuariosQuery: Recupera todos los registros de usuarios de la tabla usuarios.
-    getReservasQuery: Recupera datos de reservas, incluyendo el id de la reserva, fecha de reserva, fecha de salida, número de habitación y nombre de usuario del cliente.
-    getReservasUsuarioQuery: Recupera datos de reservas para un usuario específico identificado por su dirección de correo electrónico.
-    getHabitacionesQuery: Recupera todos los registros de habitaciones de la tabla habitaciones.
-    getHabitacionesDisponiblesQuery: Recupera registros de habitaciones disponibles junto con sus detalles de la tabla habitaciones.
-    getHabitacionesNoDisponiblesQuery: Recupera registros de habitaciones no disponibles junto con sus detalles de la tabla habitaciones.
-    getUsuarioByEmailQuery: Recupera un registro de usuario de la tabla usuarios basado en la dirección de correo electrónico proporcionada.
-    updateUsuarioByEmailQuery: Actualiza un registro de usuario en la tabla usuarios basado en la dirección de correo electrónico proporcionada y los campos actualizados.
-    deleteUsuarioByEmailQuery: Elimina un registro de usuario de la tabla usuarios basado en la dirección de correo electrónico proporcionada.
-    setUsuarioStatus: Actualiza el estado de disponibilidad de una habitación en la tabla habitaciones.
-    Manejo de Errores: Cada función incluye bloques try-catch para manejar los errores que puedan ocurrir durante la ejecución de la consulta. Los errores se registran en la consola y se vuelven a lanzar para ser manejados por el llamador.
-
-    Registro: El módulo incluye un registro extenso utilizando declaraciones console.log y console.error para registrar el flujo de ejecución, detalles de la consulta, resultados y errores.
-
-    Exportaciones: Todas las funciones se exportan del módulo para su uso en otras partes de la aplicación.
-
-    En resumen, este módulo proporciona un conjunto de funciones para realizar diversas operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en datos de usuarios y habitaciones en la base de datos. Las declaraciones de registro ayudan en la depuración y monitorización del flujo de ejecución de estas operaciones.
-</p>
-<p>
-    Este archivo routes.js parece definir las rutas para una aplicación web utilizando Express.js. Veamos qué hace cada ruta:
-
-    Importaciones: Se importan varios controladores y middleware desde el archivo ApiRestFull.js y token.js. Estos controladores probablemente manejan la lógica de la aplicación y el middleware maneja la autenticación de tokens JWT.
-    
-    Configuración de Rutas:
-    
-    Se define una instancia de Router de Express.
-    Se registran las rutas utilizando los métodos get y post del router.
-    Registro de Rutas:
-    
-    La ruta principal '/' lleva al controlador homeControl.
-    Hay rutas para el registro de usuarios, el inicio de sesión y las operaciones relacionadas con el perfil del usuario.
-    Las rutas relacionadas con el perfil del usuario requieren un token JWT para la autenticación (verifyToken).
-    También hay rutas específicas para las operaciones de administrador, como cambiar el estado de un usuario y registrarse como administrador.
-    Hay una ruta para cerrar sesión ('/logout').
-    Finalmente, hay rutas para la página de contacto y enviar un mensaje de contacto.
-    Registro de Configuración: Se utilizan declaraciones console.log para registrar el inicio y la finalización de la configuración de las rutas.
-    
-    Exportación: El router configurado se exporta para su uso en otros archivos de la aplicación.
-    
-    En resumen, este archivo define las rutas y las asocia con los controladores correspondientes para manejar las solicitudes HTTP entrantes en la aplicación web. También gestiona la autenticación de tokens JWT para ciertas rutas que requieren autenticación de usuario.
-</p>
-
-# Estructura de Directorios de my_project🚀
-
-Este proyecto tiene una estructura organizada en directorios para manejar diferentes aspectos como estilos, scripts, imágenes, bases de datos y vistas. Reutilizable, asegúrate de ajustar los nombres de los archivos y directorios según tu proyecto específico.
-
-Este repositorio contiene los archivos y directorios siguientes:
-
-1. Crear la BBDD
-2. Crear las tablas
-3. levantar el proyecto
-4. crear el index
-5. crear el package.json
-6. configurar el package.json
-7. Instalar las depenciencias
-8. conectar la BBDD
-9. crear el repositorio local y remoto
-10. crear el gigignore
-11. guardar el primer y hacer push
-12. levantar el servidor
-13. disponibilizar el archivo principal
-
-...
-<Hr>
-    <img src="./assets/img/folder_structure.jpg" alt="">      
-<hr>
-
+<details>
+  <summary>Sección 11_2: folder structure</summary>
+  <img src="./assets/img/folder_structure.jpg" alt="">  
 - m8d35Hotel/
   - ├── assets/
   - │   ├── css/
@@ -557,30 +438,43 @@ Este repositorio contiene los archivos y directorios siguientes:
   - ├── package-lock.json
   - ├── package.json
   - └── README.md
+ 
+</details>
 
-<hr>
+<details>
+  <summary>Sección 11_3: folder description</summary> 
 
-## Descripción de Directorios Principales
+## Description of Main Directories
 
-- **assets/**: Contiene recursos como archivos de hojas de estilo CSS, scripts JS, imágenes y documentos.
-- **middlewares/**: Middlewares para la aplicación y de token.
-- **node_modules/**: Módulos de Node.js utilizados en el proyecto.
-- **routes/**: Rutas de la aplicación y de configuración de envío de correos electrónicos.
-- **src/**: contiene carpetas controller, model, queries y views.
-- - **controller/**: Controladores que manejan las solicitudes de la aplicación.
-- - **model/**: Modelos de datos para la aplicación. Contiene las carpetas db y config.
-- - - **config/**: contiene archivo db.js para la conexión a la base de datos.
-- - - **db/**: Contiene los comandos para crear la base de datos local en postgre.
-- - **queries/**: Archivos de consultas sql para la base de datos.
-- - **views/**: Vistas de la aplicación, incluyendo páginas, diseños y parciales.
+- **assets/**: Contains resources such as CSS style sheet files, JS scripts, images and documents.
+- **middlewares/**: Middlewares for the application and token.
+- **node_modules/**: Node.js modules used in the project.
+- **routes/**: Routes for the application and email sending configuration.
+- **src/**: contains controller, model, queries and views folders.
+- - **controller/**: Controllers that handle application requests.
+- - **model/**: Data models for the application. It contains the db and config folders.
+- - - **config/**: contains db.js file for connecting to the database.
+- - - **db/**: Contains the commands to create the local database in postgre.
+- - **queries/**: SQL query files for the database.
+- - **views/**: Views of the application, including pages, layouts and partials.
 
-## Otros Archivos y Directorios
+## Other Files and Directories
 
-- **.env**: Archivo de configuración de variables de entorno.
-- **.gitignore**: Archivo para especificar qué archivos y directorios se deben ignorar en Git.
-- **index.js**: Archivo principal de la aplicación.
-- **package-lock.json**: Archivo de bloqueo de versiones de las dependencias de Node.js.
-- **package.json**: Archivo de configuración del proyecto Node.js.
-- **README.md**: Este archivo de documentación.
+- **.env**: Environment variables configuration file.
+- **.gitignore**: File to specify which files and directories should be ignored in Git.
+- **index.js**: Main application file.
+- **package-lock.json**: Version lock file for Node.js dependencies.
+- **package.json**: Node.js project configuration file.
+- **README.md**: This documentation file. 
+</details>
+
+
+    
+
+
+
+
+
+
 
 

@@ -1,4 +1,4 @@
-# <h1 class="text-center"> ---- MODULE 8-Certification test. <br> Hotel Reservation Management System. ---- </h1>
+# <h1 class="text-center"> 🚀---- MODULE 8-Certification test. <br> Hotel Reservation Management System. ---- </h1>
 
  # Index of contents.
 
@@ -6,8 +6,8 @@
 2. [photos of requirements: ](#photos-of-requirements)
 3. [ Development Languages and Tools: ](#tools)
 4. [ project screenshots: ](#project-screenshots)
-5. [Instalación: ](#instalación)
-6. [Uso: ](#uso)
+5. [prerequisites for installation: ](#prerequisites-for-installation)
+6. [Project Installation: ](#Project-Installation)
 7. [Contribución](#contribución)
 8. [Licencia](#licencia)
 
@@ -46,7 +46,7 @@
     </div>
 </details>
 
-## Sección 3:  👨🏽‍💻Development Languages and Tools:  <a name="tools"></a>
+## Sección 3: 👨🏽‍💻 Development Languages and Tools:  <a name="tools"></a>
 
 <details>
   <summary>Sección 3:  👨🏽‍💻Development Languages and Tools: </summary>  
@@ -152,23 +152,40 @@
     </div>
 </details>
 
-
-## Sección 4: Instalación <a name="instalación"></a>
+## Sección 5: 📋 prerequisites for installation <a name="prerequisites-for-installation"></a>
 
 <details>
-  <summary>Sección 4: Instalación</summary>
-  
-  Aquí va el contenido de la instalación.
-
+  <summary>Sección 4: prerequisites for installation</summary>
+    <div>
+        <p>
+            These instructions will guide you to get a copy of this project up and running on your local machine for development and testing purposes.
+            List of software and tools, which you need to install and run this project:
+            - Operating System (e.g. Windows 11)
+            - code editor (e.g. visual Studio Code or Atom)
+            - Database (e.g. PostgreSQL, Dbeaver or Neon)
+            - Internet to run it in Render
+        </p>
+    </div>
 </details>
 
-## Sección 5: Uso <a name="uso"></a>
+## Sección 6: 🔧 Project Installation ⚙️ <a name="Project-Installation"></a>
 
 <details>
-  <summary>Sección 5: Uso</summary>
-  
-  Aquí va el contenido del uso.
+  <summary>Sección 5: Project Installation</summary>
+    <div>  
+        installing the dependencies in Node.js with the following command ( Build Command ) :
 
+                ```bash
+                # paso 1
+                ```
+
+                Start Command...
+
+                ```bash
+                # paso 2
+                ```
+
+    </div>
 </details>
 
 ## Sección 6: Contribución <a name="contribución"></a>

@@ -114,12 +114,8 @@ INSERT INTO usuarios (username, email, password, tipo_usuario, foto) VALUES
 
 
 
-hablame en español quiero algo sencillo en habitaciones debe mostrar con paginacion y contar con un filtro donde el usuario podra filttrar por tipo y precio:
-
-readme
+paginacion y contar con un filtro donde el usuario podra filtrar por tipo y precio:
 
 tabla remota neon
-
-render
 
 registros de inicio de sesion en bases de datos y de movimientos o transacciones

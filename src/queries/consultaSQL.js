@@ -206,9 +206,9 @@ const getReservationQuery = async () => {
             JOIN             
                 habitaciones h ON r.habitacion_id = h.id
             JOIN             
-                usuarios u ON r.cliente_id = u.id
-            ORDER BY 
-                h.numero;  -- Ordenar por número de habitación
+                usuarios u ON r.cliente_id = u.id               
+            ORDER BY                 
+                r.fecha_salida ASC, u.username ASC, h.numero ASC NULLS LAST;
             `,
         };
         console.log("getReservationQuery - Ejecutando consulta:", consultaGetReservas);
@@ -380,7 +380,7 @@ const getRoomQuery = async () => {
                 LEFT JOIN reservas r ON h.id = r.habitacion_id AND r.fecha_salida > CURRENT_DATE
                 LEFT JOIN usuarios u ON r.cliente_id = u.id
                 ORDER BY
-                    h.numero;
+                    h.disponibilidad DESC, h.numero ASC NULLS LAST;
             `,
         };
         console.log("getRoomQuery - Ejecutando consulta:", consultaGetHabitaciones);

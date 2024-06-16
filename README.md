@@ -172,7 +172,7 @@
 
 <details>
   <summary>Sección 5: Project Installation</summary>     
-        installing the dependencies in Node.js with the following command ( Build Command ) :
+        installing the dependencies in Node.js with the following command :
 installing the dependencies in Node.js with the following command :
 Build Command...
 

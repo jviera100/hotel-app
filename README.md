@@ -1,15 +1,7 @@
 <h1 class="text-center"> ---- MODULE 8-Certification test. <br> Sistema de Gestión de Reservas para Hotel. ---- </h1>
  👨🏽‍💻Development Languages and Tools:
 
- # Índice
-
-1. [Introducción](#introducción)
-2. [Instalación](#instalación)
-3. [Uso](#uso)
-4. [Contribución](#contribución)
-5. [Licencia](#licencia)
-
-# Proyecto XYZ
+ # Proyecto XYZ = Título del Documento
 
 ## Contenido
 
@@ -19,7 +11,15 @@
 4. [Contribución](contribución.md)
 5. [Licencia](licencia.md)
 
-# Título del Documento
+ # Índice
+
+1. [Introducción](#introducción)
+2. [Instalación](#instalación)
+3. [Uso](#uso)
+4. [Contribución](#contribución)
+5. [Licencia](#licencia)
+
+## Sección 1: Introducción <a name="introducción"></a>
 
 <details>
   <summary>Sección 1: Introducción</summary>
@@ -28,12 +28,16 @@
 
 </details>
 
+## Sección 2: Instalación <a name="instalación"></a>
+
 <details>
   <summary>Sección 2: Instalación</summary>
   
   Aquí va el contenido de la instalación.
 
 </details>
+
+## Sección 3: Uso <a name="uso"></a>
 
 <details>
   <summary>Sección 3: Uso</summary>
@@ -42,12 +46,16 @@
 
 </details>
 
+## Sección 4: Contribución <a name="contribución"></a>
+
 <details>
   <summary>Sección 4: Contribución</summary>
   
   Aquí va el contenido de la contribución.
 
 </details>
+
+## Sección 5: Licencia <a name="licencia"></a>
 
 <details>
   <summary>Sección 5: Licencia</summary>
@@ -65,25 +73,18 @@
 </details>
 
 
-## Introducción
 
-Aquí va el contenido de la introducción.
 
-## Instalación
 
-Aquí va el contenido de la instalación.
 
-## Uso
 
-Aquí va el contenido del uso.
 
-## Contribución
 
-Aquí va el contenido de la contribución.
 
-## Licencia
 
-Aquí va el contenido de la licencia.
+
+
+
 
    
 <img width="70px" 

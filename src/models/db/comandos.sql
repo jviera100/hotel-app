@@ -11,6 +11,9 @@ DROP TABLE IF EXISTS contactos;
 DROP TABLE IF EXISTS habitaciones;
 DROP TABLE IF EXISTS tiposhabitaciones;
 
+-- Create the database
+CREATE DATABASE reservas_hotel;
+
 -- Create the table tiposhabitaciones
 CREATE TABLE tiposhabitaciones (
     id SERIAL PRIMARY KEY,

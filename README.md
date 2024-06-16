@@ -338,7 +338,7 @@ Start Command...
 ## Sección 8: Expressions of Gratitude 🎁 <a name="Gratitude"></a>
 
 <details>
-  <summary>Sección 8: Expressions of Gratitude 🎁 </summary>  
+  <summary>Sección 8: Expressions of Gratitude </summary>  
 
   I am grateful for the teaching of [Academia Latam](https://desafiolatam.com/). If you found any value in this project or want to contribute, here's what you can do:
     - Share this project with others
@@ -376,7 +376,7 @@ Start Command...
 <details>
   <summary>Sección 11_2: folder structure</summary>
   <img src="./assets/img/folder_structure.jpg" alt="">  
-  
+
 - m8d35Hotel/
   - ├── assets/
   - │   ├── css/

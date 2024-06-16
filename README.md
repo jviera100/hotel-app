@@ -3,8 +3,8 @@
 
  # Index of contents.
 
-1. [goals in english](#goals in english)
-2. [goals in spanish](#goals in spanish)
+1. [goals in english](#goals-in-english)
+2. [goals in spanish](#goals-in-spanish)
 3. [Instalación](#instalación)
 4. [Uso](#uso)
 5. [Contribución](#contribución)
@@ -12,7 +12,7 @@
 7. [Licencia](licencia.md)
 
 
-## Sección 1: goals in english <a name="goals in english"></a>
+## Sección 1: goals in english <a name="goals-in-english"></a>
 
 <details>
   <summary>Sección 1: goals in english</summary>
@@ -26,7 +26,7 @@
     </div>
 
 </details>
-## Sección 1: goals in spanish <a name="goals in spanish"></a>
+## Sección 1: goals in spanish <a name="goals-in-spanish"></a>
 
 <details>
   <summary>Sección 1: goals in spanish</summary>

@@ -9,8 +9,9 @@
 5. [prerequisites for installation: ](#prerequisites-for-installation)
 6. [Project Installation: ](#Project-Installation)
 7. [Create database: ](#Create-database)
-8. [Contribución](#contribución)
-9. [Licencia](#licencia)
+8. [Gratitude](#Gratitude)
+9. [License](#License)
+10. [Authors](#Authors)
 
 ## Sección 1: requirements in english and spanish <a name="requirements-in-english-and-spanish"></a>
 
@@ -333,75 +334,38 @@ Start Command...
     </div>
 </details>
 
-## Sección 6: Contribución <a name="contribución"></a>
+## Sección 8: Expressions of Gratitude 🎁 <a name="Gratitude"></a>
 
 <details>
-  <summary>Sección 6: Contribución</summary>
+  <summary>Sección 8: Expressions of Gratitude 🎁 </summary>  
   
-  latam challenge academy.
-
+  I am grateful for the teaching of [Academia Latam](https://desafiolatam.com/). If you found any value in this project or want to contribute, here's what you can do:
+    - Share this project with others
+    - Invite me a tea ☕
+    - Show your appreciation by saying thank you.
 </details>
 
-## Sección 7: Licencia <a name="licencia"></a>
+## Sección 9: License 📄 <a name="License"></a>
 
 <details>
-  <summary>Sección 7: Licencia</summary>
+  <summary>Sección 9: License</summary>  
+
+  This project is under the XYZ License - see the file [LICENSE.md](LICENSE.md) for details.  
+</details>
+
+## Sección 10: Authors ✒️ <a name="Authors"></a>
+
+<details>
+  <summary>Sección 10: Authors</summary> 
   
-  Aquí va el contenido de la licencia.
-  
+  - **Jonathan Viera L** - _Initial work_ - [Jonathan Viera L](https://github.com/jviera100/m8d35Hotel)
+
+⌨️ with ❤️ by [Jonathan Viera L](https://github.com/jviera100) 😊 
 </details>
 
 
------------------------------------------------------------------------------------
-
-## Autores ✒️
-
-- **Brayan Diaz C** - _Trabajo inicial_ - [Brayan Diaz C](https://github.com/brayandiazc)
-
-Mira también la lista de [contribuidores](https://github.com/your/project/contributors) que han participado en este proyecto.
-
-## Licencia 📄
-
-Este proyecto está bajo la Licencia XYZ - ve el archivo [LICENSE.md](LICENSE.md) para detalles
-
-## Expresiones de Gratitud 🎁
-
-Estamos agradecidos por las contribuciones de la comunidad a este proyecto. Si encontraste cualquier valor en este proyecto o quieres contribuir, aquí está lo que puedes hacer:
-
-- Comparte este proyecto con otros
-- Invítanos un café ☕
-- Inicia un nuevo problema o contribuye con un PR
-- Muestra tu agradecimiento diciendo gracias en un nuevo problema.
-
----
-
-⌨️ con ❤️ por [Brayan Diaz C](https://github.com/brayandiazc) 😊
 
 
-------------------------------------------------------------------------------
-
-## Authors ✒️
-
-- **Brayan Diaz C** - _Initial work_ - [Brayan Diaz C](https://github.com/brayandiazc)
-
-Also see the list of [contributors](https://github.com/your/project/contributors) who have participated in this project.
-
-## License 📄
-
-This project is under the XYZ License - see the file [LICENSE.md](LICENSE.md) for details
-
-## Expressions of Gratitude 🎁
-
-We are grateful for the community's contributions to this project. If you found any value in this project or want to contribute, here's what you can do:
-
-- Share this project with others
-- Buy us a coffee ☕
-- Start a new issue or contribute a PR
-- Show your appreciation by saying thank you in a new issue.
-
----
-
-⌨️ with ❤️ by [Brayan Diaz C](https://github.com/brayandiazc) 😊
 
 
 

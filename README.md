@@ -53,7 +53,15 @@
   <summary>Sección 5: Licencia</summary>
   
   Aquí va el contenido de la licencia.
-
+  <div>
+    <img src="./assets/img/1.jpg" alt="">
+    <img src="./assets/img/2.jpg" alt="">
+    <img src="./assets/img/3.jpg" alt="">
+    <img src="./assets/img/4.jpg" alt="">
+    <img src="./assets/img/5.jpg" alt="">
+    <img src="./assets/img/6.jpg" alt="">
+    <img src="./assets/img/7.jpg" alt="">
+  </div>
 </details>
 
 
@@ -330,11 +338,4 @@ Este repositorio contiene los archivos y directorios siguientes:
 - **package.json**: Archivo de configuración del proyecto Node.js.
 - **README.md**: Este archivo de documentación.
 
-<br>
-<img src="./assets/img/1.jpg" alt="">
-<img src="./assets/img/2.jpg" alt="">
-<img src="./assets/img/3.jpg" alt="">
-<img src="./assets/img/4.jpg" alt="">
-<img src="./assets/img/5.jpg" alt="">
-<img src="./assets/img/6.jpg" alt="">
-<img src="./assets/img/7.jpg" alt="">
+

@@ -239,7 +239,9 @@ const getReservationByEmailQuery = async (email) => {
             JOIN             
                 usuarios u ON r.cliente_id = u.id
             WHERE 
-                u.email = $1;            
+                u.email = $1;
+            ORDER BY                 
+                r.fecha_salida ASC, h.numero ASC NULLS LAST;                
             `,
             values: [email],
         };

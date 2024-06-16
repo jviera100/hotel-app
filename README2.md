@@ -1,20 +1,7 @@
 
 
-### Instalación 🔧
 
-installing the dependencies in Node.js with the following command ( Build Command ) :
 
-```bash
-# paso 1
-```
-
-Start Command...
-
-```bash
-# paso 2
-```
-
-## Ejecutando las Pruebas ⚙️
 
 Instrucciones y ejemplos para ejecutar el conjunto de pruebas.
 

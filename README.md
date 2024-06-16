@@ -173,16 +173,19 @@
 <details>
   <summary>Sección 5: Project Installation</summary>     
         installing the dependencies in Node.js with the following command ( Build Command ) :
+installing the dependencies in Node.js with the following command :
+Build Command...
 
-                ```bash
-                # paso 1
-                ```
+```bash
+# paso 1
+```
 
-                Start Command...
+Start Command...
 
-                ```bash
-                # paso 2
-                ```
+```bash
+# paso 2
+```
+               
 </details>
 
 ## Sección 6: Contribución <a name="contribución"></a>

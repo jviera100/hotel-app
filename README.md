@@ -177,13 +177,13 @@ installing the dependencies in Node.js with the following command :
 Build Command...
 
 ```bash
-# paso 1
+# npm i
 ```
 
 Start Command...
 
 ```bash
-# paso 2
+# npm start
 ```
                
 </details>

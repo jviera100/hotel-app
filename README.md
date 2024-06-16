@@ -3,8 +3,8 @@
 
  # Index of contents.
 
-1. [goals in english](#goals-in-english)
-2. [goals in spanish](#goals-in-spanish)
+1. [goals in english and spanish](#goals)
+2. [photos of requirements](#photos-of-requirements)
 3. [Instalación](#instalación)
 4. [Uso](#uso)
 5. [Contribución](#contribución)
@@ -12,7 +12,7 @@
 7. [Licencia](licencia.md)
 
 
-## Sección 1: goals in english <a name="goals-in-english"></a>
+## Sección 1: goals in english <a name="goals"></a>
 
 <details>
   <summary>Sección 1: goals in english</summary>
@@ -26,7 +26,8 @@
     </div>
 
 </details>
-## Sección 1: goals in spanish <a name="goals-in-spanish"></a>
+
+<hr>
 
 <details>
   <summary>Sección 1: goals in spanish</summary>
@@ -41,39 +42,13 @@
 
 </details>
 
-## Sección 2: Instalación <a name="instalación"></a>
+## Sección 2: photos of requirements <a name="photos-of-requirements"></a>
 
 <details>
-  <summary>Sección 2: Instalación</summary>
+  <summary>Sección 2: photos of requirements</summary>
   
-  Aquí va el contenido de la instalación.
+  Aquí va el contenido de la photos of requirements.
 
-</details>
-
-## Sección 3: Uso <a name="uso"></a>
-
-<details>
-  <summary>Sección 3: Uso</summary>
-  
-  Aquí va el contenido del uso.
-
-</details>
-
-## Sección 4: Contribución <a name="contribución"></a>
-
-<details>
-  <summary>Sección 4: Contribución</summary>
-  
-  Aquí va el contenido de la contribución.
-
-</details>
-
-## Sección 5: Licencia <a name="licencia"></a>
-
-<details>
-  <summary>Sección 5: Licencia</summary>
-  
-  Aquí va el contenido de la licencia.
   <div>
     <img src="./assets/img/1.jpg" alt="">
     <img src="./assets/img/2.jpg" alt="">
@@ -83,6 +58,43 @@
     <img src="./assets/img/6.jpg" alt="">
     <img src="./assets/img/7.jpg" alt="">
   </div>
+
+</details>
+
+## Sección 3: Instalación <a name="instalación"></a>
+
+<details>
+  <summary>Sección 2: Instalación</summary>
+  
+  Aquí va el contenido de la instalación.
+
+</details>
+
+## Sección 4: Uso <a name="uso"></a>
+
+<details>
+  <summary>Sección 3: Uso</summary>
+  
+  Aquí va el contenido del uso.
+
+</details>
+
+## Sección 5: Contribución <a name="contribución"></a>
+
+<details>
+  <summary>Sección 4: Contribución</summary>
+  
+  Aquí va el contenido de la contribución.
+
+</details>
+
+## Sección 7: Licencia <a name="licencia"></a>
+
+<details>
+  <summary>Sección 5: Licencia</summary>
+  
+  Aquí va el contenido de la licencia.
+  
 </details>
 
 

@@ -376,6 +376,7 @@ Start Command...
 <details>
   <summary>Sección 11_2: folder structure</summary>
   <img src="./assets/img/folder_structure.jpg" alt="">  
+  
 - m8d35Hotel/
   - ├── assets/
   - │   ├── css/

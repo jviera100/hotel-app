@@ -492,8 +492,18 @@ const addReservationControl = async (req, res) => {
 // reservation registration form view
 const getaddReservationControl = async (req, res) => {
     try {
-        // Aquí puedes obtener datos adicionales si es necesario, como habitaciones disponibles o clientes
-        res.render('AddReservation');
+        // Aquí puedes obtener datos adicionales si es necesario, como habitaciones disponibles o clientes        
+        res.render('AddReservation', {
+            currentPage: 'AddReservation', // Define la página actual como 'addreservation'
+            isAuthenticated: !!req.cookies.token, // Indica si el usuario está autenticado basado en la existencia de la cookie de token
+            showhomeButton: true, // Muestra el botón de inicio en la interfaz de usuario
+            showContactButton: true, // Oculta el botón de contacto en la interfaz de usuario (ya estamos en la página de contacto)
+            showRegisterButton: false, // Muestra el botón de registro en la interfaz de usuario
+            showLoginButton: false, // Muestra el botón de inicio de sesión en la interfaz de usuario
+            showProfileButton: false, // Oculta el botón de perfil en la interfaz de usuario            
+            showGreetingButton: false, // Oculta el mensaje de bienvenida en la interfaz de usuario
+            showLogoutButton: true, // Oculta el botón de cierre de sesión en la interfaz de usuario
+        });
     } catch (error) {
         console.error('Error en renderAddReservaView:', error);
         res.status(500).send('Error al cargar la vista de agregar reserva: ' + error.message);
@@ -549,8 +559,18 @@ const addRoomControl = async (req, res) => {
 // room registration form view
 const getAddRoomControl = async (req, res) => {
     try {
-        // Aquí no se realiza ninguna acción en el backend, simplemente renderizamos la vista
-        res.render('AddRoom'); // Ajusta el nombre de la vista según cómo la hayas definido
+        // Aquí no se realiza ninguna acción en el backend, simplemente renderizamos la vista         
+        res.render('AddRoom', { // Ajusta el nombre de la vista según cómo la hayas definido
+            currentPage: 'AddRoom', // Define la página actual como 'addroom'
+            isAuthenticated: !!req.cookies.token, // Indica si el usuario está autenticado basado en la existencia de la cookie de token
+            showhomeButton: true, // Muestra el botón de inicio en la interfaz de usuario
+            showContactButton: true, // Oculta el botón de contacto en la interfaz de usuario (ya estamos en la página de contacto)
+            showRegisterButton: false, // Muestra el botón de registro en la interfaz de usuario
+            showLoginButton: false, // Muestra el botón de inicio de sesión en la interfaz de usuario
+            showProfileButton: false, // Oculta el botón de perfil en la interfaz de usuario            
+            showGreetingButton: false, // Oculta el mensaje de bienvenida en la interfaz de usuario
+            showLogoutButton: true, // Oculta el botón de cierre de sesión en la interfaz de usuario
+        });
     } catch (error) {
         console.error('Error en getAddRoomControl:', error);
         res.status(500).send('Error al cargar la vista de agregar habitación: ' + error.message);

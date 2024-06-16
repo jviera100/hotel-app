@@ -111,10 +111,16 @@
         <img src="./assets/img/2_3.jpg" alt="Login">
         ### Contacto.hbs
         <img src="./assets/img/2_4.jpg" alt="Contacto">
-        ### Admin.hbs
-        <img src="./assets/img/2_5.jpg" alt="Admin">        
-        ### Customer.hbs
-        <img src="./assets/img/2_6.jpg" alt="Customer">        
+        ### Admin.hbs room
+        <img src="./assets/img/2_5A.jpg" alt="Admin">        
+        ### Admin.hbs reservation
+        <img src="./assets/img/2_5B.jpg" alt="Admin">        
+        ### Admin.hbs user
+        <img src="./assets/img/2_5C.jpg" alt="Admin">        
+        ### Customer.hbs room
+        <img src="./assets/img/2_6A.jpg" alt="Customer">        
+        ### Customer.hbs reservation
+        <img src="./assets/img/2_6B.jpg" alt="Customer">        
         ### Perfil.hbs
         <img src="./assets/img/2_7.jpg" alt="Perfil">
         ### AddReservation.hbs

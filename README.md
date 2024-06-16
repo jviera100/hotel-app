@@ -380,6 +380,29 @@ Estamos agradecidos por las contribuciones de la comunidad a este proyecto. Si e
 
 ------------------------------------------------------------------------------
 
+## Authors ✒️
+
+- **Brayan Diaz C** - _Initial work_ - [Brayan Diaz C](https://github.com/brayandiazc)
+
+Also see the list of [contributors](https://github.com/your/project/contributors) who have participated in this project.
+
+## License 📄
+
+This project is under the XYZ License - see the file [LICENSE.md](LICENSE.md) for details
+
+## Expressions of Gratitude 🎁
+
+We are grateful for the community's contributions to this project. If you found any value in this project or want to contribute, here's what you can do:
+
+- Share this project with others
+- Buy us a coffee ☕
+- Start a new issue or contribute a PR
+- Show your appreciation by saying thank you in a new issue.
+
+---
+
+⌨️ with ❤️ by [Brayan Diaz C](https://github.com/brayandiazc) 😊
+
 
 
 

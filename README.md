@@ -3,14 +3,16 @@
 
  # Index of contents.
 
-1. [requirements in english and spanish](#requirements-in-english-and-spanish)
-2. [photos of requirements](#photos-of-requirements)
-3. [ 👨🏽‍💻Development Languages and Tools: ](#tools)
-4. [Instalación](#instalación)
-5. [Uso](#uso)
-6. [Contribución](#contribución)
-7. [Licencia](#licencia)
-8. [Licencia](licencia.md)
+1. [requirements in english and spanish: ](#requirements-in-english-and-spanish)
+2. [photos of requirements: ](#photos-of-requirements)
+3. [ Development Languages and Tools: ](#tools)
+4. [ project screenshots: ](#project-screenshots)
+5. [Instalación: ](#instalación)
+6. [Uso: ](#uso)
+7. [Contribución](#contribución)
+8. [Licencia](#licencia)
+9. [Licencia](licencia.md)
+10. [prueba](assets/documents/Prueba-JavaScript-01.pdf)
 
 
 ## Sección 1: requirements in english and spanish <a name="requirements-in-english-and-spanish"></a>
@@ -38,13 +40,13 @@
 <details>
   <summary>Sección 2: photos of requirements</summary>
     <div>
-        <img src="./assets/img/1.jpg" alt="">
-        <img src="./assets/img/2.jpg" alt="">
-        <img src="./assets/img/3.jpg" alt="">
-        <img src="./assets/img/4.jpg" alt="">
-        <img src="./assets/img/5.jpg" alt="">
-        <img src="./assets/img/6.jpg" alt="">
-        <img src="./assets/img/7.jpg" alt="">
+        <img src="./assets/img/1_1.jpg" alt="">
+        <img src="./assets/img/1_2.jpg" alt="">
+        <img src="./assets/img/1_3.jpg" alt="">
+        <img src="./assets/img/1_4.jpg" alt="">
+        <img src="./assets/img/1_5.jpg" alt="">
+        <img src="./assets/img/1_6.jpg" alt="">
+        <img src="./assets/img/1_7.jpg" alt="">
     </div>
 </details>
 
@@ -99,6 +101,35 @@
         src="./assets/img/jwtio-json-web-token.svg"> &nbsp; &nbsp; 
     </div>
 </details>
+
+## Sección 4: project screenshots <a name="project-screenshots"></a>
+
+<details>
+  <summary>Sección 4: project screenshots </summary>
+    <div>        
+        ### Home.hbs
+        <img src="./assets/img/2_1.jpg" alt="Home">
+        ### Registro.hbs
+        <img src="./assets/img/2_2.jpg" alt="Registro">        
+        ### Login.hbs
+        <img src="./assets/img/2_3.jpg" alt="Login">
+        ### Contacto.hbs
+        <img src="./assets/img/2_4.jpg" alt="Contacto">
+        ### Admin.hbs
+        <img src="./assets/img/2_5.jpg" alt="Admin">        
+        ### Customer.hbs
+        <img src="./assets/img/2_6.jpg" alt="Customer">        
+        ### Perfil.hbs
+        <img src="./assets/img/2_7.jpg" alt="Perfil">
+        ### AddReservation.hbs
+        <img src="./assets/img/2_8.jpg" alt="AddReservation">        
+        ### AddRoom.hbs
+        <img src="./assets/img/2_9.jpg" alt="AddRoom">        
+        ### Undefined.hbs
+        <img src="./assets/img/2_10.jpg" alt="Undefined">
+    </div>
+</details>
+
 
 ## Sección 4: Instalación <a name="instalación"></a>
 

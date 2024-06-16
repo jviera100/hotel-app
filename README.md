@@ -338,7 +338,7 @@ Start Command...
 <details>
   <summary>Sección 6: Contribución</summary>
   
-  Aquí va el contenido de la contribución.
+  latam challenge academy.
 
 </details>
 
@@ -352,6 +352,33 @@ Start Command...
 </details>
 
 
+-----------------------------------------------------------------------------------
+
+## Autores ✒️
+
+- **Brayan Diaz C** - _Trabajo inicial_ - [Brayan Diaz C](https://github.com/brayandiazc)
+
+Mira también la lista de [contribuidores](https://github.com/your/project/contributors) que han participado en este proyecto.
+
+## Licencia 📄
+
+Este proyecto está bajo la Licencia XYZ - ve el archivo [LICENSE.md](LICENSE.md) para detalles
+
+## Expresiones de Gratitud 🎁
+
+Estamos agradecidos por las contribuciones de la comunidad a este proyecto. Si encontraste cualquier valor en este proyecto o quieres contribuir, aquí está lo que puedes hacer:
+
+- Comparte este proyecto con otros
+- Invítanos un café ☕
+- Inicia un nuevo problema o contribuye con un PR
+- Muestra tu agradecimiento diciendo gracias en un nuevo problema.
+
+---
+
+⌨️ con ❤️ por [Brayan Diaz C](https://github.com/brayandiazc) 😊
+
+
+------------------------------------------------------------------------------
 
 
 

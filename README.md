@@ -156,7 +156,7 @@
 ## Sección 5: 📋 prerequisites for installation <a name="prerequisites-for-installation"></a>
 
 <details>
-  <summary>Sección 4: prerequisites for installation</summary>
+  <summary>Sección 5: prerequisites for installation</summary>
     <div>
         <p>
             These instructions will guide you to get a copy of this project up and running on your local machine for development and testing purposes.
@@ -172,7 +172,7 @@
 ## Sección 6: 🔧 Project Installation ⚙️ <a name="Project-Installation"></a>
 
 <details>
-  <summary>Sección 5: Project Installation</summary>     
+  <summary>Sección 6: Project Installation</summary>     
         installing the dependencies in Node.js with the following command :
 installing the dependencies in Node.js with the following command :
 📦Build Command...
@@ -192,16 +192,30 @@ Start Command...
 ## Sección 7: ⌨️ Create database 🛠️ <a name="Create-database"></a>
 
 <details>
-  <summary>Sección 6: Create database</summary>
+  <summary>Sección 7_1: Create database</summary>
     <div>
         <p>-- Create the database--------
-            CREATE DATABASE reservas_hotel;
-            -- Create the table tiposhabitaciones
+            CREATE DATABASE reservas_hotel;          
+        </p>
+    </div>
+</details>
+
+<details>
+  <summary>Sección 7_2: Create the table tiposhabitaciones</summary>
+    <div>
+        <p>-- Create the table tiposhabitaciones
             CREATE TABLE tiposhabitaciones (
                 id SERIAL PRIMARY KEY,
                 tipo VARCHAR(50) NOT NULL
             );
-            -- Create the table habitaciones-----
+        </p>
+    </div>
+</details>
+
+<details>
+  <summary>Sección 7_3: Create the table habitaciones</summary>
+    <div>
+        <p>-- Create the table habitaciones-----
             CREATE TABLE habitaciones (
                 id SERIAL PRIMARY KEY,
                 numero INT NOT NULL,
@@ -210,7 +224,14 @@ Start Command...
                 precio DECIMAL(10, 2),
                 disponibilidad BOOLEAN
             );
-            -- Create the table usuarios------
+        </p>
+    </div>
+</details>
+
+<details>
+  <summary>Sección 7_4: Create the table usuarios</summary>
+    <div>
+        <p>-- Create the table usuarios------
             CREATE TABLE usuarios (
                 id SERIAL PRIMARY KEY,
                 username VARCHAR(50) NOT NULL,
@@ -219,7 +240,14 @@ Start Command...
                 tipo_usuario VARCHAR(50),
                 foto VARCHAR(255)
             );
-            -- Create the table reservas-------
+        </p>
+    </div>
+</details>
+
+<details>
+  <summary>Sección 7_5: Create the table reservas</summary>
+    <div>
+        <p>-- Create the table reservas-------
             CREATE TABLE reservas (
                 id SERIAL PRIMARY KEY,
                 fecha_reserva DATE,
@@ -227,19 +255,40 @@ Start Command...
                 habitacion_id INT REFERENCES habitaciones(id),
                 cliente_id INT REFERENCES usuarios(id)
             );
-            -- Create the table contactos--------
+        </p>
+    </div>
+</details>
+
+<details>
+  <summary>Sección 7_6: Create the table contactos</summary>
+    <div>
+        <p>-- Create the table contactos--------
             CREATE TABLE contactos (
                 id SERIAL PRIMARY KEY,
                 nombre VARCHAR(100),
                 email VARCHAR(100),
                 mensaje TEXT
             );
-            -- Insert data into the table tiposhabitaciones----------
+        </p>
+    </div>
+</details>
+
+<details>
+  <summary>Sección 7_7: Insert data into the table tiposhabitaciones</summary>
+    <div>
+        <p>-- Insert data into the table tiposhabitaciones----------
             INSERT INTO tiposhabitaciones (tipo) VALUES
             ('single'),
             ('double'),
-            ('suite');
-            -- Insert 20 rows into the table habitaciones, ensuring they match the three existing types------
+            ('suite');            
+        </p>
+    </div>
+</details>
+
+<details>
+  <summary>Sección 7_8: Insert 20 rows into the table habitaciones</summary>
+    <div>
+        <p>-- Insert 20 rows into the table habitaciones, ensuring they match the three existing types------
             INSERT INTO habitaciones (numero, tipo_habitacion_id, descripcion, precio, disponibilidad) VALUES
             (101, 1, 'Single room with private bathroom.', 50.00, true),
             (102, 1, 'Single room with garden view.', 55.00, true),
@@ -260,8 +309,15 @@ Start Command...
             (503, 2, 'Double room with living room.', 115.00, true),
             (601, 3, 'Presidential suite with butler.', 200.00, true),
             (602, 3, 'Executive suite with lounge access.', 180.00, true),
-            (603, 3, 'Family suite with two bedrooms.', 160.00, true);
-            -- Insert data into the table usuarios-----------------------------------
+            (603, 3, 'Family suite with two bedrooms.', 160.00, true);            
+        </p>
+    </div>
+</details>
+
+<details>
+  <summary>Sección 7_9: Insert data into the table usuarios</summary>
+    <div>
+        <p>-- Insert data into the table usuarios-----------------------------------
             INSERT INTO usuarios (username, email, password, tipo_usuario, foto) VALUES
             ('user1', 'user1@mail.com', 'p1', 'administrator', 'adam_feliz.jpg'),
             ('user2', 'user2@mail.com', 'p2', 'customer', 'adam.jpg'),

@@ -1,15 +1,16 @@
 # <h1 class="text-center"> ---- MODULE 8-Certification test. <br> Hotel Reservation Management System. ---- </h1>
- 👨🏽‍💻Development Languages and Tools:
+
 
  # Index of contents.
 
 1. [requirements in english and spanish](#requirements-in-english-and-spanish)
 2. [photos of requirements](#photos-of-requirements)
-3. [Instalación](#instalación)
-4. [Uso](#uso)
-5. [Contribución](#contribución)
-6. [Licencia](#licencia)
-7. [Licencia](licencia.md)
+3. [ 👨🏽‍💻Development Languages and Tools: ](#tools)
+4. [Instalación](#instalación)
+5. [Uso](#uso)
+6. [Contribución](#contribución)
+7. [Licencia](#licencia)
+8. [Licencia](licencia.md)
 
 
 ## Sección 1: requirements in english and spanish <a name="requirements-in-english-and-spanish"></a>
@@ -47,28 +48,80 @@
     </div>
 </details>
 
-## Sección 3: Instalación <a name="instalación"></a>
+## Sección 3:  👨🏽‍💻Development Languages and Tools:  <a name="tools"></a>
 
 <details>
-  <summary>Sección 2: Instalación</summary>
+  <summary>Sección 3:  👨🏽‍💻Development Languages and Tools: </summary>  
+    <div>
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/html.svg"> &nbsp;
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/css.svg"> &nbsp;
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/javascript.svg"> &nbsp; &nbsp;
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/git.svg"> &nbsp; &nbsp;
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/github-icon-1.svg"> &nbsp; &nbsp; 
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/node.svg"> &nbsp; &nbsp; 
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/npm-square-red-1.svg"> &nbsp; &nbsp; 
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/toptal-logo-wordmark.svg"> &nbsp; &nbsp;  
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/visual-studio-code-1.svg"> &nbsp; &nbsp; 
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/dbeaver-head.png"> &nbsp; &nbsp; 
+        <img width="70px" 
+        height="70px" 
+        style="margin: 10px"
+        src="./assets/img/jwtio-json-web-token.svg"> &nbsp; &nbsp; 
+    </div>
+</details>
+
+## Sección 4: Instalación <a name="instalación"></a>
+
+<details>
+  <summary>Sección 4: Instalación</summary>
   
   Aquí va el contenido de la instalación.
 
 </details>
 
-## Sección 4: Uso <a name="uso"></a>
+## Sección 5: Uso <a name="uso"></a>
 
 <details>
-  <summary>Sección 3: Uso</summary>
+  <summary>Sección 5: Uso</summary>
   
   Aquí va el contenido del uso.
 
 </details>
 
-## Sección 5: Contribución <a name="contribución"></a>
+## Sección 6: Contribución <a name="contribución"></a>
 
 <details>
-  <summary>Sección 4: Contribución</summary>
+  <summary>Sección 6: Contribución</summary>
   
   Aquí va el contenido de la contribución.
 
@@ -77,7 +130,7 @@
 ## Sección 7: Licencia <a name="licencia"></a>
 
 <details>
-  <summary>Sección 5: Licencia</summary>
+  <summary>Sección 7: Licencia</summary>
   
   Aquí va el contenido de la licencia.
   
@@ -98,50 +151,7 @@
 
 
    
-<img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/html.svg"> &nbsp;
-<img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/css.svg"> &nbsp;
-<img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/javascript.svg"> &nbsp; &nbsp;
-    <img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/git.svg"> &nbsp; &nbsp;
-    <img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/github-icon-1.svg"> &nbsp; &nbsp; 
-    <img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/node.svg"> &nbsp; &nbsp; 
-    <img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/npm-square-red-1.svg"> &nbsp; &nbsp; 
-    <img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/toptal-logo-wordmark.svg"> &nbsp; &nbsp;  
-    <img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/visual-studio-code-1.svg"> &nbsp; &nbsp; 
-    <img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/dbeaver-head.png"> &nbsp; &nbsp; 
-    <img width="70px" 
-    height="70px" 
-    style="margin: 10px"
-    src="./assets/img/jwtio-json-web-token.svg"> &nbsp; &nbsp; 
+
 
 <br>
 🚀[token](https://m8d35Hotel.onrender.com)

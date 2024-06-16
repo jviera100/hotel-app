@@ -3,7 +3,7 @@ import pool from "../models/config/db.js";
 
 console.log('consultasSQL.js - Iniciando configuración de consultas SQL');
 
-//USERS
+//USERS 🪛🪪
 
 // add user
 const addUserQuery = async (usuario) => {
@@ -115,7 +115,7 @@ const deleteUserAndReservationByEmailQuery = async (email) => {
 };
 
 
-// CONTACT
+// CONTACT 🪛📧
 
 const addContactQuery = async (contacto) => {
     try {
@@ -136,7 +136,7 @@ const addContactQuery = async (contacto) => {
 
 
 
-//RESERVATION
+//RESERVATION 🪛🗓️
 
 // add reservation and change the room to unavailable
 const addReservationQuery = async (fecha_reserva, fecha_salida, numero_habitacion, nombre_usuario) => {
@@ -329,7 +329,7 @@ const deleteReservationQuery = async (reservaId) => {
 
 
 
-// ROOM
+// ROOM 🪛🏨🛌🏽🛎️
 
 // add room
 const addRoomQuery = async (numero, tipo_habitacion_id, descripcion, precio, disponibilidad) => {

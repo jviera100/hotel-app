@@ -121,7 +121,7 @@
     </div>
 </details>
 
-## Sección 4: project screenshots <a name="project-screenshots"></a>
+## Sección 4: project screenshots 🏆 <a name="project-screenshots"></a>
 
 <details>
   <summary>Sección 4: project screenshots </summary>
@@ -365,7 +365,7 @@ Start Command...
 ⌨️ with ❤️ by [Jonathan Viera L](https://github.com/jviera100) 😊 
 </details>
 
-## Sección 11: Project structure ✒️ <a name="folders"></a>
+## Sección 11: Project structure 🗺️ <a name="folders"></a>
 
 <details>
   <summary>Sección 11_1: model view controller and requests HTTP (MVC) </summary> 

@@ -29,7 +29,7 @@ console.log('ApiRestFull.js - Iniciando configuración de controllers');
 const getHomeControl = async (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
-        console.log('homeControl - Inicio');
+        console.log('homeControl - Inicio🏨🛎️');
         
         // Renderiza la plantilla 'Home' con los siguientes parámetros
         res.render('Home', {
@@ -46,10 +46,10 @@ const getHomeControl = async (req, res) => {
         });
         
         // Registro de finalización del controlador en la consola
-        console.log('homeControl - Fin');
+        console.log('homeControl - Fin🏨🛎️');
     } catch (error) {
         // Manejo de errores: si ocurre un error durante el procesamiento de la solicitud
-        console.error('Error en homeControl:', error); // Registro del error en la consola de errores
+        console.error('Error en homeControl🏨🛎️:', error); // Registro del error en la consola de errores
         res.status(500).send('Error al obtener los datos: ' + error.message); // Envía una respuesta de error HTTP con el mensaje de error detallado
     }
 };
@@ -62,7 +62,7 @@ const getHomeControl = async (req, res) => {
 const getLoginControl = async (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
-        console.log('getLoginControl - Inicio');
+        console.log('getLoginControl - Inicio🪛🔐🪪');
         
         // Renderiza la vista de inicio de sesión con los siguientes parámetros
         res.render('Login', {
@@ -76,10 +76,10 @@ const getLoginControl = async (req, res) => {
         });
 
         // Registro de finalización del controlador en la consola
-        console.log('getLoginControl - Fin');
+        console.log('getLoginControl - Fin🪛🔐🪪');
     } catch (error) {
         // Manejo de errores: si ocurre un error durante el proceso
-        console.error('Error en getLoginControl:', error); // Registro del error en la consola de errores
+        console.error('Error en getLoginControl🪛🔐🪪:', error); // Registro del error en la consola de errores
         res.status(500).send('Ocurrió un error al cargar la vista de inicio de sesión'); // Envía una respuesta de error HTTP con un mensaje de error
     }
 };
@@ -87,31 +87,31 @@ const getLoginControl = async (req, res) => {
 const postLoginControl = async (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
-        console.log('postLoginControl - Inicio');
+        console.log('postLoginControl - Inicio🪛🔐🪪');
         
         // Extrae el correo electrónico y la contraseña del cuerpo de la solicitud
         const { email, password } = req.body;
-        console.log('Intento de inicio de sesión para:', email);
+        console.log('Intento de inicio de sesión para🪛🔐🪪:', email);
 
         // Busca al usuario en la base de datos utilizando su correo electrónico
         const usuario = await getUserByEmailQuery(email);
-        console.log('Usuario obtenido de la base de datos:', usuario);
+        console.log('Usuario obtenido de la base de datos🪛🔐🪪:', usuario);
 
         // Verifica si el usuario existe
         if (!usuario) {
-            console.log('Usuario no encontrado');
+            console.log('Usuario no encontrado🪛🔐🪪');
             return res.status(401).send('Credenciales inválidas');
         }
 
         // Verifica si la contraseña es correcta
         if (usuario.password !== password) {
-            console.log('Contraseña incorrecta');
+            console.log('Contraseña incorrecta🪛🔐🪪');
             return res.status(401).send('Credenciales inválidas');
         }
 
         // Genera un token de autenticación
         const token = jwt.sign({ userId: usuario.id, email: usuario.email }, process.env.SECRET_KEY, { expiresIn: '1h' });
-        console.log('Token generado:', token);
+        console.log('Token generado🪛🔐🪪:', token);
 
         // Almacena el token en una cookie HTTP
         res.cookie('token', token, {
@@ -119,8 +119,8 @@ const postLoginControl = async (req, res) => {
             secure: process.env.NODE_ENV === 'production', // Define si se debe usar HTTPS (solo en producción)
             sameSite: 'Strict' // La cookie solo se envía en solicitudes del mismo sitio
         });
-        console.log('Token almacenado en cookie');
-        console.log('Cookies enviadas:', res.getHeaders()['set-cookie']);
+        console.log('Token almacenado en cookie🪛🔐🪪');
+        console.log('Cookies enviadas🪛🔐🪪:', res.getHeaders()['set-cookie']);
 
         // Redirige al usuario según su tipo de usuario
         if (usuario.tipo_usuario === 'administrator' || usuario.tipo_usuario === 'admin') {
@@ -132,10 +132,10 @@ const postLoginControl = async (req, res) => {
         }
 
         // Registro de finalización del controlador en la consola
-        console.log('postLoginControl - Fin');
+        console.log('postLoginControl - Fin🪛🔐🪪');
     } catch (error) {
         // Manejo de errores: si ocurre un error durante el proceso
-        console.error('Error al procesar el inicio de sesión:', error); // Registro del error en la consola de errores
+        console.error('Error al procesar el inicio de sesión🪛🔐🪪:', error); // Registro del error en la consola de errores
         res.status(500).send('Ocurrió un error al iniciar sesión: ' + error.message); // Envía una respuesta de error HTTP con un mensaje de error
     }
 };
@@ -143,23 +143,23 @@ const postLoginControl = async (req, res) => {
 const logoutControl = (req, res) => {
     try {
         // Registro del inicio del controlador
-        console.log('logoutControl - Inicio');
+        console.log('logoutControl - Inicio🪛🔐🪪');
 
         // Eliminar la cookie del token
         res.clearCookie('token');
         // Registro de la eliminación de la cookie del token
-        console.log('Cookie del token eliminada');
+        console.log('Cookie del token eliminada🪛🔐🪪');
 
         // Redirigir al usuario a la página de inicio de sesión
         res.redirect('/login');
         // Registro de la redirección a /login
-        console.log('Redirigiendo a /login');
+        console.log('Redirigiendo a /login🪛🔐🪪');
 
         // Registro del fin del controlador
-        console.log('logoutControl - Fin');
+        console.log('logoutControl - Fin🪛🔐🪪');
     } catch (error) {
         // Capturar cualquier error que ocurra durante el proceso
-        console.error('Error en logoutControl:', error);
+        console.error('Error en logoutControl🪛🔐🪪:', error);
         // Enviar un mensaje de error al frontend junto con el código de estado 500
         res.status(500).send('Ocurrió un error al cerrar sesión');
     }
@@ -169,11 +169,11 @@ const logoutControl = (req, res) => {
 
 
 
-// contact view
+// contact view 📧
 const getContactControl = (req, res) => {
     try {
         // Registro de inicio del controlador en la consola
-        console.log('getContactControl - Inicio');
+        console.log('getContactControl - Inicio📧');
         
         // Renderiza la plantilla 'Contacto' con los siguientes parámetros
         res.render('Contacto', {
@@ -189,29 +189,29 @@ const getContactControl = (req, res) => {
         });
         
         // Registro de finalización del controlador en la consola
-        console.log('getContactControl - Fin');
+        console.log('getContactControl - Fin📧');
     } catch (error) {
         // Manejo de errores: si ocurre un error durante el procesamiento de la solicitud
-        console.error('Error en getContactControl:', error); // Registro del error en la consola de errores
+        console.error('Error en getContactControl📧:', error); // Registro del error en la consola de errores
         res.status(500).send('Ocurrió un error al renderizar la página de contacto'); // Envía una respuesta de error HTTP con el mensaje de error detallado
     }
 };
-// process sending the contact form
+// process sending the contact form 📧
 const postSendContactControl = async (req, res) => {
     try {
-        console.log('postSendContactControl - Inicio');
+        console.log('postSendContactControl - Inicio📧');
         const { nombre, email, mensaje } = req.body;
         const contacto = { nombre, email, mensaje };
 
         // Insertar datos en la tabla contactos
         const newContact = await addContactQuery(contacto);
-        console.log('Contacto registrado:', newContact); 
+        console.log('Contacto registrado📧:', newContact); 
 
         // No enviar la respuesta aquí
         //res.status(200).send({ message: "Mensaje recibido. Nos pondremos en contacto contigo pronto." });
-        console.log('postSendContactControl - Fin');
+        console.log('postSendContactControl - Fin📧');
     } catch (error) {
-        console.error('Error en postSendContactControl:', error);
+        console.error('Error en postSendContactControl📧:', error);
         res.status(500).send('Ocurrió un error al procesar el formulario de contacto');
     }
 };
@@ -219,7 +219,7 @@ const postSendContactControl = async (req, res) => {
 
 
 
-// USERS
+// USERS 🪛🪪
 
 // add user => addUserQuery
 const addUserRegistrationControl = async (req, res) => {
@@ -473,7 +473,7 @@ const deleteUserAndReservationControl = async (req, res) => {
 
 
 
-//RESERVATION
+//RESERVATION 🪛🔐🪪🗓️
 
 // add reservation => addReservationQuery
 const addReservationControl = async (req, res) => {
@@ -538,7 +538,7 @@ const deleteReservationControl = async (req, res) => {
 };
 
 
-// ROOM
+// ROOM 🪛🔐🪪🏨🛌🏽🛎️
 
 // add room
 const addRoomControl = async (req, res) => {

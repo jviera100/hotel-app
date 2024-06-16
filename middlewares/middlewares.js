@@ -25,7 +25,7 @@ export default function setupMiddlewares(app) {
   app.use(bodyParser.json());
   // Middleware de manejo de errores global
   app.use((err, req, res, next) => {
-    console.error('Error:', err.stack);
+    console.error('Error manejo de errores🪛:', err.stack);
     res.status(500).send('Ha ocurrido un error en el servidor');
   });
   // Configuración de Handlebars

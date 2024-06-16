@@ -9,20 +9,20 @@
  /// Middleware para verificar el token JWT en las rutas, el token se genero en apirest y se almaceno en cookie previamente
  const verifyToken = (req, res, next) => {
      const token = req.cookies.token; // Recupera el token de la cookie
-     console.log('Token recibido:', token);
+     console.log('Token recibido🪛🔐🪪:', token);
      if (token) {
          try {
              const decoded = jwt.verify(token, jwtSecret);
-             console.log('Token decodificado:', decoded);
+             console.log('Token decodificado🪛🔐🪪:', decoded);
              req.user = decoded; // Asigna el token decodificado a req.user
              next();
          } catch (error) {
-            console.error('Fallo al verificar el token:', error);
+            console.error('Fallo al verificar el token🪛🔐🪪:', error);
             res.status(401).json({ message: 'Not authorized, token failed' });
          }
      } else {
          // res.status(401).json({ message: 'Not authorized, no token' });
-         console.log('No se proporcionó token');
+         console.log('No se proporcionó token🪛🔐🪪');
          res.redirect('/nooo');
      }
  };

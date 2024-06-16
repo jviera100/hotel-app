@@ -44,14 +44,14 @@ console.log('routes.js - Iniciando configuración de rutas');
 // Routes to home page
 router.get('/', getHomeControl);
 
-// Routes for login and logout handler
+// Routes for login and logout handler 🔐🪪
 router.get('/login', getLoginControl);
 router.post('/login', postLoginControl); // getUserByEmailQuery
 router.get('/logout', logoutControl);
 
 // Routes for contact view
 
-// Configurar el transporte SMTP
+// Configurar el transporte SMTP 🪛
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -60,7 +60,7 @@ const transporter = nodemailer.createTransport({
     },
   });
   
-  // Definir las opciones del correo electrónico
+  // Definir las opciones del correo electrónico 📧
   const mailOptions = (to, name, message) => ({
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER,
@@ -81,41 +81,41 @@ router.post('/contacto', async (req, res) => {
         // Enviar el correo electrónico
         transporter.sendMail(createMailOptions, (error, info) => {
             if (error) {
-                console.error("Error al enviar el correo electrónico:", error);
+                console.error("Error al enviar el correo electrónico 📧:", error);
                 res.status(500).send("Error al enviar el correo electrónico");
             } else {
-                console.log("Correo electrónico enviado:", info.response);
+                console.log("Correo electrónico enviado📧:", info.response);
                 res.send("Correo electrónico enviado correctamente");
             }
         });
     } catch (error) {
-        console.error("Error al procesar la solicitud:", error);
+        console.error("Error al procesar la solicitud📧:", error);
         res.status(500).send("Ocurrió un error al procesar la solicitud");
     }
 });
 
-// Routes for users controllers
+// Routes for users controllers 🪛🔐🪪
 router.post('/registro', addUserRegistrationControl); // addUserQuery
 router.get('/registro', getUserRegistrationControl); // getUserByEmailQuery
 router.get('/perfil/:email', verifyToken, getProfileControl); // getUserByEmailQuery
 router.put('/perfil/:email', verifyToken, updateUserControl); // updateUserByEmailQuery
 router.delete('/perfil/:email', verifyToken, deleteUserAndReservationControl); // deleteUserAndReservationByEmailQuery
 
-// Routes for reservation controllers
+// Routes for reservation controllers 🪛🔐🪪🗓️
 router.post('/reserva', verifyToken, addReservationControl); // addReservationQuery 
 router.get('/reservation-add', verifyToken, getaddReservationControl);
 router.put('/reserva/:id', verifyToken, updateReservationControl); // updateReservationQuery 
 router.delete('/reserva/:id', verifyToken, deleteReservationControl); // deleteReservationQuery 
 
-// Routes for rooms controllers
+// Routes for rooms controllers 🪛🔐🪪🏨🛌🏽🛎️
 router.post('/room', verifyToken, addRoomControl); // addRoomQuery 
 router.get('/room-add', verifyToken, getAddRoomControl);
 router.delete('/room/:id', verifyToken, deleteRoomControl); // deleteRoomQuery 
 
-// Routes for client controllers
+// Routes for client controllers 🪛🔐🪪🗓️🏨🛌🏽🛎️
 router.get('/customer/inicio/:email', verifyToken, getCustomerInicio);// getUserByEmailQuery => getUsersQuery => getReservationByEmailQuery => getRoomQuery
 
-// Routes for administrator controllers
+// Routes for administrator controllers 🪛🔐🪪🗓️🏨🛌🏽🛎️
 router.get('/admin/inicio/:email', verifyToken, getAdminInicio);// getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery
 router.get('/admin/perfil/:email', verifyToken, getUpdateUserModalAdmin);// getUserByEmailQuery
 router.get('/admin/reserva/:email', verifyToken, getUpdateReservationModalAdmin);// getReservationByEmailQuery => no se usara

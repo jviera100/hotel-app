@@ -171,8 +171,7 @@
 ## Sección 6: 🔧 Project Installation ⚙️ <a name="Project-Installation"></a>
 
 <details>
-  <summary>Sección 5: Project Installation</summary>
-    <div>  
+  <summary>Sección 5: Project Installation</summary>     
         installing the dependencies in Node.js with the following command ( Build Command ) :
 
                 ```bash
@@ -184,8 +183,6 @@
                 ```bash
                 # paso 2
                 ```
-
-    </div>
 </details>
 
 ## Sección 6: Contribución <a name="contribución"></a>

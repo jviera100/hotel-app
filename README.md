@@ -167,6 +167,7 @@
             - code editor (e.g. visual Studio Code or Atom)
             - Database (e.g. PostgreSQL, Dbeaver or Neon)
             - Internet to run it in Render
+            - You must have the node application configured in Gmail so that the nodemailer dependency can send and receive email when you submit a contact form. you need to go to gmail account settings and search for "Application Passwords" and create one for node.js
         </p>
     </div>
 </details>
@@ -191,7 +192,7 @@ Start Command...
                
 </details>
 
-## Sección 7: ⌨️ Create database 🛠️ <a name="Create-database"></a>
+## Sección 7: ⌨️ Create database and view access credentials 🛠️ <a name="Create-database"></a>
 
 <details>
   <summary>Sección 7_1: Create database</summary>
@@ -317,7 +318,7 @@ Start Command...
 </details>
 
 <details>
-  <summary>Sección 7_9: Insert data into the table usuarios</summary>
+  <summary>Sección 7_9: Insert data into the table usuarios and view access credentials </summary>
     <div>
         <p>-- Insert data into the table usuarios-----------------------------------
             INSERT INTO usuarios (username, email, password, tipo_usuario, foto) VALUES

@@ -1,6 +1,5 @@
 # <h1 class="text-center"> ---- MODULE 8-Certification test. <br> Hotel Reservation Management System. ---- </h1>
 
-
  # Index of contents.
 
 1. [requirements in english and spanish: ](#requirements-in-english-and-spanish)
@@ -11,9 +10,6 @@
 6. [Uso: ](#uso)
 7. [Contribución](#contribución)
 8. [Licencia](#licencia)
-9. [Licencia](LICENSE.md)
-
-
 
 ## Sección 1: requirements in english and spanish <a name="requirements-in-english-and-spanish"></a>
 

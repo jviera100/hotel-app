@@ -365,8 +365,7 @@ Start Command...
 ⌨️ with ❤️ by [Jonathan Viera L](https://github.com/jviera100) 😊 
 </details>
 
-## Sección 11: folders ✒️ <a name="folders"></a>
-# folder structure => 
+## Sección 11: Project structure ✒️ <a name="folders"></a>
 
 <details>
   <summary>Sección 11_1: model view controller and requests HTTP (MVC) </summary> 

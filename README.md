@@ -11,8 +11,8 @@
 6. [Uso: ](#uso)
 7. [Contribución](#contribución)
 8. [Licencia](#licencia)
-9. [Licencia](licencia.md)
-10. [prueba](assets/documents/Prueba-JavaScript-01.pdf)
+9. [Licencia](LICENSE.md)
+
 
 
 ## Sección 1: requirements in english and spanish <a name="requirements-in-english-and-spanish"></a>

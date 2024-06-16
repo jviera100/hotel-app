@@ -189,7 +189,12 @@ Start Command...
 ```bash
 # npm start
 ```
-               
+or Start Command...
+
+```bash
+# npm run server
+```
+                  
 </details>
 
 ## Sección 7: ⌨️ Create database and view access credentials 🛠️ <a name="Create-database"></a>

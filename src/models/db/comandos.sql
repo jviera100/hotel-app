@@ -114,7 +114,15 @@ INSERT INTO usuarios (username, email, password, tipo_usuario, foto) VALUES
 
 
 
-paginacion y contar con un filtro donde el usuario podra filtrar por tipo y precio:
+paginacion y contar con un filtro donde el usuario podra filtrar por tipo y precio: having subquery in from union except rename 
+
+
+
+
+
+
+
+
 
 tabla remota neon
 

@@ -8,7 +8,7 @@
 4. [ project screenshots: ](#project-screenshots)
 5. [prerequisites for installation: ](#prerequisites-for-installation)
 6. [Project Installation: ](#Project-Installation)
-7. [Create database: ](#Create-database)
+7. [Create database and view access credentials: ](#Create-database)
 8. [Gratitude](#Gratitude)
 9. [License](#License)
 10. [Authors and look at my project in Render](#Authors)

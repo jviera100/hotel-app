@@ -117,7 +117,217 @@ INSERT INTO usuarios (username, email, password, tipo_usuario, foto) VALUES
 paginacion y contar con un filtro donde el usuario podra filtrar por tipo y precio: having subquery in from union except rename 
 
 
+SELECT *
+FROM table1
+INNER JOIN col_table2 ON table1.EMAIL1 = table2.EMAIL2;
 
+----------------------------
+
+SELECT *
+FROM 
+    usuarios u
+JOIN 
+    notas n
+ON 
+    u.email = n.email;
+
+---------------------------    
+
+SELECT 
+    usuarios.email, 
+    usuarios.nombre, 
+    usuarios.edad, 
+    notas.notas 
+FROM 
+    usuarios 
+JOIN 
+    notas 
+ON 
+    usuarios.email = notas.email;
+
+-----------------------
+
+SELECT 
+    usuarios.*, 
+    datos_contacto.telefono 
+FROM 
+    usuarios 
+JOIN 
+    datos_contacto 
+ON 
+    usuarios.email = datos_contacto.email;
+
+-----------------------------    
+
+Orden de cláusulas
+COMANDO	SE LEE COMO:
+SELECT	Selecciona estos datos.
+FROM	De esta tabla.
+JOIN	Únelos con esta tabla.
+ON coincidir dato entre tablas
+WHERE	Filtra los valores que cumplan tal condición.
+GROUP BY	Agrupa los resultados por este criterio.
+HAVING	Filtra por estos criterios agrupados.
+ORDER BY	Ordena los resultados por este otro criterio.
+LIMIT	Limita los resultados a esta cantidad.
+
+---------------------
+
+SELECT 
+    usuarios.*, 
+    notas.notas 
+FROM 
+    usuarios 
+JOIN 
+    notas 
+ON 
+    usuarios.email = notas.email 
+WHERE 
+    usuarios.email = 'juan.perez@example.com';
+
+---------------------
+
+SELECT 
+    usuarios.*, 
+    notas.* 
+FROM 
+    usuarios 
+JOIN 
+    notas 
+ON 
+    usuarios.email = notas.email 
+WHERE 
+    usuarios.email = 'juan.perez@example.com';
+
+--------------------
+
+SELECT 
+    p.nombre, 
+    SUM(v.cantidad) AS total_vendido
+FROM 
+    productos p
+JOIN 
+    ventas v ON p.productoid = v.productoid
+GROUP BY 
+    p.productoid, p.nombre
+ORDER BY 
+    total_vendido DESC
+LIMIT 1;
+-------------------------
+
+SELECT 
+    usuarios.email, 
+    usuarios.nombre, 
+    usuarios.edad, 
+    notas.notas 
+FROM 
+    usuarios 
+INNER JOIN 
+    notas 
+ON 
+    usuarios.email = notas.email;
+-----------------------
+SELECT 
+    empleados.email, 
+    empleados.nombre, 
+    empleados.edad, 
+    departamentos.email, 
+    departamentos.departamento
+FROM 
+    empleados 
+RIGHT JOIN 
+    departamentos 
+ON 
+    empleados.email = departamentos.email;
+
+ ------------------------
+ SELECT empleados.email, empleados.nombre, empleados.edad, departamentos.email AS email, departamentos.departamento
+FROM empleados
+RIGHT JOIN departamentos ON empleados.email = departamentos.email;
+
+-------------------------------------------------
+ SELECT productos.producto_id AS producto_id, productos.nombre, precios.precio_id, precios.producto_id AS producto_id, precios.precio
+FROM productos
+LEFT JOIN precios ON productos.producto_id = precios.producto_id;
+------------------------------------------------
+SELECT a.NOMBRE AS nombre_autor, l.TITULO AS titulo_libro  = lo que quiero mostrar con apodo
+FROM autores a                                            = de tabla
+INNER JOIN libros l ON a.ID = l.ID_AUTOR                  = unire columnas que estoy asociando con ON
+WHERE l.ID_AUTOR IS NOT NULL;                            = NO NULO
+
+-----------------------------------
+
+SELECT estudiantes.nombre, inscripciones.curso, inscripciones.fecha
+FROM estudiantes
+NATURAL LEFT JOIN inscripciones;
+
+--------------------------------
+
+SELECT c1.nombre AS nombre_cliente, c2.nombre AS nombre_cliente_referente
+FROM clientes c1
+LEFT JOIN clientes c2 ON c1.id_cliente_referente = c2.id_cliente;
+-----------------------------------
+SELECT a1.nombre AS nombre, a2.nombre AS nombre_amigo_conectado
+FROM amigos a1
+JOIN amigos a2 ON a1.id_amigo_conectado = a2.id_amigo
+WHERE a1.id_amigo_conectado IS NOT NULL;
+------------------------------------
+
+SELECT numero, pinta
+FROM numeros
+CROSS JOIN pintas
+ORDER BY numero, pinta;
+
+-----------------------------
+
+PREGUNTA FINAL N° 154 CURSO 
+
+SELECT u.EMAIL, COALESCE(COUNT(n.NOTAS), 0) AS CANTIDAD_NOTAS
+FROM usuarios u
+LEFT JOIN notas n ON u.EMAIL = n.EMAIL
+GROUP BY u.EMAIL
+ORDER BY 
+  CASE WHEN COALESCE(COUNT(n.NOTAS), 0) = 0 THEN 1 ELSE 0 END, -- Ordena los usuarios sin notas al final
+  u.EMAIL; -- Ordena el resto alfabéticamente por EMAIL
+
+----------------------------
+
+
+Guía útil para identificar el tipo de join
+INNER JOIN (o JOIN)
+
+Cuándo usarlo: Cuando necesitas sólo las filas donde haya coincidencias en ambas tablas.
+Resultado: Devuelve solo las filas con datos correspondientes en ambas tablas.
+LEFT JOIN (o LEFT OUTER JOIN)
+
+Cuándo usarlo: Cuando necesitas todas las filas de la tabla de la izquierda y las filas coincidentes de la tabla de la derecha.
+Resultado: Devuelve todas las filas de la tabla de la izquierda y las coincidencias de la tabla de la derecha, con NULLs donde no haya coincidencias.
+RIGHT JOIN (o RIGHT OUTER JOIN)
+
+Cuándo usarlo: Cuando necesitas todas las filas de la tabla de la derecha y las filas coincidentes de la tabla de la izquierda.
+Resultado: Devuelve todas las filas de la tabla de la derecha y las coincidencias de la tabla de la izquierda, con NULLs donde no haya coincidencias.
+
+Natural Join (o Natural INNER JOIN)
+Ideas clave
+Natural Join es un JOIN que adicionalmente asume que las columnas con el mismo nombre son las columnas de unión.
+La ventaja de usar NATURAL JOIN es que simplifica la escritura de la consulta, pero solo es útil cuando las columnas de unión tienen el mismo nombre y tipo de datos en ambas tablas.
+
+Natural Left Join
+Ideas clave
+Natural Join es un JOIN que adicionalmente asume que las columnas con el mismo nombre son las columnas de unión.
+La ventaja de usar NATURAL JOIN es que simplifica la escritura de la consulta, pero solo es útil cuando las columnas de unión tienen el mismo nombre y tipo de datos en ambas tablas.
+Así como para JOIN la opción de INNER es implícita, para NATURAL JOIN la opción de INNER también es implícita. y uno puede utilizar NATURAL INNER JOIN, NATURAL LEFT JOIN, NATURAL RIGHT JOIN.
+
+Self Join
+Un self join es un tipo de join en SQL que se utiliza para combinar una tabla consigo misma. Se usa cuando queremos relacionar filas de una tabla con otras filas de la misma tabla. Aunque el término "self join" se refiere a esta relación consigo misma, en la práctica se utilizan otros tipos de joins como INNER JOIN o LEFT JOIN para realizar esta operación.
+
+Cross Join
+El Cross Join, también conocido como producto cartesiano, combina cada fila de la primera tabla con cada fila de la segunda tabla, generando un conjunto de resultados que es el producto cartesiano de ambas tablas. Es útil cuando se desea combinar todas las filas de una tabla con todas las filas de otra tabla.
+
+-------------------------
+
+
+   
 
 
 

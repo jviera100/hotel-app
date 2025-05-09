@@ -4,6 +4,9 @@ body {
   color: white; /* Color del texto */
   font-family: "Hind Siliguri", sans-serif; /* Fuente */
   text-align: center; /* Alineación del texto */
+  height: 100dvh; /* Altura 100% del Viewport visible(pantalla), 100dvh es mejor para móviles que 100vh, para otros contenedores usar height: 100%; */
+  padding: 100px; /* Espacio se suma a la altura y ancho (usar box-sizing: border-box, para evitar desbordamiento). */
+  box-sizing: border-box; /* Padding y bordes no se suman al ancho y alto definidos. Evita el desbordamiento. */
 }
 
 /* Estilos para los enlaces */

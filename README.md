@@ -197,6 +197,43 @@ or Start Command...
                   
 </details>
 
+## Sección 6.5: 🔒 Security Enhancements 🛡️ <a name="security-enhancements"></a>
+
+<details>
+  <summary>Sección 6.5: Security Enhancements</summary>
+    <div>
+        <p>This project has undergone significant security enhancements to protect user data and prevent common web vulnerabilities. The improvements focus on three key areas:</p>
+
+        <h3>1. Password Hashing with `bcrypt`</h3>
+        <p>
+            To prevent sensitive user data exposure in case of a database breach, all user passwords are now securely hashed using the <code>bcrypt</code> library.
+            <ul>
+                <li>Passwords are hashed with a salt (random data) during user registration.</li>
+                <li>During login, the provided password is compared against the stored hash, ensuring the original password is never stored or directly compared in plain text.</li>
+            </ul>
+        </p>
+
+        <h3>2. Role-Based Access Control (RBAC)</h3>
+        <p>
+            The application now implements robust authorization checks to ensure users can only access resources and perform actions permitted by their assigned role (e.g., <code>customer</code> vs. <code>administrator</code>).
+            <ul>
+                <li>User roles are included in the JWT (JSON Web Token) upon login.</li>
+                <li>New middleware functions (`checkAdmin`, `checkOwnershipOrAdmin`) verify user roles and resource ownership before granting access to sensitive routes.</li>
+                <li>Administrator-specific routes are now protected, preventing unauthorized users from performing privileged operations like adding/deleting rooms or managing other user accounts.</li>
+            </ul>
+        </p>
+
+        <h3>3. Mitigation of CSRF, IDOR, and BOLA Vulnerabilities</h3>
+        <p>
+            Several measures have been implemented to protect against common web vulnerabilities:
+            <ul>
+                <li><b>CSRF (Cross-Site Request Forgery):</b> Cookies are configured with <code>SameSite=Strict</code>, significantly reducing the risk of CSRF attacks by preventing the browser from sending cookies with cross-site requests.</li>
+                <li><b>IDOR (Insecure Direct Object Reference) / BOLA (Broken Object Level Authorization):</b> The `checkOwnershipOrAdmin` middleware ensures that users can only access or modify their own resources (e.g., profile information) unless they possess administrative privileges. This prevents unauthorized access to other users' data by manipulating resource IDs in requests.</li>
+            </ul>
+        </p>
+    </div>
+</details>
+
 ## Sección 7: ⌨️ Create database and view access credentials 🛠️ <a name="Create-database"></a>
 
 <details>
@@ -485,3 +522,4 @@ or Start Command...
 
 
 
+# Probando autenticación

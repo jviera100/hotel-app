@@ -167,7 +167,7 @@
             - code editor (e.g. visual Studio Code or Atom)
             - Database (e.g. PostgreSQL, Dbeaver or Neon)
             - Internet to run it in Render
-            - You must have the node application configured in Gmail so that the nodemailer dependency can send and receive email when you submit a contact form. you need to go to gmail account settings and search for "Application Passwords" and create one for node.js
+            - For the Nodemailer functionality (sending and receiving emails via the contact form), you need to configure your Gmail account. Instead of using your main Gmail password, you must generate an **"App password"** for your Node.js application. To do this, enable 2-Step Verification on your Google account, then go to your Google Account settings, navigate to Security, and find "App passwords" to create a new one for your application.
         </p>
     </div>
 </details>
@@ -201,7 +201,7 @@ or Start Command...
   <summary>Sección 6.1: Project Installation with Docker Compose</summary>
     <div>
         <p>
-            For a streamlined setup including the application and its PostgreSQL database, it is highly recommended to use Docker Compose.
+            For a streamlined setup including the application and its PostgreSQL database, it is highly recommended to use Docker Compose. This tool orchestrates multiple services, allowing them to work together seamlessly.
         </p>
         <h4>Prerequisites:</h4>
         <ul>
@@ -211,13 +211,13 @@ or Start Command...
         <ol>
             <li><b>Clone the repository:</b> If you haven't already, clone this project to your local machine.
                 <pre><code class="language-bash">git clone [URL_DEL_REPOSITORIO]
-cd m8d35Hotel</code></pre>
+cd Hotel-app</code></pre>
             </li>
             <li><b>Configure Environment Variables:</b> Create a <code>.env</code> file in the root directory of the project by copying the provided example:
                 <pre><code class="language-bash">cp .env.example .env</code></pre>
                 Open the newly created <code>.env</code> file and fill in any necessary credentials or configurations. For local development with Docker Compose, the default values in <code>.env.example</code> for <code>DB_HOST</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>, <code>DB_DATABASE</code>, and <code>DB_PORT</code> should work as they align with the <code>db</code> service in <code>docker-compose.yml</code>.
             </li>
-            <li><b>Build and Run the Containers:</b> From the root directory of the project, execute the following command. This will build the application image (if not already built) and start both the application and PostgreSQL database services.
+            <li><b>Build and Run the Containers:</b> From the root directory of the project, execute the following command. This will build your application's Docker image (if not already built) and start both the application and PostgreSQL database services. The `depends_on` argument in `docker-compose.yml` ensures that the database service starts before your application. Note that your application's image is built locally, while the PostgreSQL image is pulled directly from Docker Hub.
                 <pre><code class="language-bash">docker-compose up --build</code></pre>
                 Allow some time for the database service to initialize.
             </li>

@@ -197,6 +197,49 @@ or Start Command...
                   
 </details>
 
+<details>
+  <summary>Sección 6.1: Project Installation with Docker Compose</summary>
+    <div>
+        <p>
+            For a streamlined setup including the application and its PostgreSQL database, it is highly recommended to use Docker Compose.
+        </p>
+        <h4>Prerequisites:</h4>
+        <ul>
+            <li>Ensure you have <a href="https://www.docker.com/products/docker-desktop/" target="_blank">Docker Desktop</a> installed and running on your system.</li>
+        </ul>
+        <h4>Steps:</h4>
+        <ol>
+            <li><b>Clone the repository:</b> If you haven't already, clone this project to your local machine.
+                <pre><code class="language-bash">git clone [URL_DEL_REPOSITORIO]
+cd m8d35Hotel</code></pre>
+            </li>
+            <li><b>Configure Environment Variables:</b> Create a <code>.env</code> file in the root directory of the project by copying the provided example:
+                <pre><code class="language-bash">cp .env.example .env</code></pre>
+                Open the newly created <code>.env</code> file and fill in any necessary credentials or configurations. For local development with Docker Compose, the default values in <code>.env.example</code> for <code>DB_HOST</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>, <code>DB_DATABASE</code>, and <code>DB_PORT</code> should work as they align with the <code>db</code> service in <code>docker-compose.yml</code>.
+            </li>
+            <li><b>Build and Run the Containers:</b> From the root directory of the project, execute the following command. This will build the application image (if not already built) and start both the application and PostgreSQL database services.
+                <pre><code class="language-bash">docker-compose up --build</code></pre>
+                Allow some time for the database service to initialize.
+            </li>
+            <li><b>Database Setup:</b> Once the database container is running, you need to create the database schema and populate it with initial data.
+                <p>
+                    Connect to your PostgreSQL database (e.g., using DBeaver, pgAdmin, or <code>psql</code>) using the credentials specified in your <code>.env</code> file (<code>DB_HOST</code>, <code>DB_PORT</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>, <code>DB_DATABASE</code>).
+                </p>
+                <p>
+                    Then, execute the SQL commands found in the file <code>src/models/db/comandos.sql</code>. This script will create the necessary tables and insert initial data for rooms and users.
+                </p>
+            </li>
+            <li><b>Access the Application:</b> Once all services are up and the database is set up, you can access the application in your web browser at:
+                <pre><code>http://localhost:3000</code></pre>
+            </li>
+        </ol>
+        <h4>Important Note on Deployment:</h4>
+        <p>
+            These instructions are for running the project locally. For deploying the application online and making it accessible via the internet, you would need to use a cloud hosting provider (e.g., Render.com, AWS, Google Cloud, Azure) and configure their respective deployment pipelines and database services.
+        </p>
+    </div>
+</details>
+
 ## Sección 6.5: 🔒 Security Enhancements 🛡️ <a name="security-enhancements"></a>
 
 <details>

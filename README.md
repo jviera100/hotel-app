@@ -1,4 +1,4 @@
-# <h1 class="text-center"> 🚀---- MODULE 8-Certification test. <br> Hotel Reservation Management System. ---- </h1>
+# <h1 class="text-center"> 🚀---- Hotel Reservation Management System. ---- </h1>
 
  # 📌 Index of contents.
 
@@ -445,7 +445,7 @@ cd Hotel-app</code></pre>
 <details>
   <summary>Sección 10: Authors</summary> 
   
-  - **Jonathan Viera L** - _Initial work_ - [look at my project in GitHub](https://github.com/jviera100/m8d35Hotel)
+  - **Jonathan Viera L** - _Initial work_ - [look at my project in GitHub](https://github.com/jviera100/Hotel-app)
   - **Jonathan Viera L** - _Initial work_ - [look at my project in Render](https://m8d35hotel.onrender.com)
 
 ⌨️ with ❤️ by [Jonathan Viera L, See my profile on GitHub](https://github.com/jviera100) 😊 

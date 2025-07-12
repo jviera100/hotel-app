@@ -6,8 +6,8 @@ import setupMiddlewares from './middlewares/middlewares.js';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-
 dotenv.config();
+
 
 //console.log('Configuraciones de entorno:', process.env);
 

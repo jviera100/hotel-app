@@ -1,38 +1,6 @@
 // routes.js (HTTP requests)
-import { Router } from 'express';
-import nodemailer from 'nodemailer';
-import {
-    getHomeControl,
-    
-    getLoginControl,
-    postLoginControl,
-    logoutControl,
-
-    getContactControl,
-    postSendContactControl,
-
-    addUserRegistrationControl,
-    getUserRegistrationControl,
-    getProfileControl,
-    updateUserControl,
-    deleteUserAndReservationControl,
-
-    addReservationControl, 
-    getaddReservationControl,         
-    updateReservationControl,
-    deleteReservationControl, 
-
-    addRoomControl,
-    getAddRoomControl,
-    deleteRoomControl,
-    
-    getCustomerInicio,
-    
-    getAdminInicio,
-    getUpdateUserModalAdmin,
-    getUpdateReservationModalAdmin   
-} from '../src/controllers/ApiRestFull.js';
 import { verifyToken } from '../middlewares/token.js';
+import { checkAdmin, checkOwnershipOrAdmin } from '../middlewares/auth.js'; // Importa los middlewares de autorización.
 
 const router = Router();
 
@@ -97,9 +65,11 @@ router.post('/contacto', async (req, res) => {
 // Routes for users controllers 🪛🔐🪪
 router.post('/registro', addUserRegistrationControl); // addUserQuery
 router.get('/registro', getUserRegistrationControl); // getUserByEmailQuery
-router.get('/perfil/:email', verifyToken, getProfileControl); // getUserByEmailQuery
-router.put('/perfil/:email', verifyToken, updateUserControl); // updateUserByEmailQuery
-router.delete('/perfil/:email', verifyToken, deleteUserAndReservationControl); // deleteUserAndReservationByEmailQuery
+// Rutas de perfil de usuario protegidas: solo el propietario o un administrador pueden acceder/modificar.
+router.get('/perfil/:email', verifyToken, checkOwnershipOrAdmin, getProfileControl); // getUserByEmailQuery
+router.put('/perfil/:email', verifyToken, checkOwnershipOrAdmin, updateUserControl); // updateUserByEmailQuery
+// Ruta para eliminar usuario: solo accesible por administradores.
+router.delete('/perfil/:email', verifyToken, checkAdmin, deleteUserAndReservationControl); // deleteUserAndReservationByEmailQuery
 
 // Routes for reservation controllers 🪛🔐🪪🗓️
 router.post('/reserva', verifyToken, addReservationControl); // addReservationQuery 
@@ -108,17 +78,19 @@ router.put('/reserva/:id', verifyToken, updateReservationControl); // updateRese
 router.delete('/reserva/:id', verifyToken, deleteReservationControl); // deleteReservationQuery 
 
 // Routes for rooms controllers 🪛🔐🪪🏨🛌🏽🛎️
-router.post('/room', verifyToken, addRoomControl); // addRoomQuery 
+// Rutas de habitaciones protegidas: solo accesibles por administradores.
+router.post('/room', verifyToken, checkAdmin, addRoomControl); // addRoomQuery 
 router.get('/room-add', verifyToken, getAddRoomControl);
-router.delete('/room/:id', verifyToken, deleteRoomControl); // deleteRoomQuery 
+router.delete('/room/:id', verifyToken, checkAdmin, deleteRoomControl); // deleteRoomQuery 
 
 // Routes for client controllers 🪛🔐🪪🗓️🏨🛌🏽🛎️
 router.get('/customer/inicio/:email', verifyToken, getCustomerInicio);// getUserByEmailQuery => getUsersQuery => getReservationByEmailQuery => getRoomQuery
 
 // Routes for administrator controllers 🪛🔐🪪🗓️🏨🛌🏽🛎️
-router.get('/admin/inicio/:email', verifyToken, getAdminInicio);// getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery
-router.get('/admin/perfil/:email', verifyToken, getUpdateUserModalAdmin);// getUserByEmailQuery
-router.get('/admin/reserva/:email', verifyToken, getUpdateReservationModalAdmin);// getReservationByEmailQuery => no se usara
+// Todas las rutas de administrador están protegidas por el middleware checkAdmin.
+router.get('/admin/inicio/:email', verifyToken, checkAdmin, getAdminInicio);// getUserByEmailQuery => getUsersQuery => getReservationQuery => getRoomQuery
+router.get('/admin/perfil/:email', verifyToken, checkAdmin, getUpdateUserModalAdmin);// getUserByEmailQuery
+router.get('/admin/reserva/:email', verifyToken, checkAdmin, getUpdateReservationModalAdmin);// getReservationByEmailQuery => no se usara
 
 console.log('routes.js - Configuración de rutas completa');
 

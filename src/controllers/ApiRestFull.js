@@ -103,14 +103,18 @@ const postLoginControl = async (req, res) => {
             return res.status(401).send('Credenciales inválidas');
         }
 
-        // Verifica si la contraseña es correcta
-        if (usuario.password !== password) {
+        // Verifica si la contraseña es correcta comparando el hash almacenado con la contraseña proporcionada.
+        // Esto asegura que nunca se manejen contraseñas en texto plano.
+        const match = await bcrypt.compare(password, usuario.password);
+        if (!match) {
             console.log('Contraseña incorrecta🪛🔐🪪');
             return res.status(401).send('Credenciales inválidas');
         }
 
-        // Genera un token de autenticación
-        const token = jwt.sign({ userId: usuario.id, email: usuario.email }, process.env.SECRET_KEY, { expiresIn: '1h' });
+        // Genera un token de autenticación JWT (JSON Web Token).
+        // Se incluye el 'tipo_usuario' en el payload del token para permitir la autorización basada en roles.
+        // El token expira en 1 hora para limitar la ventana de oportunidad en caso de robo.
+        const token = jwt.sign({ userId: usuario.id, email: usuario.email, tipo_usuario: usuario.tipo_usuario }, process.env.SECRET_KEY, { expiresIn: '1h' });
         console.log('Token generado🪛🔐🪪:', token);
 
         // Almacena el token en una cookie HTTP
@@ -221,6 +225,8 @@ const postSendContactControl = async (req, res) => {
 
 // USERS 🪛🪪
 
+import bcrypt from 'bcrypt'; // Importa la librería bcrypt para el hashing seguro de contraseñas.
+
 // add user => addUserQuery
 const addUserRegistrationControl = async (req, res) => {
     try {
@@ -252,8 +258,16 @@ const addUserRegistrationControl = async (req, res) => {
                 // Lanzar un error con el mensaje correspondiente
                 throw new Error('Error al cargar la imagen');
             }
+
+            // Generar un hash seguro de la contraseña antes de guardarla en la base de datos.
+            // Esto protege las contraseñas en caso de una brecha de seguridad en la base de datos.
+            // saltRounds define la complejidad del hashing (10 es un buen valor por defecto).
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+
             // Crear un objeto de usuario con los datos proporcionados y la ruta de la foto de perfil
-            const usuario = { email, username, password, tipo_usuario, foto: pathPhoto };
+            // Se guarda el hash de la contraseña, no la contraseña en texto plano.
+            const usuario = { email, username, password: hashedPassword, tipo_usuario, foto: pathPhoto };
             // Agregar el usuario a la base de datos
             await addUserQuery(usuario);
             // Registro de la adición exitosa del usuario en la consola

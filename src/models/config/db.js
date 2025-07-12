@@ -11,18 +11,18 @@ const { DB_HOST, DB_DATABASE, DB_PORT, DB_USER, DB_PASSWORD, PGHOST, PGDATABASE,
 // Configuración para la base de datos local y remota
 const config = {
     local: {
-        host: DB_HOST,
-        database: DB_DATABASE,
-        port: DB_PORT,
-        user: DB_USER,
-        password: DB_PASSWORD
+        host: process.env.DB_HOST,
+        database: process.env.DB_DATABASE,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD
     },
     remote: {
-        host: PGHOST,
-        database: PGDATABASE,
-        port: DB_PORT,
-        user: PGUSER,
-        password: PGPASSWORD,
+        host: process.env.PGHOST,
+        database: process.env.PGDATABASE,
+        port: process.env.DB_PORT,
+        user: process.env.PGUSER,
+        password: process.env.PGPASSWORD,
         ssl: {
             rejectUnauthorized: false
         }
@@ -32,8 +32,10 @@ const config = {
 // Función para obtener la configuración según el entorno (local o remoto)
 const getConfig = () => {
     if (process.env.NODE_ENV === 'production') {
+        console.log('Using remote database configuration');
         return config.remote;
     } else {
+        console.log('Using local database configuration');
         return config.local;
     }
 };

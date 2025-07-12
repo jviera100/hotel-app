@@ -446,7 +446,7 @@ cd Hotel-app</code></pre>
   <summary>Sección 10: Authors</summary> 
   
   - **Jonathan Viera L** - _Initial work_ - [look at my project in GitHub](https://github.com/jviera100/Hotel-app)
-  - **Jonathan Viera L** - _Initial work_ - [look at my project in Render](https://m8d35hotel.onrender.com)
+  - **Jonathan Viera L** - _Initial work_ - [look at my project in Render](https://hotel-app-ekgz.onrender.com)
 
 ⌨️ with ❤️ by [Jonathan Viera L, See my profile on GitHub](https://github.com/jviera100) 😊 
 </details>

@@ -556,13 +556,3 @@ cd m8d35Hotel</code></pre>
 </details>
 
 
-    
-
-
-
-
-
-
-
-
-# Probando autenticación

@@ -3,6 +3,7 @@
     <h2>Check in 🪪 </h2>    
 
     <form action="/registro" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <div class="form-group row w-50 m-auto">
             <div class="form-group col-12 col-sm-6">
                 <label>Email</label>

@@ -3,6 +3,7 @@
     <h2>Add Reservation 🗓️ </h2>
 
     <form id="addReservationForm">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <div class="mb-3">
             <label for="fechaReserva" class="form-label">Reservation date</label>
             <input type="date" class="form-control" id="fechaReserva" name="fecha_reserva" required>
@@ -52,13 +53,15 @@
             const numeroHabitacion = document.getElementById('numeroHabitacion').value;
             const nombreUsuario = document.getElementById('nombreUsuario').value;
 
+            const csrfToken = document.querySelector('input[name="_csrf"]').value;
+
             try {
                 const response = await axios.post('/reserva', {
                     fecha_reserva: fechaReserva,
                     fecha_salida: fechaSalida,
                     numero_habitacion: numeroHabitacion,
                     nombre_usuario: nombreUsuario
-                });
+                }, { headers: { 'x-csrf-token': csrfToken } });
                 if (response.status === 201) {
                     alert('Reserva agregada con éxito.');
                     window.location.href = '/login'; // Redirigir al login

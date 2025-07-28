@@ -3,6 +3,7 @@
     <h2>Add Room 🏨🛌🏽🛎️ </h2>
 
     <form action="/room" method="POST" id="addRoomForm">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <div class="form-group row w-50 m-auto">
             <div class="mb-3">
                 <label for="numeroHabitacion" class="form-label">Room number</label>
@@ -108,10 +109,15 @@
         const form = event.target;
         const formData = new FormData(form);
         
+        const csrfToken = document.querySelector('input[name="_csrf"]').value;
+
         try {
             const response = await fetch('/room', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'x-csrf-token': csrfToken
+                }
             });
             if (response.ok) {
                 alert('Habitación agregada correctamente.');

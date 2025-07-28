@@ -240,42 +240,81 @@ cd Hotel-app</code></pre>
     </div>
 </details>
 
-## Sección 6.5: 🔒 Security Enhancements 🛡️ <a name="security-enhancements"></a>
+## Sección 6.5: 🛡️ Arquitectura de Seguridad Avanzada 🛡️ <a name="security-enhancements"></a>
 
 <details>
-  <summary>Sección 6.5: Security Enhancements</summary>
-    <div>
-        <p>This project has undergone significant security enhancements to protect user data and prevent common web vulnerabilities. The improvements focus on three key areas:</p>
+  <summary>Haga clic para expandir la Descripción General de Seguridad</summary>
 
-        <h3>1. Password Hashing with `bcrypt`</h3>
-        <p>
-            To prevent sensitive user data exposure in case of a database breach, all user passwords are now securely hashed using the <code>bcrypt</code> library.
-            <ul>
-                <li>Passwords are hashed with a salt (random data) during user registration.</li>
-                <li>During login, the provided password is compared against the stored hash, ensuring the original password is never stored or directly compared in plain text.</li>
-            </ul>
-        </p>
+Este proyecto ha sido fortificado con una estrategia de defensa en profundidad para proteger la integridad de los datos, asegurar la autenticación y autorización, y prevenir vulnerabilidades web comunes. A continuación se detallan las capas de seguridad implementadas, que sirven como un checklist robusto para el desarrollo seguro de aplicaciones.
 
-        <h3>2. Role-Based Access Control (RBAC)</h3>
-        <p>
-            The application now implements robust authorization checks to ensure users can only access resources and perform actions permitted by their assigned role (e.g., <code>customer</code> vs. <code>administrator</code>).
-            <ul>
-                <li>User roles are included in the JWT (JSON Web Token) upon login.</li>
-                <li>New middleware functions (`checkAdmin`, `checkOwnershipOrAdmin`) verify user roles and resource ownership before granting access to sensitive routes.</li>
-                <li>Administrator-specific routes are now protected, preventing unauthorized users from performing privileged operations like adding/deleting rooms or managing other user accounts.</li>
-            </ul>
-        </p>
+---
 
-        <h3>3. Mitigation of CSRF, IDOR, and BOLA Vulnerabilities</h3>
-        <p>
-            Several measures have been implemented to protect against common web vulnerabilities:
-            <ul>
-                <li><b>CSRF (Cross-Site Request Forgery):</b> Cookies are configured with <code>SameSite=Strict</code>, significantly reducing the risk of CSRF attacks by preventing the browser from sending cookies with cross-site requests.</li>
-                <li><b>IDOR (Insecure Direct Object Reference) / BOLA (Broken Object Level Authorization):</b> The `checkOwnershipOrAdmin` middleware ensures that users can only access or modify their own resources (e.g., profile information) unless they possess administrative privileges. This prevents unauthorized access to other users' data by manipulating resource IDs in requests.</li>
-            </ul>
-        </p>
-    </div>
+### 🏛️ **Capa 1: Control de Acceso y Gestión de Sesiones**
+
+#### 1.1. Autenticación Robusta
+- **Hashing de Contraseñas con `bcrypt`**: Todas las contraseñas de los usuarios se almacenan hasheadas utilizando el algoritmo `bcrypt` con un factor de coste de 10. Esto hace que los ataques de fuerza bruta o de diccionario contra la base de datos sean computacionalmente inviables.
+- **Tokens de Sesión Seguros (JWT)**: La autenticación se gestiona mediante JSON Web Tokens (JWT) firmados digitalmente. Los tokens tienen una vida útil corta (1 hora) para minimizar el riesgo en caso de que un token sea comprometido.
+- **Protección contra Fuerza Bruta (`express-rate-limit`)**: El endpoint de inicio de sesión (`/login`) está protegido con un limitador de velocidad que bloquea una dirección IP después de 10 intentos fallidos en un período de 15 minutos, previniendo ataques de fuerza bruta.
+
+#### 1.2. Autorización Estricta (Prevención de IDOR y BOLA)
+- **Control de Acceso Basado en Roles (RBAC)**: El sistema implementa middlewares de autorización (`checkAdmin`) que restringen el acceso a endpoints sensibles (ej. gestión de habitaciones, eliminación de usuarios) únicamente a usuarios con rol de `administrador`.
+- **Verificación de Propiedad de Recursos**: Para prevenir Insecure Direct Object References (IDOR), los endpoints que acceden a datos de usuario (ej. `/perfil/:email`) utilizan el middleware `checkOwnershipOrAdmin`. Este verifica que el usuario autenticado sea el propietario del recurso solicitado o un administrador, impidiendo que un usuario pueda acceder a los datos de otro.
+- **Uso de UUIDs para Claves Primarias**: Todas las entidades de la base de datos utilizan `UUID` como claves primarias en lugar de IDs numéricos secuenciales. Esto elimina la capacidad de un atacante de adivinar o enumerar los IDs de los recursos del sistema, añadiendo una capa fundamental de protección contra ataques de enumeración.
+
+---
+
+### 🌊 **Capa 2: Prevención de Ataques de Inyección**
+
+#### 2.1. Inyección de SQL (SQLi)
+- **Consultas Parametrizadas**: Todas las consultas a la base de datos se ejecutan utilizando consultas preparadas (parameterized queries) a través del driver `node-postgres`. Esto garantiza que las entradas del usuario sean tratadas como datos y no como código ejecutable, neutralizando por completo el riesgo de inyección de SQL.
+
+#### 2.2. Cross-Site Scripting (XSS)
+- **Validación y Sanitización de Entradas (`express-validator`)**: Todas las rutas que aceptan datos del usuario (formularios de registro, contacto, perfiles, etc.) utilizan `express-validator` para:
+  - **Validar**: Asegurar que los datos cumplen con el formato esperado (ej. `isEmail()`, `isInt()`).
+  - **Sanitizar**: Limpiar los datos de caracteres potencialmente peligrosos (`trim()`, `escape()`, `normalizeEmail()`). La función `escape()` convierte caracteres como `<`, `>`, `&` en sus equivalentes de entidad HTML, previniendo que el navegador los interprete como código.
+- **Política de Seguridad de Contenido (CSP)**: Se ha implementado una cabecera `Content-Security-Policy` estricta a través de `helmet`. Esta política define explícitamente desde qué fuentes se permite cargar recursos (scripts, estilos, imágenes), bloqueando la ejecución de scripts inyectados desde orígenes no autorizados.
+
+---
+
+### 🌐 **Capa 3: Seguridad de Cabeceras HTTP y Políticas Web**
+
+#### 3.1. Cabeceras de Seguridad con `helmet`
+El middleware `helmet` se ha configurado para establecer un conjunto de cabeceras HTTP que protegen contra ataques comunes:
+- `Content-Security-Policy`: Previene XSS y ataques de inyección de datos.
+- `X-Frame-Options: DENY`: Previene el **Clickjacking**, impidiendo que el sitio sea renderizado dentro de un `<iframe>`.
+- `Strict-Transport-Security (HSTS)`: Fuerza el uso de HTTPS, previniendo ataques de intermediario (man-in-the-middle).
+- `X-Content-Type-Options: nosniff`: Evita que el navegador intente adivinar el tipo MIME de un recurso.
+- `X-DNS-Prefetch-Control`: Controla la captura previa de DNS.
+- `Referrer-Policy`: Controla la información de referencia enviada a otros sitios.
+
+#### 3.2. Cross-Site Request Forgery (CSRF)
+- **Protección de Doble Capa (Double-Submit Cookie + SameSite)**:
+  - **Cookies `SameSite=Strict`**: La cookie de sesión se configura con el atributo `SameSite=Strict`, que previene que el navegador envíe la cookie en peticiones desde sitios de terceros.
+  - **Tokens Anti-CSRF (Double-Submit Cookie)**: Como segunda capa de defensa, la aplicación implementa el patrón de "double-submit cookie". Se genera un token anti-CSRF único en cada respuesta, que se envía tanto en una cookie como en el cuerpo de la respuesta. En las peticiones que modifican datos, el cliente debe enviar este token en un encabezado (`x-csrf-token`), y el servidor verifica que coincida con el token de la cookie. Esto asegura que la petición es legítima y no ha sido forjada.
+
+#### 3.3. Cross-Origin Resource Sharing (CORS)
+- **Política Restrictiva**: La configuración de CORS se ha ajustado para permitir solicitudes únicamente desde un origen de confianza definido en las variables de entorno (`process.env.FRONTEND_URL`), en lugar de permitir cualquier origen (`*`).
+
+---
+
+### 🛡️ **Resumen del Checklist de Seguridad**
+
+| Vulnerabilidad | Medida de Protección Implementada | Estado |
+| :--- | :--- | :--- |
+| **IDOR / BOLA** | Middlewares `checkAdmin` y `checkOwnershipOrAdmin` | ✅ **Cubierto** |
+| **Enumeración de Recursos** | Uso de UUIDs como claves primarias | ✅ **Cubierto** |
+| **SQL Injection** | Consultas parametrizadas (Prepared Statements) | ✅ **Cubierto** |
+| **XSS (Cross-Site Scripting)** | `express-validator` (validación y sanitización) + `helmet` (CSP) | ✅ **Cubierto** |
+| **CSRF** | Doble capa: Tokens Anti-CSRF + Cookies `SameSite=Strict` | ✅ **Cubierto** |
+| **Clickjacking** | Cabecera `X-Frame-Options: DENY` vía `helmet` | ✅ **Cubierto** |
+| **Rate Limiting (Fuerza Bruta)** | `express-rate-limit` en el endpoint de login | ✅ **Cubierto** |
+| **CORS Misconfiguration** | Lista blanca de orígenes permitidos | ✅ **Cubierto** |
+| **Hardcoded Credentials** | Uso de variables de entorno (`.env`) | ✅ **Cubierto** |
+| **XXE / SSRF** | No aplicable (el servidor no procesa XML ni hace requests a URLs externas) | ✅ **N/A** |
+
 </details>
+
+
 
 ## Sección 7: ⌨️ Create database and view access credentials 🛠️ <a name="Create-database"></a>
 

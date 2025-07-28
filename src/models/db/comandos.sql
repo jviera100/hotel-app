@@ -15,24 +15,24 @@ DROP TABLE IF EXISTS tiposhabitaciones;
 CREATE DATABASE reservas_hotel;
 
 -- Create the table tiposhabitaciones
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE tiposhabitaciones (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     tipo VARCHAR(50) NOT NULL
 );
 
--- Create the table habitaciones
 CREATE TABLE habitaciones (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     numero INT NOT NULL,
-    tipo_habitacion_id INT REFERENCES tiposhabitaciones(id),
+    tipo_habitacion_id UUID REFERENCES tiposhabitaciones(id),
     descripcion TEXT,
     precio DECIMAL(10, 2),
     disponibilidad BOOLEAN
 );
 
--- Create the table usuarios
 CREATE TABLE usuarios (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password VARCHAR(100) NOT NULL,
@@ -40,18 +40,16 @@ CREATE TABLE usuarios (
     foto VARCHAR(255)
 );
 
--- Create the table reservas
 CREATE TABLE reservas (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     fecha_reserva DATE,
     fecha_salida DATE,
-    habitacion_id INT REFERENCES habitaciones(id),
-    cliente_id INT REFERENCES usuarios(id)
+    habitacion_id UUID REFERENCES habitaciones(id),
+    cliente_id UUID REFERENCES usuarios(id)
 );
 
--- Create the table contactos
 CREATE TABLE contactos (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     nombre VARCHAR(100),
     email VARCHAR(100),
     mensaje TEXT

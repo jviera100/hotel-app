@@ -7,7 +7,9 @@
         <button class="btn btn-outline-danger" id="deleteBtn">Delete profile and reservation</button>            
     </div>
 
-    <form id="updateForm" enctype="multipart/form-data"> <!-- Añadir enctype="multipart/form-data" para manejar archivos -->
+    <form id="updateForm" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <div class="form-group row w-50 m-auto text-center"> <!-- Añadir enctype="multipart/form-data" para manejar archivos -->
         <div class="form-group row w-50 m-auto text-center">
             <div class="form-group col-12 col-sm-12">
                 <label>Photo</label>
@@ -127,9 +129,13 @@
         }
 
         try {
+            const csrfToken = document.querySelector('input[name="_csrf"]').value;
+
+        try {
             const response = await axios.put(`/perfil/${email}`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data' // Añadir encabezado necesario para manejar archivos
+                    'Content-Type': 'multipart/form-data',
+                    'x-csrf-token': csrfToken
                 }
             }); 
             console.log("Respuesta de actualización:", response);

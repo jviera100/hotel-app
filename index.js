@@ -52,12 +52,16 @@ app.use(cors(corsOptions));
 
 // 3. Rate Limiting: Protect against brute-force attacks
 import { addCsrfToken } from './middlewares/csrf.js';
+
+const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 10, // Limit each IP to 10 login requests per windowMs
   standardHeaders: true,
   legacyHeaders: false,
   message: 'Too many login attempts from this IP, please try again after 15 minutes',
 });
+
+app.use(limiter);
 
 // --- Middlewares ---
 app.use(express.json());
